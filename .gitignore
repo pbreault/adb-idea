@@ -5,3 +5,5 @@ out/
 bin/
 out/
 tmp/
+gen
+local.properties

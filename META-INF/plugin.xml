@@ -1,42 +1,50 @@
-<idea-plugin version="2">
-  <id>com.developerphil.adbidea</id>
-  <name>Plugin display name here</name>
-  <version>1.0</version>
-  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+<idea-plugin version="3">
+    <id>com.developerphil.adbidea</id>
+    <name>ADB Idea</name>
+    <version>1.0</version>
+    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
 
-  <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <small>most HTML tags may be used</small>
+    <description><![CDATA[
+      Adds adb command to Android Studio and Intellij
       ]]></description>
 
-  <change-notes><![CDATA[
+    <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.android</depends>
+
+    <change-notes><![CDATA[
       Add change notes here.<br>
       <small>most HTML tags may be used</small>
       ]]>
-  </change-notes>
+    </change-notes>
 
-  <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
-  <idea-version since-build="107.105"/>
+    <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
+    <idea-version since-build="107.105"/>
 
-  <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
-       on how to target different products -->
-  <!-- uncomment to enable plugin in all products
-  <depends>com.intellij.modules.lang</depends>
-  -->
+    <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
 
-  <application-components>
+    <!--<application-components>-->
     <!-- Add your application components here -->
-  </application-components>
+    <!--</application-components>-->
 
-  <project-components>
+    <!--<project-components>-->
     <!-- Add your project components here -->
-  </project-components>
+    <!--</project-components>-->
 
-  <actions>
-    <!-- Add your actions here -->
-  </actions>
+    <actions>
+        <group id="AdbIdea" text="_ADB Commands" description="ADB Commands">
+            <action id="com.developerphil.adbidea.uninstall" class="com.developerphil.adbidea.action.UninstallAction"
+                    text="adb uninstall"
+                    description="Uninstalls the current application">
+                <add-to-group group-id="AdbIdea" anchor="last"/>
+            </action>
+        </group>
+    </actions>
 
-  <extensions defaultExtensionNs="com.intellij">
+    <!--<extensions defaultExtensionNs="com.intellij">-->
     <!-- Add your extensions here -->
-  </extensions>
+    <!--</extensions>-->
 </idea-plugin>
