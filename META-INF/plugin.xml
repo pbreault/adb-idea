@@ -36,10 +36,16 @@
 
     <actions>
         <group id="AdbIdea" text="_ADB Commands" description="ADB Commands">
-            <action id="com.developerphil.adbidea.uninstall" class="com.developerphil.adbidea.action.UninstallAction"
-                    text="adb uninstall"
+            <action id="com.developerphil.adbidea.action.UninstallAction"
+                    class="com.developerphil.adbidea.action.UninstallAction"
+                    text="Uninstall"
                     description="Uninstalls the current application">
-                <add-to-group group-id="AdbIdea" anchor="last"/>
+            </action>
+
+            <action id="com.developerphil.adbidea.action.KillAction"
+                    class="com.developerphil.adbidea.action.KillAction"
+                    text="Kill"
+                    description="Kills the current application">
             </action>
         </group>
     </actions>
