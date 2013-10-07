@@ -35,28 +35,29 @@
     <!--</project-components>-->
 
     <actions>
-        <group id="AdbIdea" text="_ADB Commands" description="ADB Commands">
+        <group id="AdbIdea" text="_ADB Commands" description="ADB Commands" popup="true">
             <action id="com.developerphil.adbidea.action.UninstallAction"
                     class="com.developerphil.adbidea.action.UninstallAction"
-                    text="Uninstall"
+                    text="ADB Uninstall App"
                     description="Uninstalls the current application">
             </action>
 
             <action id="com.developerphil.adbidea.action.KillAction"
                     class="com.developerphil.adbidea.action.KillAction"
-                    text="Kill"
+                    text="ADB Kill App"
                     description="Kills the current application">
             </action>
             <action id="com.developerphil.adbidea.action.StartAction"
                     class="com.developerphil.adbidea.action.StartAction"
-                    text="Start App"
+                    text="ADB Start App"
                     description="Starts the current application">
             </action>
             <action id="com.developerphil.adbidea.action.RestartAction"
                     class="com.developerphil.adbidea.action.RestartAction"
-                    text="Restart App"
+                    text="ADB Restart App"
                     description="Restarts the current application">
             </action>
+            <add-to-group group-id="AndroidToolsGroup" relative-to-action="Android.EnableDdms" anchor="After"/>
         </group>
     </actions>
 
