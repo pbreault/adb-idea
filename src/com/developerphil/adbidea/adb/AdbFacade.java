@@ -3,7 +3,6 @@ package com.developerphil.adbidea.adb;
 import com.android.ddmlib.AndroidDebugBridge;
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.InstallException;
-import com.android.ddmlib.MultiLineReceiver;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
@@ -13,8 +12,6 @@ import org.jetbrains.android.util.AndroidUtils;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by pbreault on 10/6/13.
@@ -41,7 +38,7 @@ public class AdbFacade {
             @Override
             public void run(Project project, IDevice device, AndroidFacet facet, String packageName) {
                 try {
-                    device.executeShellCommand("am force-stop " + packageName, new ForceStopReceiver(), 5L, TimeUnit.MINUTES);
+                    device.executeShellCommand("am force-stop " + packageName, new GenericReceiver(), 5L, TimeUnit.MINUTES);
                     info(String.format("<b>%s</b> forced-stop on %s", packageName, device.getName()));
                 } catch (Exception e1) {
                     error("Kill fail... " + e1.getMessage());
@@ -60,7 +57,7 @@ public class AdbFacade {
                 String component = packageName + "/" + defaultActivityName;
 
                 try {
-                    device.executeShellCommand("am start " + component, new ForceStopReceiver(), 5L, TimeUnit.MINUTES);
+                    device.executeShellCommand("am start " + component, new GenericReceiver(), 5L, TimeUnit.MINUTES);
                     info(String.format("<b>%s</b> started app on %s", packageName, device.getName()));
                 } catch (Exception e1) {
                     error("Start fail... " + e1.getMessage());
@@ -110,44 +107,6 @@ public class AdbFacade {
     private static void sendNotification(String message, NotificationType notificationType) {
         Notification notification = new Notification("com.developerphil.adbidea", "Adb IDEA", message, notificationType);
         Notifications.Bus.notify(notification);
-    }
-
-    private static final class ForceStopReceiver extends MultiLineReceiver {
-
-        private static final String SUCCESS_OUTPUT = "Success"; //$NON-NLS-1$
-        private static final Pattern FAILURE_PATTERN = Pattern.compile("Failure\\s+\\[(.*)\\]"); //$NON-NLS-1$
-
-        private String mErrorMessage = null;
-
-        public ForceStopReceiver() {
-        }
-
-        @Override
-        public void processNewLines(String[] lines) {
-            for (String line : lines) {
-                if (!line.isEmpty()) {
-                    if (line.startsWith(SUCCESS_OUTPUT)) {
-                        mErrorMessage = null;
-                    } else {
-                        Matcher m = FAILURE_PATTERN.matcher(line);
-                        if (m.matches()) {
-                            mErrorMessage = m.group(1);
-                        } else {
-                            mErrorMessage = "Unknown failure";
-                        }
-                    }
-                }
-            }
-        }
-
-        @Override
-        public boolean isCancelled() {
-            return false;
-        }
-
-        public String getErrorMessage() {
-            return mErrorMessage;
-        }
     }
 
 }
