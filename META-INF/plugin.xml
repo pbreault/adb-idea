@@ -1,8 +1,8 @@
 <idea-plugin version="3">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>1.0</version>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <version>0.5</version>
+    <!--<vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>-->
 
     <description><![CDATA[
       Adds adb command to Android Studio and Intellij
@@ -11,11 +11,11 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.android</depends>
 
-    <change-notes><![CDATA[
-      Add change notes here.<br>
-      <small>most HTML tags may be used</small>
-      ]]>
-    </change-notes>
+    <!--<change-notes><![CDATA[-->
+      <!--Add change notes here.<br>-->
+      <!--<small>most HTML tags may be used</small>-->
+      <!--]]>-->
+    <!--</change-notes>-->
 
     <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
     <idea-version since-build="107.105"/>
@@ -57,7 +57,12 @@
                     text="ADB Restart App"
                     description="Restarts the current application">
             </action>
-            <add-to-group group-id="AndroidToolsGroup" relative-to-action="Android.EnableDdms" anchor="After"/>
+            <action id="com.developerphil.adbidea.action.ClearDataAction"
+                    class="com.developerphil.adbidea.action.ClearDataAction"
+                    text="ADB Clear App Data"
+                    description="Clears the private storage of the app">
+            </action>
+            <add-to-group group-id="AndroidToolsGroup" relative-to-action="Android.EnableDdms" anchor="after"/>
         </group>
     </actions>
 

@@ -72,6 +72,21 @@ public class AdbFacade {
         startDefaultActivity(project);
     }
 
+    public static void clearData(Project project) {
+        executeOnFirstDevice(project, new AdbRunnable() {
+            @Override
+            public void run(Project project, IDevice device, AndroidFacet facet, String packageName) {
+                try {
+                    device.executeShellCommand("pm clear " + packageName, new GenericReceiver(), 5L, TimeUnit.MINUTES);
+                    info(String.format("<b>%s</b> cleared data for app on %s", packageName, device.getName()));
+                } catch (Exception e1) {
+                    error("Start fail... " + e1.getMessage());
+                    e1.printStackTrace();
+                }
+            }
+        });
+    }
+
     private static void executeOnFirstDevice(Project project, AdbRunnable runnable) {
         List<AndroidFacet> facets = AndroidUtils.getApplicationFacets(project);
         if (!facets.isEmpty()) {
