@@ -70,6 +70,11 @@ public class AdbFacade {
         });
     }
 
+    public static void restartDefaultActivity(Project project) {
+        kill(project);
+        startDefaultActivity(project);
+    }
+
     private static void executeOnFirstDevice(Project project, AdbRunnable runnable) {
         List<AndroidFacet> facets = AndroidUtils.getApplicationFacets(project);
         if (!facets.isEmpty()) {

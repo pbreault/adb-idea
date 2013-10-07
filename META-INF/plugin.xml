@@ -52,6 +52,11 @@
                     text="Start App"
                     description="Starts the current application">
             </action>
+            <action id="com.developerphil.adbidea.action.RestartAction"
+                    class="com.developerphil.adbidea.action.RestartAction"
+                    text="Restart App"
+                    description="Restarts the current application">
+            </action>
         </group>
     </actions>
 
