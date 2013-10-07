@@ -24,7 +24,7 @@ public class AdbFacade {
     public static void uninstall(Project project) {
         executeOnFirstDevice(project, new AdbRunnable() {
             @Override
-            public void run(Project project, IDevice device, String packageName) {
+            public void run(Project project, IDevice device, AndroidFacet facet, String packageName) {
                 try {
                     device.uninstallPackage(packageName);
                     info(String.format("<b>%s</b> uninstalled on %s", packageName, device.getName()));
@@ -39,7 +39,7 @@ public class AdbFacade {
     public static void kill(Project project) {
         executeOnFirstDevice(project, new AdbRunnable() {
             @Override
-            public void run(Project project, IDevice device, String packageName) {
+            public void run(Project project, IDevice device, AndroidFacet facet, String packageName) {
                 try {
                     device.executeShellCommand("am force-stop " + packageName, new ForceStopReceiver(), 5L, TimeUnit.MINUTES);
                     info(String.format("<b>%s</b> forced-stop on %s", packageName, device.getName()));
@@ -52,6 +52,24 @@ public class AdbFacade {
     }
 
 
+    public static void startDefaultActivity(Project project) {
+        executeOnFirstDevice(project, new AdbRunnable() {
+            @Override
+            public void run(Project project, IDevice device, AndroidFacet facet, String packageName) {
+                String defaultActivityName = AndroidUtils.getDefaultActivityName(facet.getManifest());
+                String component = packageName + "/" + defaultActivityName;
+
+                try {
+                    device.executeShellCommand("am start " + component, new ForceStopReceiver(), 5L, TimeUnit.MINUTES);
+                    info(String.format("<b>%s</b> started app on %s", packageName, device.getName()));
+                } catch (Exception e1) {
+                    error("Start fail... " + e1.getMessage());
+                    e1.printStackTrace();
+                }
+            }
+        });
+    }
+
     private static void executeOnFirstDevice(Project project, AdbRunnable runnable) {
         List<AndroidFacet> facets = AndroidUtils.getApplicationFacets(project);
         if (!facets.isEmpty()) {
@@ -63,8 +81,8 @@ public class AdbFacade {
                 IDevice[] devices = bridge.getDevices();
                 if (devices.length > 0) {
                     IDevice device = devices[0];
-                    runnable.run(project, device, packageName);
-                }else{
+                    runnable.run(project, device, facet, packageName);
+                } else {
                     error("No Device found");
                 }
             }
@@ -72,7 +90,7 @@ public class AdbFacade {
     }
 
     private static interface AdbRunnable {
-        void run(Project project, IDevice device, String packageName);
+        void run(Project project, IDevice device, AndroidFacet facet, String packageName);
     }
 
 

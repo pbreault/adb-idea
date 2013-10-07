@@ -47,6 +47,11 @@
                     text="Kill"
                     description="Kills the current application">
             </action>
+            <action id="com.developerphil.adbidea.action.StartAction"
+                    class="com.developerphil.adbidea.action.StartAction"
+                    text="Start App"
+                    description="Starts the current application">
+            </action>
         </group>
     </actions>
 
