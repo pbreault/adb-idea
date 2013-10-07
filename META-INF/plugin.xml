@@ -5,16 +5,24 @@
     <!--<vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>-->
 
     <description><![CDATA[
-      Adds adb command to Android Studio and Intellij
-      ]]></description>
+Adds the following ADB commands to Android Studio and Intellij:
+<ul>
+    <li>ADB Uninstall App</li>
+    <li>ADB Kill App</li>
+    <li>ADB Start App</li>
+    <li>ADB Restart App</li>
+    <li>ADB Clear App Data</li>
+</ul>
+]]>
+    </description>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.android</depends>
 
     <!--<change-notes><![CDATA[-->
-      <!--Add change notes here.<br>-->
-      <!--<small>most HTML tags may be used</small>-->
-      <!--]]>-->
+    <!--Add change notes here.<br>-->
+    <!--<small>most HTML tags may be used</small>-->
+    <!--]]>-->
     <!--</change-notes>-->
 
     <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
