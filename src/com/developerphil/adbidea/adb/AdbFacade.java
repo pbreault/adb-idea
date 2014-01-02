@@ -2,18 +2,16 @@ package com.developerphil.adbidea.adb;
 
 import com.android.ddmlib.AndroidDebugBridge;
 import com.android.ddmlib.IDevice;
-import com.android.ddmlib.InstallException;
+import com.developerphil.adbidea.adb.command.*;
 import com.developerphil.adbidea.ui.DeviceChooserDialog;
-import com.intellij.notification.Notification;
-import com.intellij.notification.NotificationType;
-import com.intellij.notification.Notifications;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import org.jetbrains.android.facet.AndroidFacet;
 import org.jetbrains.android.util.AndroidUtils;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+
+import static com.developerphil.adbidea.ui.NotificationHelper.error;
 
 /**
  * Created by pbreault on 10/6/13.
@@ -21,75 +19,26 @@ import java.util.concurrent.TimeUnit;
 public class AdbFacade {
 
     public static void uninstall(Project project) {
-        executeOnDevice(project, new AdbRunnable() {
-            @Override
-            public void run(Project project, IDevice device, AndroidFacet facet, String packageName) {
-                try {
-                    device.uninstallPackage(packageName);
-                    info(String.format("<b>%s</b> uninstalled on %s", packageName, device.getName()));
-                } catch (InstallException e1) {
-                    error("Uninstall fail... " + e1.getMessage());
-                    e1.printStackTrace();
-                }
-            }
-        });
+        executeOnDevice(project, new UninstallCommand());
     }
 
     public static void kill(Project project) {
-        executeOnDevice(project, new AdbRunnable() {
-            @Override
-            public void run(Project project, IDevice device, AndroidFacet facet, String packageName) {
-                try {
-                    device.executeShellCommand("am force-stop " + packageName, new GenericReceiver(), 5L, TimeUnit.MINUTES);
-                    info(String.format("<b>%s</b> forced-stop on %s", packageName, device.getName()));
-                } catch (Exception e1) {
-                    error("Kill fail... " + e1.getMessage());
-                    e1.printStackTrace();
-                }
-            }
-        });
+        executeOnDevice(project, new KillCommand());
     }
 
-
     public static void startDefaultActivity(Project project) {
-        executeOnDevice(project, new AdbRunnable() {
-            @Override
-            public void run(Project project, IDevice device, AndroidFacet facet, String packageName) {
-                String defaultActivityName = AndroidUtils.getDefaultActivityName(facet.getManifest());
-                String component = packageName + "/" + defaultActivityName;
-
-                try {
-                    device.executeShellCommand("am start " + component, new GenericReceiver(), 5L, TimeUnit.MINUTES);
-                    info(String.format("<b>%s</b> started app on %s", packageName, device.getName()));
-                } catch (Exception e1) {
-                    error("Start fail... " + e1.getMessage());
-                    e1.printStackTrace();
-                }
-            }
-        });
+        executeOnDevice(project, new StartDefaultActivityCommand());
     }
 
     public static void restartDefaultActivity(Project project) {
-        kill(project);
-        startDefaultActivity(project);
+        executeOnDevice(project, new RestartPackageCommand());
     }
 
     public static void clearData(Project project) {
-        executeOnDevice(project, new AdbRunnable() {
-            @Override
-            public void run(Project project, IDevice device, AndroidFacet facet, String packageName) {
-                try {
-                    device.executeShellCommand("pm clear " + packageName, new GenericReceiver(), 5L, TimeUnit.MINUTES);
-                    info(String.format("<b>%s</b> cleared data for app on %s", packageName, device.getName()));
-                } catch (Exception e1) {
-                    error("Start fail... " + e1.getMessage());
-                    e1.printStackTrace();
-                }
-            }
-        });
+        executeOnDevice(project, new ClearDataCommand());
     }
 
-    private static void executeOnDevice(Project project, AdbRunnable runnable) {
+    private static void executeOnDevice(Project project, Command runnable) {
         DeviceResult result = getDevice(project);
         if (result != null) {
             runnable.run(project, result.device, result.facet, result.packageName);
@@ -97,25 +46,6 @@ public class AdbFacade {
             error("No Device found");
         }
     }
-
-    private static interface AdbRunnable {
-        void run(Project project, IDevice device, AndroidFacet facet, String packageName);
-
-    }
-
-    private static void info(String message) {
-        sendNotification(message, NotificationType.INFORMATION);
-    }
-
-    private static void error(String message) {
-        sendNotification(message, NotificationType.ERROR);
-    }
-
-    private static void sendNotification(String message, NotificationType notificationType) {
-        Notification notification = new Notification("com.developerphil.adbidea", "Adb IDEA", message, notificationType);
-        Notifications.Bus.notify(notification);
-    }
-
 
     private static DeviceResult getDevice(Project project) {
         List<AndroidFacet> facets = AndroidUtils.getApplicationFacets(project);
