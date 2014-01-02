@@ -28,8 +28,6 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * @author Eugene.Kudelevsky
@@ -42,7 +40,7 @@ public class DeviceChooserDialog extends DialogWrapper {
     private JPanel myDeviceChooserWrapper;
 
     @NonNls
-    private static final String SELECTED_SERIALS_PROPERTY = "ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS";
+    private static final String SELECTED_SERIALS_PROPERTY = DeviceChooserDialog.class.getCanonicalName() + "-SELECTED_DEVICES";
 
     public DeviceChooserDialog(@NotNull final AndroidFacet facet, boolean multipleSelection) {
         super(facet.getModule().getProject(), true);
@@ -72,13 +70,6 @@ public class DeviceChooserDialog extends DialogWrapper {
 
         myDeviceChooserWrapper.add(myDeviceChooser.getPanel());
 
-        final ActionListener listener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateEnabled();
-            }
-        };
-
         init();
 
         myDeviceChooser.init(selectedSerials);
@@ -104,7 +95,7 @@ public class DeviceChooserDialog extends DialogWrapper {
         myDeviceChooser.finish();
 
         final PropertiesComponent properties = PropertiesComponent.getInstance(myProject);
-//        properties.setValue(SELECTED_SERIALS_PROPERTY, AndroidRunningState.toString(myDeviceChooser.getSelectedDevices()));
+        properties.setValue(SELECTED_SERIALS_PROPERTY, toString(myDeviceChooser.getSelectedDevices()));
 
         super.doOKAction();
     }
@@ -122,6 +113,18 @@ public class DeviceChooserDialog extends DialogWrapper {
     @NotNull
     public IDevice[] getSelectedDevices() {
         return myDeviceChooser.getSelectedDevices();
+    }
+
+    @NotNull
+    public static String toString(@NotNull IDevice[] devices) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0, n = devices.length; i < n; i++) {
+            builder.append(devices[i].getSerialNumber());
+            if (i < n - 1) {
+                builder.append(' ');
+            }
+        }
+        return builder.toString();
     }
 
 }
