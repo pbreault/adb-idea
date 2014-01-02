@@ -64,7 +64,6 @@ public class AdbFacade {
                     public void run() {
                         runnable.run(project, device, result.facet, result.packageName);
                     }
-
                 });
             }
         } else {
