@@ -2,7 +2,9 @@ package com.developerphil.adbidea.adb.command;
 
 import com.android.ddmlib.IDevice;
 import com.developerphil.adbidea.adb.GenericReceiver;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Computable;
 import org.jetbrains.android.facet.AndroidFacet;
 import org.jetbrains.android.util.AndroidUtils;
 
@@ -12,12 +14,12 @@ import static com.developerphil.adbidea.ui.NotificationHelper.error;
 import static com.developerphil.adbidea.ui.NotificationHelper.info;
 
 /**
-* Created by pbreault on 1/2/14.
-*/
+ * Created by pbreault on 1/2/14.
+ */
 public class StartDefaultActivityCommand implements Command {
     @Override
     public void run(Project project, IDevice device, AndroidFacet facet, String packageName) {
-        String defaultActivityName = AndroidUtils.getDefaultActivityName(facet.getManifest());
+        String defaultActivityName = getDefaultActivityName(facet);
         String component = packageName + "/" + defaultActivityName;
 
         try {
@@ -27,5 +29,14 @@ public class StartDefaultActivityCommand implements Command {
             error("Start fail... " + e1.getMessage());
             e1.printStackTrace();
         }
+    }
+
+    private String getDefaultActivityName(final AndroidFacet facet) {
+        return ApplicationManager.getApplication().runReadAction(new Computable<String>() {
+            @Override
+            public String compute() {
+                return AndroidUtils.getDefaultActivityName(facet.getManifest());
+            }
+        });
     }
 }
