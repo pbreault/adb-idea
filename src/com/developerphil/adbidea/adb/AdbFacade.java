@@ -38,6 +38,10 @@ public class AdbFacade {
         executeOnDevice(project, new ClearDataCommand());
     }
 
+    public static void clearDataAndRestart(Project project) {
+        executeOnDevice(project, new ClearDataAndRestartCommand());
+    }
+
     private static void executeOnDevice(Project project, Command runnable) {
         DeviceResult result = getDevice(project);
         if (result != null) {

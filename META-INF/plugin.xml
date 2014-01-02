@@ -70,6 +70,11 @@ Adds the following ADB commands to Android Studio and Intellij:
                     text="ADB Clear App Data"
                     description="Clears the private storage of the app">
             </action>
+            <action id="com.developerphil.adbidea.action.ClearDataAndRestartAction"
+                    class="com.developerphil.adbidea.action.ClearDataAndRestartAction"
+                    text="ADB Clear App Data and Restart"
+                    description="Clears the private storage of the app and restarts it">
+            </action>
             <add-to-group group-id="AndroidToolsGroup" relative-to-action="Android.EnableDdms" anchor="after"/>
         </group>
     </actions>
