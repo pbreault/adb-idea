@@ -41,7 +41,9 @@ public class AdbFacade {
     private static void executeOnDevice(Project project, Command runnable) {
         DeviceResult result = getDevice(project);
         if (result != null) {
-            runnable.run(project, result.device, result.facet, result.packageName);
+            for (IDevice device : result.devices) {
+                runnable.run(project, device, result.facet, result.packageName);
+            }
         } else {
             error("No Device found");
         }
@@ -57,7 +59,7 @@ public class AdbFacade {
             if (bridge.isConnected() && bridge.hasInitialDeviceList()) {
                 IDevice[] devices = bridge.getDevices();
                 if (devices.length == 1) {
-                    return new DeviceResult(devices[0], facet, packageName);
+                    return new DeviceResult(devices, facet, packageName);
                 } else if (devices.length > 1) {
                     return askUserForDevice(facet, packageName);
                 } else {
@@ -82,16 +84,16 @@ public class AdbFacade {
         }
 
         //TODO support sending to multiple devices at once
-        return new DeviceResult(selectedDevices[0], facet, packageName);
+        return new DeviceResult(selectedDevices, facet, packageName);
     }
 
     private static final class DeviceResult {
-        private final IDevice device;
+        private final IDevice[] devices;
         private final AndroidFacet facet;
         private final String packageName;
 
-        private DeviceResult(IDevice device, AndroidFacet facet, String packageName) {
-            this.device = device;
+        private DeviceResult(IDevice[] devices, AndroidFacet facet, String packageName) {
+            this.devices = devices;
             this.facet = facet;
             this.packageName = packageName;
         }
