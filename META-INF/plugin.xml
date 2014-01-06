@@ -75,7 +75,7 @@ Adds the following ADB commands to Android Studio and Intellij:
                     text="ADB Clear App Data and Restart"
                     description="Clears the private storage of the app and restarts it">
             </action>
-            <add-to-group group-id="AndroidToolsGroup" relative-to-action="Android.EnableDdms" anchor="after"/>
+            <add-to-group group-id="AndroidToolsGroup" anchor="last"/>
         </group>
     </actions>
 
