@@ -6,9 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
-* Created by pbreault on 10/6/13.
-*/
-public final class GenericReceiver extends MultiLineReceiver {
+ * Created by pbreault on 10/6/13.
+ */
+public class GenericReceiver extends MultiLineReceiver {
 
     private static final String SUCCESS_OUTPUT = "Success"; //$NON-NLS-1$
     private static final Pattern FAILURE_PATTERN = Pattern.compile("Failure\\s+\\[(.*)\\]"); //$NON-NLS-1$
@@ -39,6 +39,10 @@ public final class GenericReceiver extends MultiLineReceiver {
     @Override
     public boolean isCancelled() {
         return false;
+    }
+
+    public boolean isSuccess() {
+        return mErrorMessage == null;
     }
 
     public String getErrorMessage() {
