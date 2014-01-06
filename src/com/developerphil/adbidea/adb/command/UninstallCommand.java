@@ -15,8 +15,12 @@ public class UninstallCommand implements Command {
     @Override
     public void run(Project project, IDevice device, AndroidFacet facet, String packageName) {
         try {
-            device.uninstallPackage(packageName);
-            info(String.format("<b>%s</b> uninstalled on %s", packageName, device.getName()));
+            String errorCode = device.uninstallPackage(packageName);
+            if (errorCode == null) {
+                info(String.format("<b>%s</b> uninstalled on %s", packageName, device.getName()));
+            }else{
+                error(String.format("<b>%s</b> is not installed on %s", packageName, device.getName()));
+            }
         } catch (InstallException e1) {
             error("Uninstall fail... " + e1.getMessage());
             e1.printStackTrace();
