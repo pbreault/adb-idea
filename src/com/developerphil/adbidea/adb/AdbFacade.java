@@ -77,6 +77,7 @@ public class AdbFacade {
             AndroidFacet facet = facets.get(0);
             String packageName = facet.getManifest().getPackage().getXmlAttributeValue().getValue();
 
+            //TODO handle case where platform is not configured
             AndroidDebugBridge bridge = facet.getDebugBridge();
             if (bridge.isConnected() && bridge.hasInitialDeviceList()) {
                 IDevice[] devices = bridge.getDevices();

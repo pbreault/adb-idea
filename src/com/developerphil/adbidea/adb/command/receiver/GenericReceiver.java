@@ -1,13 +1,13 @@
-package com.developerphil.adbidea.adb;
+package com.developerphil.adbidea.adb.command.receiver;
 
 import com.android.ddmlib.MultiLineReceiver;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by pbreault on 10/6/13.
- */
 public class GenericReceiver extends MultiLineReceiver {
 
     private static final String SUCCESS_OUTPUT = "Success"; //$NON-NLS-1$
@@ -15,11 +15,15 @@ public class GenericReceiver extends MultiLineReceiver {
 
     private String mErrorMessage = null;
 
+    private List<String> adbOutputLines = new ArrayList<String>();
+
     public GenericReceiver() {
     }
 
     @Override
     public void processNewLines(String[] lines) {
+        this.adbOutputLines.addAll(Arrays.asList(lines));
+
         for (String line : lines) {
             if (!line.isEmpty()) {
                 if (line.startsWith(SUCCESS_OUTPUT)) {
@@ -39,6 +43,10 @@ public class GenericReceiver extends MultiLineReceiver {
     @Override
     public boolean isCancelled() {
         return false;
+    }
+
+    public List<String> getAdbOutputLines() {
+        return adbOutputLines;
     }
 
     public boolean isSuccess() {

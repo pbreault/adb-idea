@@ -6,13 +6,9 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created by pbreault on 1/5/14.
- */
-public class StartActivityReceiverTest {
+public class StartDefaultActivityCommandTest {
 
-
-    public static final String[] TRAILING_EMPTY_LINE = new String[]{""};
+    private static final String[] TRAILING_EMPTY_LINE = new String[]{""};
 
     @Test
     public void testReceiverSuccess() throws Exception {

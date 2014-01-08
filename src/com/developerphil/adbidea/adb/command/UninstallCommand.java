@@ -9,8 +9,8 @@ import static com.developerphil.adbidea.ui.NotificationHelper.error;
 import static com.developerphil.adbidea.ui.NotificationHelper.info;
 
 /**
-* Created by pbreault on 1/2/14.
-*/
+ * Created by pbreault on 1/2/14.
+ */
 public class UninstallCommand implements Command {
     @Override
     public void run(Project project, IDevice device, AndroidFacet facet, String packageName) {
@@ -18,7 +18,7 @@ public class UninstallCommand implements Command {
             String errorCode = device.uninstallPackage(packageName);
             if (errorCode == null) {
                 info(String.format("<b>%s</b> uninstalled on %s", packageName, device.getName()));
-            }else{
+            } else {
                 error(String.format("<b>%s</b> is not installed on %s", packageName, device.getName()));
             }
         } catch (InstallException e1) {

@@ -1,7 +1,7 @@
 package com.developerphil.adbidea.adb.command;
 
 import com.android.ddmlib.IDevice;
-import com.developerphil.adbidea.adb.GenericReceiver;
+import com.developerphil.adbidea.adb.command.receiver.GenericReceiver;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.android.facet.AndroidFacet;
 
