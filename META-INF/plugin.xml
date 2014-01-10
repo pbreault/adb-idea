@@ -1,8 +1,8 @@
 <idea-plugin version="3">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>0.5</version>
-    <!--<vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>-->
+    <version>0.8</version>
+    <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
     <description><![CDATA[
 Adds the following ADB commands to Android Studio and Intellij:
@@ -12,12 +12,11 @@ Adds the following ADB commands to Android Studio and Intellij:
     <li>ADB Start App</li>
     <li>ADB Restart App</li>
     <li>ADB Clear App Data</li>
+    <li>ADB Clear App Data and Restart</li>
 </ul>
 ]]>
     </description>
 
-    <depends>com.intellij.modules.platform</depends>
-    <depends>org.jetbrains.android</depends>
 
     <!--<change-notes><![CDATA[-->
     <!--Add change notes here.<br>-->
@@ -25,22 +24,10 @@ Adds the following ADB commands to Android Studio and Intellij:
     <!--]]>-->
     <!--</change-notes>-->
 
-    <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
     <idea-version since-build="107.105"/>
 
-    <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
-
-    <!--<application-components>-->
-    <!-- Add your application components here -->
-    <!--</application-components>-->
-
-    <!--<project-components>-->
-    <!-- Add your project components here -->
-    <!--</project-components>-->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.android</depends>
 
     <actions>
         <group id="AdbIdea" text="_ADB Commands" description="ADB Commands" popup="true">
@@ -78,8 +65,4 @@ Adds the following ADB commands to Android Studio and Intellij:
             <add-to-group group-id="AndroidToolsGroup" anchor="last"/>
         </group>
     </actions>
-
-    <!--<extensions defaultExtensionNs="com.intellij">-->
-    <!-- Add your extensions here -->
-    <!--</extensions>-->
 </idea-plugin>
