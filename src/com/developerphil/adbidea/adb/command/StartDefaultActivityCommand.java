@@ -17,12 +17,9 @@ import java.util.concurrent.TimeUnit;
 import static com.developerphil.adbidea.ui.NotificationHelper.error;
 import static com.developerphil.adbidea.ui.NotificationHelper.info;
 
-/**
- * Created by pbreault on 1/2/14.
- */
 public class StartDefaultActivityCommand implements Command {
     @Override
-    public void run(Project project, IDevice device, AndroidFacet facet, String packageName) {
+    public boolean run(Project project, IDevice device, AndroidFacet facet, String packageName) {
         String defaultActivityName = getDefaultActivityName(facet);
         String component = packageName + "/" + defaultActivityName;
 
@@ -31,13 +28,15 @@ public class StartDefaultActivityCommand implements Command {
             device.executeShellCommand("am start " + component, receiver, 5L, TimeUnit.MINUTES);
             if (receiver.isSuccess()) {
                 info(String.format("<b>%s</b> started on %s", packageName, device.getName()));
+                return true;
             } else {
                 error(String.format("<b>%s</b> could not bet started on %s. \n\n<b>ADB Output:</b> \n%s", packageName, device.getName(), receiver.getMessage()));
             }
-        } catch (Exception e1) {
-            error("Start fail... " + e1.getMessage());
-            e1.printStackTrace();
+        } catch (Exception e) {
+            error("Start fail... " + e.getMessage());
         }
+
+        return false;
     }
 
     private String getDefaultActivityName(final AndroidFacet facet) {

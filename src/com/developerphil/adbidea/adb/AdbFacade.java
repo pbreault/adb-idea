@@ -4,6 +4,7 @@ import com.android.ddmlib.AndroidDebugBridge;
 import com.android.ddmlib.IDevice;
 import com.developerphil.adbidea.adb.command.*;
 import com.developerphil.adbidea.ui.DeviceChooserDialog;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import org.jetbrains.android.facet.AndroidFacet;
@@ -12,24 +13,12 @@ import org.jetbrains.android.util.AndroidUtils;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.developerphil.adbidea.ui.NotificationHelper.error;
 
-/**
- * Created by pbreault on 10/6/13.
- */
 public class AdbFacade {
 
-    private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool(new ThreadFactory() {
-        private final AtomicInteger counter = new AtomicInteger();
-
-        @Override
-        public Thread newThread(Runnable runnable) {
-            return new Thread(runnable, "ADB_IDEA#" + counter.incrementAndGet());
-        }
-    });
+    private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool(new ThreadFactoryBuilder().setNameFormat("AdbIdea-%d").build());
 
     public static void uninstall(Project project) {
         executeOnDevice(project, new UninstallCommand());
