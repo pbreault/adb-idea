@@ -1,7 +1,7 @@
 <idea-plugin version="3">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>0.5</version>
+    <version>0.8</version>
     <!--<vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>-->
 
     <description><![CDATA[
@@ -12,6 +12,7 @@ Adds the following ADB commands to Android Studio and Intellij:
     <li>ADB Start App</li>
     <li>ADB Restart App</li>
     <li>ADB Clear App Data</li>
+    <li>ADB Clear App Data and Restart</li>
 </ul>
 ]]>
     </description>
