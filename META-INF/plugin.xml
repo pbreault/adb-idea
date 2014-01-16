@@ -1,7 +1,7 @@
 <idea-plugin version="3">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>0.8</version>
+    <version>1.0.0</version>
     <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
     <description><![CDATA[
@@ -12,8 +12,14 @@ Adds the following ADB commands to Android Studio and Intellij:
     <li>ADB Start App</li>
     <li>ADB Restart App</li>
     <li>ADB Clear App Data</li>
-    <li>ADB Clear App Data and Restart</li>
+    <li>ADB Clear App Data and Restart</
 </ul>
+<br />
+There are two main ways to invoke a command:
+<ol>
+    <li>Through the Tools->Android->ADB Idea menu</li>
+    <li>By searching for "ADB" in "Find Actions" (osx: cmd+shift+a, windows/linux: ctrl+shift+a)</li>
+</ol>
 ]]>
     </description>
 
@@ -30,7 +36,7 @@ Adds the following ADB commands to Android Studio and Intellij:
     <depends>org.jetbrains.android</depends>
 
     <actions>
-        <group id="AdbIdea" text="_ADB Commands" description="ADB Commands" popup="true">
+        <group id="AdbIdea" text="_ADB Idea" description="ADB Idea" popup="true">
             <action id="com.developerphil.adbidea.action.UninstallAction"
                     class="com.developerphil.adbidea.action.UninstallAction"
                     text="ADB Uninstall App"
@@ -62,7 +68,7 @@ Adds the following ADB commands to Android Studio and Intellij:
                     text="ADB Clear App Data and Restart"
                     description="Clears the private storage of the app and restarts it">
             </action>
-            <add-to-group group-id="AndroidToolsGroup" anchor="last"/>
+            <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
         </group>
     </actions>
 </idea-plugin>
