@@ -1,4 +1,4 @@
-<idea-plugin version="3">
+<idea-plugin version="3" url="https://github.com/pbreault/adb-idea">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
     <version>1.0.0</version>
