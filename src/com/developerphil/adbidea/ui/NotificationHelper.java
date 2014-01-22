@@ -4,9 +4,6 @@ import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
 
-/**
- * Created by pbreault on 1/2/14.
- */
 public class NotificationHelper {
     public static void info(String message) {
         sendNotification(message, NotificationType.INFORMATION);

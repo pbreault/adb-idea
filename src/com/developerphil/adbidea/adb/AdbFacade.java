@@ -4,6 +4,7 @@ import com.android.ddmlib.AndroidDebugBridge;
 import com.android.ddmlib.IDevice;
 import com.developerphil.adbidea.adb.command.*;
 import com.developerphil.adbidea.ui.DeviceChooserDialog;
+import com.developerphil.adbidea.ui.ModuleChooserDialogHelper;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
@@ -63,8 +64,19 @@ public class AdbFacade {
     private static DeviceResult getDevice(Project project) {
         List<AndroidFacet> facets = AndroidUtils.getApplicationFacets(project);
         if (!facets.isEmpty()) {
-            AndroidFacet facet = facets.get(0);
+            AndroidFacet facet;
+            if (facets.size() > 1) {
+                facet = ModuleChooserDialogHelper.showDialogForFacets(project, facets);
+                if (facet == null) {
+                    return null;
+                }
+            } else {
+                facet = facets.get(0);
+            }
             String packageName = facet.getManifest().getPackage().getXmlAttributeValue().getValue();
+
+            //TODO handle multi modules ( facet.getModule().getName() )
+
 
             //TODO handle case where platform is not configured
             AndroidDebugBridge bridge = facet.getDebugBridge();
