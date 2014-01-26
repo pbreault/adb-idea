@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="support-v4-19.0.1">
+    <CLASSES>
+      <root url="jar://$ANDROID_HOME$/extras/android/m2repository/com/android/support/support-v4/19.0.1/support-v4-19.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

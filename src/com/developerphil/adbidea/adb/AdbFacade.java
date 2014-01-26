@@ -73,10 +73,8 @@ public class AdbFacade {
             } else {
                 facet = facets.get(0);
             }
-            String packageName = facet.getManifest().getPackage().getXmlAttributeValue().getValue();
 
-            //TODO handle multi modules ( facet.getModule().getName() )
-
+            String packageName = facet.getAndroidModuleInfo().getPackage();
 
             //TODO handle case where platform is not configured
             AndroidDebugBridge bridge = facet.getDebugBridge();
