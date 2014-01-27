@@ -76,8 +76,12 @@ public class AdbFacade {
 
             String packageName = facet.getAndroidModuleInfo().getPackage();
 
-            //TODO handle case where platform is not configured
             AndroidDebugBridge bridge = facet.getDebugBridge();
+            if (bridge == null) {
+                error("No platform configured");
+                return null;
+            }
+
             if (bridge.isConnected() && bridge.hasInitialDeviceList()) {
                 IDevice[] devices = bridge.getDevices();
                 if (devices.length == 1) {
@@ -105,7 +109,6 @@ public class AdbFacade {
             return null;
         }
 
-        //TODO support sending to multiple devices at once
         return new DeviceResult(selectedDevices, facet, packageName);
     }
 
