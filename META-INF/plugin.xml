@@ -1,34 +1,40 @@
 <idea-plugin version="3" url="https://github.com/pbreault/adb-idea">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
     <description><![CDATA[
-Adds the following ADB commands to Android Studio and Intellij:
-<ul>
-    <li>ADB Uninstall App</li>
-    <li>ADB Kill App</li>
-    <li>ADB Start App</li>
-    <li>ADB Restart App</li>
-    <li>ADB Clear App Data</li>
-    <li>ADB Clear App Data and Restart</
-</ul>
-<br />
-There are two main ways to invoke a command:
-<ol>
-    <li>Through the Tools->Android->ADB Idea menu</li>
-    <li>By searching for "ADB" in "Find Actions" (osx: cmd+shift+a, windows/linux: ctrl+shift+a)</li>
-</ol>
-]]>
-    </description>
+        <p>
+
+        <p>
+            Adds the following ADB commands to Android Studio and Intellij:
+        <ul>
+            <li>ADB Uninstall App</li>
+            <li>ADB Kill App</li>
+            <li>ADB Start App</li>
+            <li>ADB Restart App</li>
+            <li>ADB Clear App Data</li>
+            <li>ADB Clear App Data and Restart</li>
+        </ul>
+        </p>
+        <p>
+            There are two basic ways to invoke a command:
+        <ol>
+            <li>Through the Tools->Android->ADB Idea menu</li>
+            <li>By searching for "ADB" in "Find Actions" (osx: cmd+shift+a, windows/linux: ctrl+shift+a)</li>
+        </ol>
+        </p>
+        ]]></description>
 
 
-    <!--<change-notes><![CDATA[-->
-    <!--Add change notes here.<br>-->
-    <!--<small>most HTML tags may be used</small>-->
-    <!--]]>-->
-    <!--</change-notes>-->
+    <change-notes><![CDATA[
+        <ul>
+            <li>Now support Build-Types and flavors in Gradle projects</li>
+            <li>Now support projects with more than one application module</li>
+        </ul>
+        ]]>
+    </change-notes>
 
     <idea-version since-build="107.105"/>
 
