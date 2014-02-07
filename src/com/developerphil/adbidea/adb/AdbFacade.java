@@ -5,6 +5,7 @@ import com.android.ddmlib.IDevice;
 import com.developerphil.adbidea.adb.command.*;
 import com.developerphil.adbidea.ui.DeviceChooserDialog;
 import com.developerphil.adbidea.ui.ModuleChooserDialogHelper;
+import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
@@ -62,7 +63,7 @@ public class AdbFacade {
     }
 
     private static DeviceResult getDevice(Project project) {
-        List<AndroidFacet> facets = AndroidUtils.getApplicationFacets(project);
+        List<AndroidFacet> facets = getApplicationFacets(project);
         if (!facets.isEmpty()) {
             AndroidFacet facet;
             if (facets.size() > 1) {
@@ -94,6 +95,24 @@ public class AdbFacade {
             }
         }
         return null;
+    }
+
+    private static List<AndroidFacet> getApplicationFacets(Project project) {
+
+        List<AndroidFacet> facets = Lists.newArrayList();
+        for (AndroidFacet facet : AndroidUtils.getApplicationFacets(project)) {
+            if (!isTestProject(facet)) {
+                facets.add(facet);
+            }
+        }
+
+        return facets;
+    }
+
+    private static boolean isTestProject(AndroidFacet facet) {
+        return facet.getManifest() != null
+                && facet.getManifest().getInstrumentations() != null
+                && !facet.getManifest().getInstrumentations().isEmpty();
     }
 
     private static DeviceResult askUserForDevice(AndroidFacet facet, String packageName) {
