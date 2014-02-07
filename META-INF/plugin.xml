@@ -1,14 +1,11 @@
 <idea-plugin version="3" url="https://github.com/pbreault/adb-idea">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
     <description><![CDATA[
-        <p>
-
-        <p>
-            Adds the following ADB commands to Android Studio and Intellij:
+        Adds the following ADB commands to Android Studio and Intellij:<br />
         <ul>
             <li>ADB Uninstall App</li>
             <li>ADB Kill App</li>
@@ -17,18 +14,22 @@
             <li>ADB Clear App Data</li>
             <li>ADB Clear App Data and Restart</li>
         </ul>
-        </p>
-        <p>
-            There are two basic ways to invoke a command:
-        <ol>
+        <br />
+        There are two basic ways to invoke a command:
+        <ul>
             <li>Through the Tools->Android->ADB Idea menu</li>
             <li>By searching for "ADB" in "Find Actions" (osx: cmd+shift+a, windows/linux: ctrl+shift+a)</li>
-        </ol>
-        </p>
+        </ul>
         ]]></description>
 
 
     <change-notes><![CDATA[
+        <b>1.1.1</b>
+        <ul>
+            <li>BUGFIX: Fix Crash on Android Studio 0.4.4</li>
+            <li>BUGFIX: Don't show test projects in the module selection dialog</li>
+        </ul>
+        <b>1.1.0</b>
         <ul>
             <li>Now support Build-Types and flavors in Gradle projects</li>
             <li>Now support projects with more than one application module</li>
