@@ -7,8 +7,12 @@ import com.google.common.base.Strings;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Computable;
+import com.intellij.psi.PsiClass;
+import org.jetbrains.android.dom.AndroidDomUtil;
+import org.jetbrains.android.dom.manifest.*;
 import org.jetbrains.android.facet.AndroidFacet;
-import org.jetbrains.android.util.AndroidUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +22,9 @@ import static com.developerphil.adbidea.ui.NotificationHelper.error;
 import static com.developerphil.adbidea.ui.NotificationHelper.info;
 
 public class StartDefaultActivityCommand implements Command {
+    public static final String LAUNCH_ACTION_NAME = "android.intent.action.MAIN";
+    public static final String LAUNCH_CATEGORY_NAME = "android.intent.category.LAUNCHER";
+
     @Override
     public boolean run(Project project, IDevice device, AndroidFacet facet, String packageName) {
         String defaultActivityName = getDefaultActivityName(facet);
@@ -43,7 +50,7 @@ public class StartDefaultActivityCommand implements Command {
         return ApplicationManager.getApplication().runReadAction(new Computable<String>() {
             @Override
             public String compute() {
-                return AndroidUtils.getDefaultActivityName(facet.getManifest());
+                return getDefaultLauncherActivityName(facet.getManifest());
             }
         });
     }
@@ -80,8 +87,34 @@ public class StartDefaultActivityCommand implements Command {
         public boolean isSuccess() {
             return currentLines.size() > 0 && currentLines.size() < 3;
         }
-
     }
 
+    // copied from AOSP since it changed between 0.4.3 and 0.4.4
+    @Nullable
+    public static String getDefaultLauncherActivityName(@NotNull Manifest manifest) {
+        Application application = manifest.getApplication();
+        if (application == null) {
+            return null;
+        }
+
+        for (Activity activity : application.getActivities()) {
+            for (IntentFilter filter : activity.getIntentFilters()) {
+                if (AndroidDomUtil.containsAction(filter, LAUNCH_ACTION_NAME) && AndroidDomUtil.containsCategory(filter, LAUNCH_CATEGORY_NAME)) {
+                    PsiClass c = activity.getActivityClass().getValue();
+                    return c != null ? c.getQualifiedName() : null;
+                }
+            }
+        }
+
+        for (ActivityAlias alias : application.getActivityAliass()) {
+            for (IntentFilter filter : alias.getIntentFilters()) {
+                if (AndroidDomUtil.containsAction(filter, LAUNCH_ACTION_NAME) && AndroidDomUtil.containsCategory(filter, LAUNCH_CATEGORY_NAME)) {
+                    return alias.getName().getStringValue();
+                }
+            }
+        }
+
+        return null;
+    }
 
 }

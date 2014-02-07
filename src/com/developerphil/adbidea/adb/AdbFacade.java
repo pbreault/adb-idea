@@ -74,8 +74,7 @@ public class AdbFacade {
             } else {
                 facet = facets.get(0);
             }
-
-            String packageName = facet.getAndroidModuleInfo().getPackage();
+            String packageName = AdbUtil.computePackageName(facet);
 
             AndroidDebugBridge bridge = facet.getDebugBridge();
             if (bridge == null) {
