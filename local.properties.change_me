@@ -1,0 +1,9 @@
+# Path to the home of of the Android Studio app that was compiled from source
+idea.home=aosp_repo/tools/idea/out/artifacts/Android Studio.app
+
+# Path to the bin directory of the jdk
+jdk.bin=/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/bin
+
+# Optional path to the plugin directory of your local instance of intellij/android studio
+# This is used with the "ant deploy" to remove the previous plugin and add the current one
+deploy.plugin.dir=~/Library/Application Support/AndroidStudioPreview

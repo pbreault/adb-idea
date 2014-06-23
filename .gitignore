@@ -9,3 +9,4 @@ tmp/
 gen
 local.properties
 adb*.jar
+dependencies

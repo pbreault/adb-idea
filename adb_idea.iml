@@ -9,6 +9,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="TEST" name="org.junit:com.springsource.org.junit:4.11.0" level="project" />
   </component>
 </module>
 
