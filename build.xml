@@ -225,6 +225,7 @@
 
     <path id="adb_idea.module.production.classpath">
         <path refid="${module.jdk.classpath.adb_idea}"/>
+        <path refid="adb_idea.module.classpath" />
     </path>
 
     <path id="adb_idea.runtime.production.module.classpath">
@@ -234,11 +235,15 @@
     <path id="adb_idea.module.classpath">
         <path refid="${module.jdk.classpath.adb_idea}"/>
         <pathelement location="${adb_idea.output.dir}"/>
+        <fileset dir="lib/main">
+            <include name="**/*.jar" />
+            <exclude name="**/*-sources.jar" />
+        </fileset>
     </path>
 
     <path id="adb_idea.module.test.classpath">
         <path refid="adb_idea.module.classpath"/>
-        <fileset dir="lib">
+        <fileset dir="lib/test">
               <include name="**/*.jar" />
               <exclude name="**/*-sources.jar" />
         </fileset>

@@ -4,6 +4,7 @@ import com.android.ddmlib.IDevice;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.util.Disposer;
 import org.jetbrains.android.facet.AndroidFacet;
 import org.jetbrains.android.run.DeviceChooser;
@@ -11,6 +12,7 @@ import org.jetbrains.android.run.DeviceChooserListener;
 import org.jetbrains.android.util.AndroidBundle;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+import org.joor.Reflect;
 
 import javax.swing.*;
 
@@ -24,7 +26,7 @@ public class DeviceChooserDialog extends DialogWrapper {
     @NonNls
     private static final String SELECTED_SERIALS_PROPERTY = DeviceChooserDialog.class.getCanonicalName() + "-SELECTED_DEVICES";
 
-    public DeviceChooserDialog(@NotNull final AndroidFacet facet, boolean multipleSelection) {
+    public DeviceChooserDialog(@NotNull final AndroidFacet facet) {
         super(facet.getModule().getProject(), true);
         setTitle(AndroidBundle.message("choose.device.dialog.title"));
 
@@ -41,7 +43,7 @@ public class DeviceChooserDialog extends DialogWrapper {
 
         getOKAction().setEnabled(false);
 
-        myDeviceChooser = new DeviceChooser(multipleSelection, getOKAction(), facet, null);
+        myDeviceChooser = newDeviceChooser(facet);
         Disposer.register(myDisposable, myDeviceChooser);
         myDeviceChooser.addListener(new DeviceChooserListener() {
             @Override
@@ -59,6 +61,31 @@ public class DeviceChooserDialog extends DialogWrapper {
         updateEnabled();
     }
 
+    private DeviceChooser newDeviceChooser(AndroidFacet facet) {
+        try {
+            return buildPostZeroDotSixDeviceChooser(facet);
+        } catch (NoSuchMethodError e) {
+            // that means that we are probably on a preview version of android studio or in intellij 13
+            return buildPreZeroDotSixDeviceChooser(facet);
+        }
+    }
+
+    // device chooser before android studio 0.6
+    private DeviceChooser buildPreZeroDotSixDeviceChooser(AndroidFacet facet) {
+        return Reflect.on(DeviceChooser.class)
+                .create(true, getOKAction(), facet, new Condition<IDevice>() {
+                    @Override
+                    public boolean value(IDevice iDevice) {
+                        return true;
+                    }
+                }).get();
+    }
+
+    // device chooser after android studio 0.6
+    private DeviceChooser buildPostZeroDotSixDeviceChooser(AndroidFacet facet) {
+        return new DeviceChooser(true, getOKAction(), facet, facet.getConfiguration().getAndroidTarget(), null);
+    }
+
     private void updateOkButton() {
         getOKAction().setEnabled(getSelectedDevices().length > 0);
     }
@@ -69,7 +96,12 @@ public class DeviceChooserDialog extends DialogWrapper {
 
     @Override
     public JComponent getPreferredFocusedComponent() {
-        return myDeviceChooser.getDeviceTable();
+        try {
+            return myDeviceChooser.getPreferredFocusComponent();
+        } catch (NoSuchMethodError e) {
+            // that means that we are probably on a preview version of android studio or in intellij 13
+            return Reflect.on(myDeviceChooser).call("getDeviceTable").get();
+        }
     }
 
     @Override

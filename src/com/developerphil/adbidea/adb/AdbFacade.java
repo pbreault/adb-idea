@@ -115,7 +115,7 @@ public class AdbFacade {
     }
 
     private static DeviceResult askUserForDevice(AndroidFacet facet, String packageName) {
-        final DeviceChooserDialog chooser = new DeviceChooserDialog(facet, true);
+        final DeviceChooserDialog chooser = new DeviceChooserDialog(facet);
         chooser.show();
 
         if (chooser.getExitCode() != DialogWrapper.OK_EXIT_CODE) {

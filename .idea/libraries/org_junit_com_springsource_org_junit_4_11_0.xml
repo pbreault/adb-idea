@@ -2,11 +2,11 @@
   <library name="org.junit:com.springsource.org.junit:4.11.0" type="repository">
     <properties maven-id="org.junit:com.springsource.org.junit:4.11.0" />
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/com.springsource.org.junit-4.11.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/test/com.springsource.org.junit-4.11.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/lib/com.springsource.org.junit-4.11.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/test/com.springsource.org.junit-4.11.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
