@@ -10,6 +10,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import org.jetbrains.android.facet.AndroidFacet;
+import org.jetbrains.android.sdk.AndroidSdkUtils;
 import org.jetbrains.android.util.AndroidUtils;
 
 import java.util.List;
@@ -76,7 +77,7 @@ public class AdbFacade {
             }
             String packageName = AdbUtil.computePackageName(facet);
 
-            AndroidDebugBridge bridge = facet.getDebugBridge();
+            AndroidDebugBridge bridge = AndroidSdkUtils.getDebugBridge(project);
             if (bridge == null) {
                 error("No platform configured");
                 return null;
