@@ -30,6 +30,9 @@ import org.jetbrains.android.sdk.AndroidSdkUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
+import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -43,9 +46,11 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
     public static final String LAUNCH_CATEGORY_NAME = "android.intent.category.LAUNCHER";
     private ToolWindow androidToolWindow;
     private String prvPackageName;
+    private RunnerAndConfigurationSettings prvSettings;
+    private Project prvProject;
 
     @Override
-    public boolean run(Project project, IDevice device, AndroidFacet facet, String packageName) {
+    public boolean run(final Project project, final IDevice device, final AndroidFacet facet, final String packageName) {
         String defaultActivityName = getDefaultActivityName(facet);
         String component = packageName + "/" + defaultActivityName;
 
@@ -53,10 +58,10 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
             StartActivityReceiver receiver = new StartActivityReceiver();
             device.executeShellCommand("am start -D -n " + component, receiver, 5L, TimeUnit.MINUTES);
 
-            PropertiesComponent properties = PropertiesComponent.getInstance(project);
-
             boolean status = startDebugging(device, project, facet, packageName);
-            if (!status) return false;
+            if (!status) {
+                error(String.format("startDebugging returns false."));
+            }
 
             if (receiver.isSuccess()) {
                 info(String.format("<b>%s</b> started on %s", packageName, device.getName()));
@@ -144,7 +149,8 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
 
 
     private void closeOldSessionAndRun(String port, Project project) {
-        final String configurationName = String.format("Android Debugger (%s)", new Object[] { port });
+        final String configurationName = String.format("Android Debugger (%s)", new Object[]{port});
+        prvProject = project;
         Collection descriptors = ExecutionHelper.findRunningConsoleByTitle(project, new NotNullFunction() {
             @NotNull
             public Boolean fun(String title) {
@@ -188,15 +194,19 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
         }
 
         ConfigurationFactory factory = remoteConfigurationType.getFactory();
-        RunnerAndConfigurationSettings settings = RunManager.getInstance(project).createRunConfiguration(configurationName, factory);
+        prvSettings = RunManager.getInstance(project).createRunConfiguration(configurationName, factory);
 
-        RemoteConfiguration configuration = (RemoteConfiguration)settings.getConfiguration();
+        RemoteConfiguration configuration = (RemoteConfiguration)prvSettings.getConfiguration();
         configuration.HOST = "localhost";
         configuration.PORT = port;
         configuration.USE_SOCKET_TRANSPORT = true;
         configuration.SERVER_MODE = false;
 
-        ProgramRunnerUtil.executeConfiguration(project, settings, DefaultDebugExecutor.getDebugExecutorInstance());
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                ProgramRunnerUtil.executeConfiguration(prvProject, prvSettings, DefaultDebugExecutor.getDebugExecutorInstance());
+            }
+        });
     }
 
 
