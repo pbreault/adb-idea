@@ -30,10 +30,6 @@ import org.jetbrains.android.sdk.AndroidSdkUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
-import javax.swing.event.HyperlinkEvent;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -229,7 +225,6 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
                     androidToolWindow.activate(new Runnable() {
                         public void run() {
                             int count = androidToolWindow.getContentManager().getContentCount();
-                            info(String.format("ContentCount [%s]", count));
                             for (int i = 0; i < count; i++) {
                                 Content content = androidToolWindow.getContentManager().getContent(i);
                                 DevicePanel devicePanel = content == null ? null : (DevicePanel)content.getUserData(AndroidToolWindowFactory.DEVICES_PANEL_KEY);
@@ -243,6 +238,7 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
                                     break;
                                 }
                             }
+
                         }
                     }, false);
                 }
