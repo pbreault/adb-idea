@@ -45,9 +45,8 @@ import static com.developerphil.adbidea.ui.NotificationHelper.info;
 public class StartDefaultActivityCommandWithDebugger implements Command {
     public static final String LAUNCH_ACTION_NAME = "android.intent.action.MAIN";
     public static final String LAUNCH_CATEGORY_NAME = "android.intent.category.LAUNCHER";
-    //private MyDebugLauncher debugLauncher;
-    //private static Project prvProject;
-    //public ProgramRunner runner;
+    private ToolWindow androidToolWindow;
+    private String prvPackageName;
 
     @Override
     public boolean run(Project project, IDevice device, AndroidFacet facet, String packageName) {
@@ -149,7 +148,7 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
 
 
     private void closeOldSessionAndRun(String port, Project project) {
-        final String configurationName = getRunConfigurationName(port);
+        final String configurationName = String.format("Android Debugger (%s)", new Object[] { port });
         Collection descriptors = ExecutionHelper.findRunningConsoleByTitle(project, new NotNullFunction() {
             @NotNull
             public Boolean fun(String title) {
@@ -186,26 +185,6 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
             }
         }
 
-        runSession(port, project);
-    }
-
-
-    private void runSession(String port, Project project) {
-        RunnerAndConfigurationSettings settings = createRunConfiguration(project, port);
-        ProgramRunnerUtil.executeConfiguration(project, settings, DefaultDebugExecutor.getDebugExecutorInstance());
-    }
-
-
-    @NotNull
-    private static String getRunConfigurationName(String debugPort) {
-        String info = String.format("Android Debugger (%s)", new Object[] { debugPort });
-        if (info == null) throw new IllegalStateException(String.format("ERROR: parameters must not return null"));
-        return info;
-    }
-
-
-    @NotNull
-    private static RunnerAndConfigurationSettings createRunConfiguration(Project project, String debugPort) {
         RemoteConfigurationType remoteConfigurationType = RemoteConfigurationType.getInstance();
 
         if (remoteConfigurationType == null) {
@@ -213,22 +192,21 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
         }
 
         ConfigurationFactory factory = remoteConfigurationType.getFactory();
-        RunnerAndConfigurationSettings runSettings = RunManager.getInstance(project).createRunConfiguration(getRunConfigurationName(debugPort), factory);
+        RunnerAndConfigurationSettings settings = RunManager.getInstance(project).createRunConfiguration(configurationName, factory);
 
-        RemoteConfiguration configuration = (RemoteConfiguration)runSettings.getConfiguration();
-
+        RemoteConfiguration configuration = (RemoteConfiguration)settings.getConfiguration();
         configuration.HOST = "localhost";
-        configuration.PORT = debugPort;
+        configuration.PORT = port;
         configuration.USE_SOCKET_TRANSPORT = true;
         configuration.SERVER_MODE = false;
 
-        return runSettings;
+        ProgramRunnerUtil.executeConfiguration(project, settings, DefaultDebugExecutor.getDebugExecutorInstance());
     }
 
 
     private boolean startDebugging(final IDevice device, final Project project, final AndroidFacet facet, final String packageName) {
         if (device == null) throw new IllegalArgumentException(String.format("ERROR: startDebugging(): device == null"));
-
+        prvPackageName = packageName;
         info(String.format("Target device: " + device.getName(), ProcessOutputTypes.STDOUT));
         try {
             AndroidDebugBridge bridge = AndroidDebugBridge.getBridge();
@@ -247,18 +225,22 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
 
             ApplicationManager.getApplication().invokeLater(new Runnable() {
                 public void run() {
-                    final ToolWindow androidToolWindow = ToolWindowManager.getInstance(project).getToolWindow(AndroidToolWindowFactory.TOOL_WINDOW_ID);
+                    androidToolWindow = ToolWindowManager.getInstance(project).getToolWindow(AndroidToolWindowFactory.TOOL_WINDOW_ID);
                     androidToolWindow.activate(new Runnable() {
                         public void run() {
                             int count = androidToolWindow.getContentManager().getContentCount();
+                            info(String.format("ContentCount [%s]", count));
                             for (int i = 0; i < count; i++) {
                                 Content content = androidToolWindow.getContentManager().getContent(i);
                                 DevicePanel devicePanel = content == null ? null : (DevicePanel)content.getUserData(AndroidToolWindowFactory.DEVICES_PANEL_KEY);
                                 AndroidLogcatView logcatView = content == null ? null : (AndroidLogcatView)content.getUserData(AndroidLogcatView.ANDROID_LOGCAT_VIEW_KEY);
                                 if (devicePanel != null) {
                                     devicePanel.selectDevice(device);
-                                    if (logcatView == null) break;
-                                    logcatView.createAndSelectFilterByPackage(packageName); break;
+                                    if (logcatView == null) {
+                                        break;
+                                    }
+                                    logcatView.createAndSelectFilterByPackage(prvPackageName);
+                                    break;
                                 }
                             }
                         }
