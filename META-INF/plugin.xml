@@ -13,6 +13,9 @@
             <li>ADB Restart App</li>
             <li>ADB Clear App Data</li>
             <li>ADB Clear App Data and Restart</li>
+            <li>ADB Start App With Debugger</li>
+            <li>ADB Restart App With Debugger</li>
+            <li>ADB Clear App Data and Restart With Debugger</li>
         </ul>
         <br />
         There are two basic ways to invoke a command:
@@ -81,6 +84,23 @@
             <action id="com.developerphil.adbidea.action.ClearDataAndRestartAction"
                     class="com.developerphil.adbidea.action.ClearDataAndRestartAction"
                     text="ADB Clear App Data and Restart"
+                    description="Clears the private storage of the app and restarts it">
+            </action>
+
+            <!-- DEBUGGING ENABLED -->
+            <action id="com.developerphil.adbidea.action.StartWithDebuggerAction"
+                    class="com.developerphil.adbidea.action.StartWithDebuggerAction"
+                    text="ADB Start App With Debugger"
+                    description="Starts the current application">
+            </action>
+            <action id="com.developerphil.adbidea.action.RestartWithDebuggerAction"
+                    class="com.developerphil.adbidea.action.RestartWithDebuggerAction"
+                    text="ADB Restart App With Debugger"
+                    description="Restarts the current application">
+            </action>
+            <action id="com.developerphil.adbidea.action.ClearDataAndRestartWithDebuggerAction"
+                    class="com.developerphil.adbidea.action.ClearDataAndRestartWithDebuggerAction"
+                    text="ADB Clear App Data and Restart With Debugger"
                     description="Clears the private storage of the app and restarts it">
             </action>
             <add-to-group group-id="AndroidToolsGroup" anchor="first"/>

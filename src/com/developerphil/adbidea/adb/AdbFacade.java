@@ -47,6 +47,18 @@ public class AdbFacade {
         executeOnDevice(project, new ClearDataAndRestartCommand());
     }
 
+    public static void startDefaultActivityWithDebugger(Project project) {
+        executeOnDevice(project, new StartDefaultActivityCommandWithDebugger());
+    }
+
+    public static void restartDefaultActivityWithDebugger(Project project) {
+        executeOnDevice(project, new RestartPackageCommandWithDebugger());
+    }
+
+    public static void clearDataAndRestartWithDebugger(Project project) {
+        executeOnDevice(project, new ClearDataAndRestartCommandWithDebugger());
+    }
+
     private static void executeOnDevice(final Project project, final Command runnable) {
         final DeviceResult result = getDevice(project);
         if (result != null) {
