@@ -221,10 +221,51 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
                 return false;
             }
 
-            Client client = device.getClient(packageName);
-            if (client == null) {
-                error(String.format("ERROR: getClient() == null"));
+            if (device.isOnline()) {
+                info(String.format("INFO: isOnline"));
+            }
+
+            if (device.isOffline()) {
+                info(String.format("INFO: isOffline"));
+            }
+
+            if (device.isEmulator()) {
+                info(String.format("INFO: isEmulator"));
+            }
+
+            if (device.isBootLoader()) {
+                info(String.format("INFO: isBootLoader"));
+            }
+
+            Client clients[];
+            Client client = null;
+            if (device.hasClients()) {
+                info(String.format("INFO: hasClients"));
+                clients = device.getClients();
+                info(String.format("INFO: found %d clients", clients.length));
+                for (int i=0; i<clients.length; i++) {
+                    if (packageName.equalsIgnoreCase(clients[i].getClientData().getClientDescription())) {
+                        info(String.format("INFO: found package client"));
+                        client = clients[i];
+                        break;
+                    }
+                }
+            } else {
+                error(String.format("ERROR: hasClients == false"));
                 return false;
+            }
+
+            if (client == null) {
+                client = device.getClient(packageName);
+            }
+
+            if (client == null) {
+                error(String.format("ERROR: client == null"));
+                return false;
+            }
+
+            if (client.isDebuggerAttached()) {
+                info(String.format("INFO: isDebuggerAttached[TRUE]"));
             }
             String port = Integer.toString(client.getDebuggerListenPort());
             closeOldSessionAndRun(port, project);
