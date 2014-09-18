@@ -59,32 +59,38 @@
                     class="com.developerphil.adbidea.action.UninstallAction"
                     text="ADB Uninstall App"
                     description="Uninstalls the current application">
+                    <keyboard-shortcut first-keystroke="control alt 0" keymap="$default"/>
             </action>
 
             <action id="com.developerphil.adbidea.action.KillAction"
                     class="com.developerphil.adbidea.action.KillAction"
                     text="ADB Kill App"
                     description="Kills the current application">
+                    <keyboard-shortcut first-keystroke="control alt 1" keymap="$default"/>
             </action>
             <action id="com.developerphil.adbidea.action.StartAction"
                     class="com.developerphil.adbidea.action.StartAction"
                     text="ADB Start App"
                     description="Starts the current application">
+                    <keyboard-shortcut first-keystroke="control alt 2" keymap="$default"/>
             </action>
             <action id="com.developerphil.adbidea.action.RestartAction"
                     class="com.developerphil.adbidea.action.RestartAction"
                     text="ADB Restart App"
                     description="Restarts the current application">
+                    <keyboard-shortcut first-keystroke="control alt 3" keymap="$default"/>
             </action>
             <action id="com.developerphil.adbidea.action.ClearDataAction"
                     class="com.developerphil.adbidea.action.ClearDataAction"
                     text="ADB Clear App Data"
                     description="Clears the private storage of the app">
+                    <keyboard-shortcut first-keystroke="control alt 4" keymap="$default"/>
             </action>
             <action id="com.developerphil.adbidea.action.ClearDataAndRestartAction"
                     class="com.developerphil.adbidea.action.ClearDataAndRestartAction"
                     text="ADB Clear App Data and Restart"
                     description="Clears the private storage of the app and restarts it">
+                    <keyboard-shortcut first-keystroke="control alt 5" keymap="$default"/>
             </action>
 
             <!-- DEBUGGING ENABLED -->
@@ -92,18 +98,22 @@
                     class="com.developerphil.adbidea.action.StartWithDebuggerAction"
                     text="ADB Start App With Debugger"
                     description="Starts the current application">
+                    <keyboard-shortcut first-keystroke="control alt 6" keymap="$default"/>
             </action>
             <action id="com.developerphil.adbidea.action.RestartWithDebuggerAction"
                     class="com.developerphil.adbidea.action.RestartWithDebuggerAction"
                     text="ADB Restart App With Debugger"
                     description="Restarts the current application">
+                    <keyboard-shortcut first-keystroke="control alt 7" keymap="$default"/>
             </action>
             <action id="com.developerphil.adbidea.action.ClearDataAndRestartWithDebuggerAction"
                     class="com.developerphil.adbidea.action.ClearDataAndRestartWithDebuggerAction"
                     text="ADB Clear App Data and Restart With Debugger"
                     description="Clears the private storage of the app and restarts it">
+                    <keyboard-shortcut first-keystroke="control alt 8" keymap="$default"/>
             </action>
-            <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
+            <!-- <add-to-group group-id="AndroidToolsGroup" anchor="first"/> -->
+            <add-to-group group-id="MainMenu" relative-to-action="ToolsMenu" anchor="after"/>
         </group>
     </actions>
 </idea-plugin>
