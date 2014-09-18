@@ -115,5 +115,29 @@
             <!-- <add-to-group group-id="AndroidToolsGroup" anchor="first"/> -->
             <add-to-group group-id="MainMenu" relative-to-action="ToolsMenu" anchor="after"/>
         </group>
+        <action id="ADBIdeaKillApp"
+                class="com.developerphil.adbidea.action.KillAction"
+                text="Adb Idea Kill App"
+                icon="/icons/circle_stop.png"
+                description="Adb Idea Kill App">
+            <add-to-group group-id="ToolbarRunGroup" anchor="after" relative-to-action="AndroidConnectDebuggerAction"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt 1"/>
+        </action>
+        <action id="ADBIdeaDebugApp"
+                class="com.developerphil.adbidea.action.RestartWithDebuggerAction"
+                text="Adb Idea Debug App"
+                icon="/icons/circle_debug.png"
+                description="Adb Idea Debug App">
+            <add-to-group group-id="ToolbarRunGroup" anchor="after" relative-to-action="AndroidConnectDebuggerAction"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt 7"/>
+        </action>
+        <action id="ADBIdeaRunApp"
+                class="com.developerphil.adbidea.action.RestartAction"
+                text="Adb Idea Run App"
+                icon="/icons/circle_run.png"
+                description="Adb Idea Debug App">
+            <add-to-group group-id="ToolbarRunGroup" anchor="after" relative-to-action="AndroidConnectDebuggerAction"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt 3"/>
+        </action>
     </actions>
 </idea-plugin>
