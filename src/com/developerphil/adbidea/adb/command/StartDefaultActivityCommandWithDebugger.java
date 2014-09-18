@@ -2,6 +2,7 @@ package com.developerphil.adbidea.adb.command;
 
 import com.android.ddmlib.*;
 import com.android.tools.idea.ddms.DevicePanel;
+import com.developerphil.adbidea.adb.command.receiver.GenericReceiver;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.intellij.execution.*;
@@ -61,11 +62,15 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
             boolean status = startDebugging(device, project, facet, packageName);
             if (!status) {
                 error(String.format("startDebugging returns false."));
+                device.executeShellCommand("am force-stop " + packageName, new GenericReceiver(), 5L, TimeUnit.MINUTES);
+                info(String.format("<b>%s</b> forced-stop on %s", packageName, device.getName()));
             }
 
             if (receiver.isSuccess()) {
-                info(String.format("<b>%s</b> started on %s", packageName, device.getName()));
-                return true;
+                if (status) {
+                    info(String.format("<b>%s</b> started on %s", packageName, device.getName()));
+                    return true;
+                }
             } else {
                 error(String.format("<b>%s</b> could not bet started on %s. \n\n<b>ADB Output:</b> \n%s", packageName, device.getName(), receiver.getMessage()));
             }
