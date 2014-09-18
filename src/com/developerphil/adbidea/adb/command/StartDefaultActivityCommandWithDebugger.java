@@ -1,10 +1,12 @@
 package com.developerphil.adbidea.adb.command;
 
 import com.android.ddmlib.*;
+import com.android.tools.idea.ddms.DeviceContext;
 import com.android.tools.idea.ddms.DevicePanel;
 import com.developerphil.adbidea.adb.command.receiver.GenericReceiver;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
+import com.intellij.ProjectTopics;
 import com.intellij.execution.*;
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.executors.DefaultDebugExecutor;
@@ -13,20 +15,33 @@ import com.intellij.execution.process.ProcessOutputTypes;
 import com.intellij.execution.remote.RemoteConfiguration;
 import com.intellij.execution.remote.RemoteConfigurationType;
 import com.intellij.execution.ui.*;
+import com.intellij.execution.ui.layout.PlaceInGrid;
+import com.intellij.facet.ProjectFacetManager;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ModuleRootAdapter;
+import com.intellij.openapi.roots.ModuleRootEvent;
+import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.Computable;
+import com.intellij.openapi.util.Key;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowManager;
+import com.intellij.openapi.wm.ex.ToolWindowManagerAdapter;
+import com.intellij.openapi.wm.ex.ToolWindowManagerEx;
 import com.intellij.psi.PsiClass;
 import com.intellij.ui.content.Content;
+import com.intellij.ui.content.ContentManager;
 import com.intellij.util.NotNullFunction;
+import com.intellij.util.messages.MessageBusConnection;
+import icons.AndroidIcons;
 import org.jetbrains.android.dom.AndroidDomUtil;
 import org.jetbrains.android.dom.manifest.*;
 import org.jetbrains.android.facet.AndroidFacet;
+import org.jetbrains.android.facet.AndroidFacetConfiguration;
 import org.jetbrains.android.logcat.AndroidLogcatView;
 import org.jetbrains.android.logcat.AndroidToolWindowFactory;
+import org.jetbrains.android.sdk.AndroidPlatform;
 import org.jetbrains.android.sdk.AndroidSdkUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -43,12 +58,18 @@ import static com.developerphil.adbidea.ui.NotificationHelper.error;
 import static com.developerphil.adbidea.ui.NotificationHelper.info;
 
 public class StartDefaultActivityCommandWithDebugger implements Command {
+    public static final Key<DevicePanel> DEVICES_PANEL_KEY = Key.create("DevicePanel");
     public static final String LAUNCH_ACTION_NAME = "android.intent.action.MAIN";
     public static final String LAUNCH_CATEGORY_NAME = "android.intent.category.LAUNCHER";
+    private AndroidToolWindowFactory androidToolWindowFactory;
     private ToolWindow androidToolWindow;
-    private String prvPackageName;
-    private RunnerAndConfigurationSettings prvSettings;
-    private Project prvProject;
+    private static ToolWindow debugWindow;
+    private static String prvPackageName;
+    private static RunnerAndConfigurationSettings prvSettings;
+    private static Project prvProject;
+    //private static Collection prvDescriptors;
+    //private static AndroidLogcatView prvLogcatView;
+    //private static Content debugContent;
 
     @Override
     public boolean run(final Project project, final IDevice device, final AndroidFacet facet, final String packageName) {
@@ -153,44 +174,9 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
     }
 
 
-    private void closeOldSessionAndRun(String port, Project project) {
-        final String configurationName = String.format("Android Debugger (%s)", new Object[]{port});
+    private void runDebugger(String port, Project project) {
+        final String configurationName = String.format("(ADB IDEA) Debugger (%s)", new Object[]{port});
         prvProject = project;
-        Collection descriptors = ExecutionHelper.findRunningConsoleByTitle(project, new NotNullFunction() {
-            @NotNull
-            public Boolean fun(String title) {
-                Boolean status = Boolean.valueOf(configurationName.equals(title));
-                if (status == null) throw new IllegalStateException(String.format("ERROR: parameters must not return null"));
-                return status;
-            }
-
-            @NotNull
-            @Override
-            public Object fun(Object o) {
-                if (o.getClass() == String.class) {
-                    return fun((String)o);
-                }
-                return null;
-            }
-        });
-
-        if (descriptors.size() > 0) {
-            RunContentDescriptor descriptor = (RunContentDescriptor)descriptors.iterator().next();
-            ProcessHandler processHandler = descriptor.getProcessHandler();
-            Content content = descriptor.getAttachedContent();
-
-            if ((processHandler != null) && (content != null)) {
-                Executor executor = DefaultDebugExecutor.getDebugExecutorInstance();
-                if (processHandler.isProcessTerminated()) {
-                    ExecutionManager.getInstance(project).getContentManager().removeRunContent(executor, descriptor);
-                } else {
-                    content.getManager().setSelectedContent(content);
-                    ToolWindow window = ToolWindowManager.getInstance(project).getToolWindow(executor.getToolWindowId());
-                    window.activate(null, false, true);
-                    return;
-                }
-            }
-        }
 
         RemoteConfigurationType remoteConfigurationType = RemoteConfigurationType.getInstance();
 
@@ -269,36 +255,8 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
                 return false;
             }
 
-            if (client.isDebuggerAttached()) {
-                info(String.format("INFO: isDebuggerAttached[TRUE]"));
-            }
-            String port = Integer.toString(client.getDebuggerListenPort());
-            closeOldSessionAndRun(port, project);
-
-            ApplicationManager.getApplication().invokeLater(new Runnable() {
-                public void run() {
-                    androidToolWindow = ToolWindowManager.getInstance(project).getToolWindow(AndroidToolWindowFactory.TOOL_WINDOW_ID);
-                    androidToolWindow.activate(new Runnable() {
-                        public void run() {
-                            int count = androidToolWindow.getContentManager().getContentCount();
-                            for (int i = 0; i < count; i++) {
-                                Content content = androidToolWindow.getContentManager().getContent(i);
-                                DevicePanel devicePanel = content == null ? null : (DevicePanel)content.getUserData(AndroidToolWindowFactory.DEVICES_PANEL_KEY);
-                                AndroidLogcatView logcatView = content == null ? null : (AndroidLogcatView)content.getUserData(AndroidLogcatView.ANDROID_LOGCAT_VIEW_KEY);
-                                if (devicePanel != null) {
-                                    devicePanel.selectDevice(device);
-                                    if (logcatView == null) {
-                                        break;
-                                    }
-                                    logcatView.createAndSelectFilterByPackage(prvPackageName);
-                                    break;
-                                }
-                            }
-
-                        }
-                    }, false);
-                }
-            });
+            final String port = Integer.toString(client.getDebuggerListenPort());
+            runDebugger(port, project);
 
             return true;
         } catch (Exception e) {
@@ -308,3 +266,4 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
         return false;
     }
 }
+
