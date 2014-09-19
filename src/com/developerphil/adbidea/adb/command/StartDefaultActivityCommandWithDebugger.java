@@ -1,47 +1,27 @@
 package com.developerphil.adbidea.adb.command;
 
 import com.android.ddmlib.*;
-import com.android.tools.idea.ddms.DeviceContext;
 import com.android.tools.idea.ddms.DevicePanel;
+import com.android.tools.idea.ddms.adb.AdbService;
 import com.developerphil.adbidea.adb.command.receiver.GenericReceiver;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.intellij.ProjectTopics;
 import com.intellij.execution.*;
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.executors.DefaultDebugExecutor;
-import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.process.ProcessOutputTypes;
 import com.intellij.execution.remote.RemoteConfiguration;
 import com.intellij.execution.remote.RemoteConfigurationType;
-import com.intellij.execution.ui.*;
-import com.intellij.execution.ui.layout.PlaceInGrid;
-import com.intellij.facet.ProjectFacetManager;
-import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ModuleRootAdapter;
-import com.intellij.openapi.roots.ModuleRootEvent;
-import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.Computable;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.wm.ToolWindow;
-import com.intellij.openapi.wm.ToolWindowManager;
-import com.intellij.openapi.wm.ex.ToolWindowManagerAdapter;
-import com.intellij.openapi.wm.ex.ToolWindowManagerEx;
 import com.intellij.psi.PsiClass;
-import com.intellij.ui.content.Content;
-import com.intellij.ui.content.ContentManager;
-import com.intellij.util.NotNullFunction;
-import com.intellij.util.messages.MessageBusConnection;
-import icons.AndroidIcons;
 import org.jetbrains.android.dom.AndroidDomUtil;
 import org.jetbrains.android.dom.manifest.*;
 import org.jetbrains.android.facet.AndroidFacet;
-import org.jetbrains.android.facet.AndroidFacetConfiguration;
-import org.jetbrains.android.logcat.AndroidLogcatView;
 import org.jetbrains.android.logcat.AndroidToolWindowFactory;
-import org.jetbrains.android.sdk.AndroidPlatform;
 import org.jetbrains.android.sdk.AndroidSdkUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -67,9 +47,6 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
     private static String prvPackageName;
     private static RunnerAndConfigurationSettings prvSettings;
     private static Project prvProject;
-    //private static Collection prvDescriptors;
-    //private static AndroidLogcatView prvLogcatView;
-    //private static Content debugContent;
 
     @Override
     public boolean run(final Project project, final IDevice device, final AndroidFacet facet, final String packageName) {
@@ -207,43 +184,25 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
         info(String.format("Target device: " + device.getName(), ProcessOutputTypes.STDOUT));
         try {
             AndroidDebugBridge bridge = AndroidDebugBridge.getBridge();
-            if ((bridge != null) && (AndroidSdkUtils.canDdmsBeCorrupted(bridge))) {
-                error(String.format("ERROR: ddms can be corrupted."));
+            /* AS 0.8.9 */
+            /* boolean canDdmsBeCorrupted = AndroidSdkUtils.canDdmsBeCorrupted(bridge); */
+            /* as of AS 0.8.10 */
+            boolean canDdmsBeCorrupted = AdbService.canDdmsBeCorrupted(bridge);
+            if ((bridge != null) && (canDdmsBeCorrupted)) {
+                error(String.format("ERROR: ddms can be corrupted, can't start debugger."));
                 return false;
-            }
-
-            if (device.isOnline()) {
-                info(String.format("INFO: isOnline"));
-            }
-
-            if (device.isOffline()) {
-                info(String.format("INFO: isOffline"));
-            }
-
-            if (device.isEmulator()) {
-                info(String.format("INFO: isEmulator"));
-            }
-
-            if (device.isBootLoader()) {
-                info(String.format("INFO: isBootLoader"));
             }
 
             Client clients[];
             Client client = null;
             if (device.hasClients()) {
-                info(String.format("INFO: hasClients"));
                 clients = device.getClients();
-                info(String.format("INFO: found %d clients", clients.length));
                 for (int i=0; i<clients.length; i++) {
                     if (packageName.equalsIgnoreCase(clients[i].getClientData().getClientDescription())) {
-                        info(String.format("INFO: found package client"));
                         client = clients[i];
                         break;
                     }
                 }
-            } else {
-                error(String.format("ERROR: hasClients == false"));
-                return false;
             }
 
             if (client == null) {
@@ -251,7 +210,7 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
             }
 
             if (client == null) {
-                error(String.format("ERROR: client == null"));
+                error(String.format("ERROR: client == null, can't start debugger."));
                 return false;
             }
 
@@ -260,7 +219,7 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
 
             return true;
         } catch (Exception e) {
-            error(String.format("ERROR: Exception!"));
+            error(String.format("ERROR: Fatal Exception, unable to start debugger!"));
         }
 
         return false;
