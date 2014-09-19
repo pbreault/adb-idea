@@ -1,7 +1,7 @@
 <idea-plugin version="3" url="https://github.com/pbreault/adb-idea">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>1.1.3</version>
+    <version>1.1.4</version>
     <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
     <description><![CDATA[
@@ -27,6 +27,12 @@
 
 
     <change-notes><![CDATA[
+        <b>1.1.4</b>
+        <ul>
+            <li>Added support for debugging</li>
+            <li>Added toolbar icons</li>
+            <li>Added keymap entries for each action</li>
+        </ul>
         <b>1.1.3</b>
         <ul>
             <li>BUGFIX: Fixed crash on Android Studio 0.8.10</li>
