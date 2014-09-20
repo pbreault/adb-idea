@@ -6,22 +6,44 @@ import com.android.tools.idea.ddms.adb.AdbService;
 import com.developerphil.adbidea.adb.command.receiver.GenericReceiver;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
+import com.intellij.debugger.engine.RemoteDebugProcessHandler;
+import com.intellij.debugger.ui.DebuggerPanelsManager;
+import com.intellij.debugger.ui.DebuggerSessionTab;
 import com.intellij.execution.*;
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.executors.DefaultDebugExecutor;
+import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.process.ProcessOutputTypes;
 import com.intellij.execution.remote.RemoteConfiguration;
 import com.intellij.execution.remote.RemoteConfigurationType;
+import com.intellij.execution.ui.ConsoleView;
+import com.intellij.execution.ui.RunContentDescriptor;
+import com.intellij.execution.ui.RunnerLayoutUi;
+import com.intellij.execution.ui.layout.PlaceInGrid;
+import com.intellij.icons.AllIcons;
+import com.intellij.ide.util.PropertiesComponent;
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Computable;
+import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.psi.PsiClass;
+import com.intellij.ui.content.Content;
+import com.intellij.ui.content.ContentManagerAdapter;
+import com.intellij.ui.content.ContentManagerEvent;
+import com.intellij.util.NotNullFunction;
+import com.intellij.xdebugger.XDebuggerBundle;
+import icons.AndroidIcons;
 import org.jetbrains.android.dom.AndroidDomUtil;
 import org.jetbrains.android.dom.manifest.*;
 import org.jetbrains.android.facet.AndroidFacet;
+import org.jetbrains.android.logcat.AndroidLogcatView;
 import org.jetbrains.android.logcat.AndroidToolWindowFactory;
+import org.jetbrains.android.run.AndroidDebugRunner;
+import org.jetbrains.android.run.AndroidRunningState;
 import org.jetbrains.android.sdk.AndroidSdkUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,15 +60,14 @@ import static com.developerphil.adbidea.ui.NotificationHelper.error;
 import static com.developerphil.adbidea.ui.NotificationHelper.info;
 
 public class StartDefaultActivityCommandWithDebugger implements Command {
-    public static final Key<DevicePanel> DEVICES_PANEL_KEY = Key.create("DevicePanel");
     public static final String LAUNCH_ACTION_NAME = "android.intent.action.MAIN";
     public static final String LAUNCH_CATEGORY_NAME = "android.intent.category.LAUNCHER";
-    private AndroidToolWindowFactory androidToolWindowFactory;
-    private ToolWindow androidToolWindow;
-    private static ToolWindow debugWindow;
     private static String prvPackageName;
     private static RunnerAndConfigurationSettings prvSettings;
     private static Project prvProject;
+    private static RunContentDescriptor prvDescriptor;
+    private static Executor prvExecutor;
+
 
     @Override
     public boolean run(final Project project, final IDevice device, final AndroidFacet facet, final String packageName) {
@@ -151,10 +172,40 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
     }
 
 
-    private void runDebugger(String port, Project project) {
+    private void runDebugger(String port, Project project, final IDevice device) {
         final String configurationName = String.format("(ADB IDEA) Debugger (%s)", new Object[]{port});
+        ProcessHandler processHandler;
+        Content content;
+        Collection descriptors;
         prvProject = project;
 
+        /* Attempt to close previous instance if one exists */
+        descriptors = ExecutionHelper.findRunningConsoleByTitle(prvProject, new NotNullFunction() {
+            @NotNull
+            @Override
+            public Object fun(Object title) {
+                return Boolean.valueOf(configurationName.equals((String)title));
+            }
+        });
+
+        if (descriptors.size() > 0) {
+            prvDescriptor = (RunContentDescriptor)descriptors.iterator().next();
+            processHandler = prvDescriptor.getProcessHandler();
+            content = prvDescriptor.getAttachedContent();
+
+            if ((processHandler != null) && (content != null)) {
+                prvExecutor = DefaultDebugExecutor.getDebugExecutorInstance();
+                if (processHandler.isProcessTerminated()) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            ExecutionManager.getInstance(prvProject).getContentManager().removeRunContent(prvExecutor, prvDescriptor);
+                        }
+                    });
+                }
+            }
+        }
+
+        /* Start a new instance */
         RemoteConfigurationType remoteConfigurationType = RemoteConfigurationType.getInstance();
 
         if (remoteConfigurationType == null) {
@@ -172,7 +223,8 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                ProgramRunnerUtil.executeConfiguration(prvProject, prvSettings, DefaultDebugExecutor.getDebugExecutorInstance());
+                Executor executor = DefaultDebugExecutor.getDebugExecutorInstance();
+                ProgramRunnerUtil.executeConfiguration(prvProject, prvSettings, executor);
             }
         });
     }
@@ -215,7 +267,7 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
             }
 
             final String port = Integer.toString(client.getDebuggerListenPort());
-            runDebugger(port, project);
+            runDebugger(port, project, device);
 
             return true;
         } catch (Exception e) {
