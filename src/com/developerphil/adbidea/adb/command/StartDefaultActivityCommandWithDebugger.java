@@ -188,19 +188,22 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
             }
         });
 
-        if (descriptors.size() > 0) {
-            prvDescriptor = (RunContentDescriptor)descriptors.iterator().next();
-            processHandler = prvDescriptor.getProcessHandler();
-            content = prvDescriptor.getAttachedContent();
+        int size = descriptors.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                prvDescriptor = (RunContentDescriptor)descriptors.iterator().next();
+                processHandler = prvDescriptor.getProcessHandler();
+                content = prvDescriptor.getAttachedContent();
 
-            if ((processHandler != null) && (content != null)) {
-                prvExecutor = DefaultDebugExecutor.getDebugExecutorInstance();
-                if (processHandler.isProcessTerminated()) {
-                    SwingUtilities.invokeLater(new Runnable() {
-                        public void run() {
-                            ExecutionManager.getInstance(prvProject).getContentManager().removeRunContent(prvExecutor, prvDescriptor);
-                        }
-                    });
+                if ((processHandler != null) && (content != null)) {
+                    prvExecutor = DefaultDebugExecutor.getDebugExecutorInstance();
+                    if (processHandler.isProcessTerminated()) {
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                ExecutionManager.getInstance(prvProject).getContentManager().removeRunContent(prvExecutor, prvDescriptor);
+                            }
+                        });
+                    }
                 }
             }
         }
@@ -246,8 +249,9 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
             }
 
             Client clients[];
-            Client client = null;
+            Client client;
             if (device.hasClients()) {
+                client = null;
                 clients = device.getClients();
                 for (int i=0; i<clients.length; i++) {
                     if (packageName.equalsIgnoreCase(clients[i].getClientData().getClientDescription())) {
@@ -255,11 +259,13 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
                         break;
                     }
                 }
-            }
-
-            if (client == null) {
+                if (client == null) {
+                    client = device.getClient(packageName);
+                }
+            } else{
                 client = device.getClient(packageName);
             }
+
 
             if (client == null) {
                 error(String.format("ERROR: client == null, can't start debugger."));

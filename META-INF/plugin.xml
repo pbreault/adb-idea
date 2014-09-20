@@ -1,7 +1,7 @@
 <idea-plugin version="3" url="https://github.com/pbreault/adb-idea">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>1.1.5</version>
+    <version>1.1.6</version>
     <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
     <description><![CDATA[
@@ -16,6 +16,7 @@
             <li>ADB Start App With Debugger</li>
             <li>ADB Restart App With Debugger</li>
             <li>ADB Clear App Data and Restart With Debugger</li>
+            <li>ADB Reboot device</li>
         </ul>
         <br />
         There are two basic ways to invoke a command:
@@ -27,6 +28,10 @@
 
 
     <change-notes><![CDATA[
+        <b>1.1.6</b>
+        <ul>
+            <li>Added device reboot action</li>
+        </ul>
         <b>1.1.5</b>
         <ul>
             <li>BUGFIX: Fixed debugging for Android Studio 0.8.10</li>
@@ -122,6 +127,12 @@
                     text="ADB Clear App Data and Restart With Debugger"
                     description="Clears the private storage of the app and restarts it">
                     <keyboard-shortcut first-keystroke="control alt 8" keymap="$default"/>
+            </action>
+            <action id="com.developerphil.adbidea.action.RebootAction"
+                    class="com.developerphil.adbidea.action.RebootAction"
+                    text="ADB Reboot Device"
+                    description="Reboot the device">
+                    <keyboard-shortcut first-keystroke="control alt 9" keymap="$default"/>
             </action>
             <!-- <add-to-group group-id="AndroidToolsGroup" anchor="first"/> -->
             <add-to-group group-id="MainMenu" relative-to-action="ToolsMenu" anchor="after"/>
