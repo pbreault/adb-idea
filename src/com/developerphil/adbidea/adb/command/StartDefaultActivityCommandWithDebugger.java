@@ -1,14 +1,13 @@
 package com.developerphil.adbidea.adb.command;
 
-import com.android.ddmlib.*;
-import com.android.tools.idea.ddms.DevicePanel;
+import com.android.ddmlib.AndroidDebugBridge;
+import com.android.ddmlib.Client;
+import com.android.ddmlib.IDevice;
+import com.android.ddmlib.MultiLineReceiver;
 import com.android.tools.idea.ddms.adb.AdbService;
 import com.developerphil.adbidea.adb.command.receiver.GenericReceiver;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.intellij.debugger.engine.RemoteDebugProcessHandler;
-import com.intellij.debugger.ui.DebuggerPanelsManager;
-import com.intellij.debugger.ui.DebuggerSessionTab;
 import com.intellij.execution.*;
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.executors.DefaultDebugExecutor;
@@ -16,41 +15,20 @@ import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.process.ProcessOutputTypes;
 import com.intellij.execution.remote.RemoteConfiguration;
 import com.intellij.execution.remote.RemoteConfigurationType;
-import com.intellij.execution.ui.ConsoleView;
 import com.intellij.execution.ui.RunContentDescriptor;
-import com.intellij.execution.ui.RunnerLayoutUi;
-import com.intellij.execution.ui.layout.PlaceInGrid;
-import com.intellij.icons.AllIcons;
-import com.intellij.ide.util.PropertiesComponent;
-import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Computable;
-import com.intellij.openapi.util.Disposer;
-import com.intellij.openapi.util.Key;
-import com.intellij.openapi.wm.ToolWindow;
-import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.psi.PsiClass;
 import com.intellij.ui.content.Content;
-import com.intellij.ui.content.ContentManagerAdapter;
-import com.intellij.ui.content.ContentManagerEvent;
 import com.intellij.util.NotNullFunction;
-import com.intellij.xdebugger.XDebuggerBundle;
-import icons.AndroidIcons;
 import org.jetbrains.android.dom.AndroidDomUtil;
 import org.jetbrains.android.dom.manifest.*;
 import org.jetbrains.android.facet.AndroidFacet;
-import org.jetbrains.android.logcat.AndroidLogcatView;
-import org.jetbrains.android.logcat.AndroidToolWindowFactory;
-import org.jetbrains.android.run.AndroidDebugRunner;
-import org.jetbrains.android.run.AndroidRunningState;
 import org.jetbrains.android.sdk.AndroidSdkUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
-import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -62,31 +40,52 @@ import static com.developerphil.adbidea.ui.NotificationHelper.info;
 public class StartDefaultActivityCommandWithDebugger implements Command {
     public static final String LAUNCH_ACTION_NAME = "android.intent.action.MAIN";
     public static final String LAUNCH_CATEGORY_NAME = "android.intent.category.LAUNCHER";
-    private static String prvPackageName;
     private static RunnerAndConfigurationSettings prvSettings;
     private static Project prvProject;
+    private static IDevice prvDevice;
     private static RunContentDescriptor prvDescriptor;
+    private static String prvPackageName;
     private static Executor prvExecutor;
-
+    private static boolean debuggingStatus;
 
     @Override
     public boolean run(final Project project, final IDevice device, final AndroidFacet facet, final String packageName) {
         String defaultActivityName = getDefaultActivityName(facet);
         String component = packageName + "/" + defaultActivityName;
 
+        if (prvProject == null) prvProject = project;
+        if (prvDevice == null) prvDevice = device;
+        if (prvPackageName == null) prvPackageName = packageName;
+
         try {
             StartActivityReceiver receiver = new StartActivityReceiver();
             device.executeShellCommand("am start -D -n " + component, receiver, 5L, TimeUnit.MINUTES);
 
-            boolean status = startDebugging(device, project, facet, packageName);
-            if (!status) {
-                error(String.format("startDebugging returns false."));
-                device.executeShellCommand("am force-stop " + packageName, new GenericReceiver(), 5L, TimeUnit.MINUTES);
-                info(String.format("<b>%s</b> forced-stop on %s", packageName, device.getName()));
-            }
+            ApplicationManager.getApplication().invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    if (!AndroidSdkUtils.activateDdmsIfNecessary(project)) {
+                        error(String.format("activateDdmsIfNecessary returns false, unable to start debugging."));
+                        debuggingStatus = false;
+                    } else {
+                        debuggingStatus = startDebugging(prvDevice, prvProject, prvPackageName);
+                        if (!debuggingStatus) {
+                            error(String.format("startDebugging returns false."));
+                            info(String.format("<b>%s</b> forced-stop on %s", packageName, device.getName()));
+                            try {
+                                device.executeShellCommand("am force-stop " + packageName, new GenericReceiver(), 5L, TimeUnit.MINUTES);
+                            } catch (Exception e) {
+                                error("Force-stop failed... " + e.getMessage());
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            });
+
 
             if (receiver.isSuccess()) {
-                if (status) {
+                if (debuggingStatus) {
                     info(String.format("<b>%s</b> started on %s", packageName, device.getName()));
                     return true;
                 }
@@ -112,8 +111,7 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
     public static class StartActivityReceiver extends MultiLineReceiver {
 
         public String message = "Nothing Received";
-
-        public List<String> currentLines = new ArrayList<String>();
+        public final List<String> currentLines = new ArrayList<String>();
 
         @Override
         public void processNewLines(String[] strings) {
@@ -172,19 +170,20 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
     }
 
 
-    private void runDebugger(String port, Project project, final IDevice device) {
-        final String configurationName = String.format("(ADB IDEA) Debugger (%s)", new Object[]{port});
+    private void runDebugger(final String port, final Project project) {
+        final String configurationName = String.format("Android Debugger (%s)", port);
         ProcessHandler processHandler;
         Content content;
         Collection descriptors;
-        prvProject = project;
+
+        if (prvProject == null) prvProject = project;
 
         /* Attempt to close previous instance if one exists */
-        descriptors = ExecutionHelper.findRunningConsoleByTitle(prvProject, new NotNullFunction() {
+        descriptors = ExecutionHelper.findRunningConsoleByTitle(prvProject, new NotNullFunction<String, Boolean>() {
             @NotNull
             @Override
-            public Object fun(Object title) {
-                return Boolean.valueOf(configurationName.equals((String)title));
+            public Boolean fun(String title) {
+                return configurationName.equals(title);
             }
         });
 
@@ -198,7 +197,7 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
                 if ((processHandler != null) && (content != null)) {
                     prvExecutor = DefaultDebugExecutor.getDebugExecutorInstance();
                     if (processHandler.isProcessTerminated()) {
-                        SwingUtilities.invokeLater(new Runnable() {
+                        ApplicationManager.getApplication().invokeLater(new Runnable() {
                             public void run() {
                                 ExecutionManager.getInstance(prvProject).getContentManager().removeRunContent(prvExecutor, prvDescriptor);
                             }
@@ -224,7 +223,7 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
         configuration.USE_SOCKET_TRANSPORT = true;
         configuration.SERVER_MODE = false;
 
-        SwingUtilities.invokeLater(new Runnable() {
+        ApplicationManager.getApplication().invokeLater(new Runnable() {
             public void run() {
                 Executor executor = DefaultDebugExecutor.getDebugExecutorInstance();
                 ProgramRunnerUtil.executeConfiguration(prvProject, prvSettings, executor);
@@ -233,23 +232,28 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
     }
 
 
-    private boolean startDebugging(final IDevice device, final Project project, final AndroidFacet facet, final String packageName) {
+    private boolean startDebugging(final IDevice device, final Project project, final String packageName) {
+        Client clients[];
+        Client client;
         if (device == null) throw new IllegalArgumentException(String.format("ERROR: startDebugging(): device == null"));
-        prvPackageName = packageName;
         info(String.format("Target device: " + device.getName(), ProcessOutputTypes.STDOUT));
+
         try {
             AndroidDebugBridge bridge = AndroidDebugBridge.getBridge();
+            if (bridge == null) {
+                error("bridge == null, can't start debugger");
+                return false;
+            }
+
             /* AS 0.8.9 */
             /* boolean canDdmsBeCorrupted = AndroidSdkUtils.canDdmsBeCorrupted(bridge); */
             /* as of AS 0.8.10 */
             boolean canDdmsBeCorrupted = AdbService.canDdmsBeCorrupted(bridge);
-            if ((bridge != null) && (canDdmsBeCorrupted)) {
+            if (bridge != null && canDdmsBeCorrupted) {
                 error(String.format("ERROR: ddms can be corrupted, can't start debugger."));
                 return false;
             }
 
-            Client clients[];
-            Client client;
             if (device.hasClients()) {
                 client = null;
                 clients = device.getClients();
@@ -266,14 +270,13 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
                 client = device.getClient(packageName);
             }
 
-
             if (client == null) {
                 error(String.format("ERROR: client == null, can't start debugger."));
                 return false;
             }
 
             final String port = Integer.toString(client.getDebuggerListenPort());
-            runDebugger(port, project, device);
+            runDebugger(port, project);
 
             return true;
         } catch (Exception e) {

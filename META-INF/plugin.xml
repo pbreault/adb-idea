@@ -31,6 +31,8 @@
         <b>1.1.6</b>
         <ul>
             <li>Added device reboot action</li>
+            <li>Code cleanup for debugger actions</li>
+            <li>Added check for activateDdmsIfNecessary</li>
         </ul>
         <b>1.1.5</b>
         <ul>
