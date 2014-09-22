@@ -31,6 +31,10 @@ public class AdbFacade {
         executeOnDevice(project, new KillCommand());
     }
 
+    public static void reboot(Project project) {
+        executeOnDevice(project, new RebootCommand());
+    }
+
     public static void startDefaultActivity(Project project) {
         executeOnDevice(project, new StartDefaultActivityCommand());
     }
@@ -45,6 +49,18 @@ public class AdbFacade {
 
     public static void clearDataAndRestart(Project project) {
         executeOnDevice(project, new ClearDataAndRestartCommand());
+    }
+
+    public static void startDefaultActivityWithDebugger(Project project) {
+        executeOnDevice(project, new StartDefaultActivityCommandWithDebugger());
+    }
+
+    public static void restartDefaultActivityWithDebugger(Project project) {
+        executeOnDevice(project, new RestartPackageCommandWithDebugger());
+    }
+
+    public static void clearDataAndRestartWithDebugger(Project project) {
+        executeOnDevice(project, new ClearDataAndRestartCommandWithDebugger());
     }
 
     private static void executeOnDevice(final Project project, final Command runnable) {

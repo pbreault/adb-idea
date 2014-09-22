@@ -11,6 +11,9 @@ The following commands are provided:
 * Restart App
 * Clear App Data
 * Clear App Data and Restart
+* Start App with Debugger
+* Restart App with Debugger
+* Clear App Data and Restart with Debugger
 
 Usage
 =====
@@ -40,6 +43,7 @@ License
 =======
 
     Copyright 2014 Philippe Breault
+    Copyright 2014 Benoit Touchette (Debuger and reboot actions, icons/toolbar menu items)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

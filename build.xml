@@ -312,7 +312,7 @@
             <patternset refid="excluded.from.compilation.adb_idea"/>
         </javac2>
 
-        <copy todir="${adb_idea.testoutput.dir}">
+        <copy todir="${adb_idea.testoutputdir}">
             <fileset dir="${module.adb_idea.basedir}/test">
                 <patternset refid="compiler.resources"/>
                 <type type="file"/>
@@ -333,9 +333,12 @@
         <jar destfile="${adb_idea.plugin.path.jar}" duplicate="preserve">
             <zipfileset dir="${module.adb_idea.basedir}/out/production/adb_idea"/>
             <zipfileset file="${module.adb_idea.basedir}/META-INF/plugin.xml" prefix="META-INF"/>
+            <zipfileset file="${module.adb_idea.basedir}/res/icons/circle_stop.png" prefix="icons"/>
+            <zipfileset file="${module.adb_idea.basedir}/res/icons/circle_run.png" prefix="icons"/>
+            <zipfileset file="${module.adb_idea.basedir}/res/icons/circle_debug.png" prefix="icons"/>
             <manifest>
                 <attribute name="Created-By" value="IntelliJ IDEA"/>
-                <attribute name="Manifest-Version" value="1.0"/>
+                <attribute name="Manifest-Version" value="1.2"/>
             </manifest>
         </jar>
     </target>
