@@ -1,8 +1,8 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.0.1"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         minSdkVersion 7
@@ -13,22 +13,20 @@ android {
     buildTypes {
 
         debug{
-            packageNameSuffix ".debug"
+            applicationIdSuffix ".debug"
         }
 
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
 
     productFlavors {
         first {
-            packageName "com.example.app.first"
+            applicationId "com.example.app.first"
         }
 
         second {
-            packageName "com.example.app.second"
+            applicationId "com.example.app.second"
         }
     }
 }
