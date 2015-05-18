@@ -1,7 +1,7 @@
 <idea-plugin version="3" url="https://github.com/pbreault/adb-idea">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>1.1.4</version>
+    <version>1.2.0</version>
     <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
     <description><![CDATA[
@@ -24,6 +24,10 @@
 
 
     <change-notes><![CDATA[
+        <b>1.2.0</b>
+        <ul>
+            <li>FEATURE: New "ADB Operations Popup...". Windows: Ctrl+Alt+Shift+A  -  Mac OSX: Ctrl+Shift+A</li>
+        </ul>
         <b>1.1.4</b>
         <ul>
             <li>BUGFIX: Start & Restart is broken when the activity is merged in the manifest.</li>
