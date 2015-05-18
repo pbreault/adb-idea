@@ -56,6 +56,14 @@
 
     <actions>
         <group id="AdbIdea" text="_ADB Idea" description="ADB Idea" popup="true">
+            <action id="com.developerphil.adbidea.action.AdbIdeaQuickList"
+                    class="com.developerphil.adbidea.action.QuickListAction" text="ADB Operations Popup..."
+                    description="List all the adb idea operations in a popup">
+                <keyboard-shortcut keymap="Mac OS X" first-keystroke="shift ctrl A"/>
+                <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="shift ctrl A"/>
+                <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt A"/>
+            </action>
+            <separator />
             <action id="com.developerphil.adbidea.action.UninstallAction"
                     class="com.developerphil.adbidea.action.UninstallAction"
                     text="ADB Uninstall App"
