@@ -5,6 +5,7 @@ A plugin for Android Studio and Intellij IDEA that speeds up your day to day and
 
 The following commands are provided:
 
+* Toggle Display
 * Uninstall App
 * Kill App
 * Start App
