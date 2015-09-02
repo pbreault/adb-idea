@@ -1,27 +1,23 @@
 package com.developerphil.adbidea.adb.command;
 
-import static com.developerphil.adbidea.ui.NotificationHelper.error;
-import static com.developerphil.adbidea.ui.NotificationHelper.info;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import org.jetbrains.android.facet.AndroidFacet;
-import org.jetbrains.android.util.AndroidUtils;
-
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.MultiLineReceiver;
-import com.android.tools.idea.model.ManifestInfo;
+import com.developerphil.adbidea.adb.AdbUtil;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Computable;
+import org.jetbrains.android.facet.AndroidFacet;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static com.developerphil.adbidea.ui.NotificationHelper.error;
+import static com.developerphil.adbidea.ui.NotificationHelper.info;
 
 public class StartDefaultActivityCommand implements Command {
-    public static final String LAUNCH_ACTION_NAME = "android.intent.action.MAIN";
-    public static final String LAUNCH_CATEGORY_NAME = "android.intent.category.LAUNCHER";
 
     @Override
     public boolean run(Project project, IDevice device, AndroidFacet facet, String packageName) {
@@ -48,13 +44,10 @@ public class StartDefaultActivityCommand implements Command {
         return ApplicationManager.getApplication().runReadAction(new Computable<String>() {
             @Override
             public String compute() {
-                final boolean useMergedManifest = facet.isGradleProject() || facet.getProperties().ENABLE_MANIFEST_MERGING;
-                final ManifestInfo manifestInfo = ManifestInfo.get(facet.getModule(), useMergedManifest);
-
                 return ApplicationManager.getApplication().runReadAction(new Computable<String>() {
                     @Override
                     public String compute() {
-                        return AndroidUtils.getDefaultLauncherActivityName(manifestInfo.getActivities(), manifestInfo.getActivityAliases());
+                        return AdbUtil.getDefaultLauncherActivityName(facet);
                     }
                 });
             }

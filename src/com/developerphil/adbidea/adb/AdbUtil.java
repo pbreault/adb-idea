@@ -6,6 +6,9 @@ import com.android.ddmlib.ShellCommandUnresponsiveException;
 import com.android.ddmlib.TimeoutException;
 import com.developerphil.adbidea.adb.command.receiver.GenericReceiver;
 import org.jetbrains.android.facet.AndroidFacet;
+import org.jetbrains.android.run.DefaultActivityLocator;
+import org.jetbrains.android.util.AndroidUtils;
+import org.joor.Reflect;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -38,4 +41,11 @@ public class AdbUtil {
         return null;
     }
 
+    public static String getDefaultLauncherActivityName(AndroidFacet facet) {
+        try {
+            return DefaultActivityLocator.getDefaultLauncherActivityName(facet.getManifest());
+        } catch (Exception e) {
+            return Reflect.on(AndroidUtils.class).call("getDefaultLauncherActivityName", facet.getManifest()).get();
+        }
+    }
 }
