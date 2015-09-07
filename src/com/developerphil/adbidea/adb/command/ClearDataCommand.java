@@ -17,7 +17,7 @@ public class ClearDataCommand implements Command {
     public boolean run(Project project, IDevice device, AndroidFacet facet, String packageName) {
         try {
             if (isAppInstalled(device, packageName)) {
-                device.executeShellCommand("pm clear " + packageName, new GenericReceiver(), 5L, TimeUnit.MINUTES);
+                device.executeShellCommand("pm clear " + packageName, new GenericReceiver(), 15L, TimeUnit.SECONDS);
                 info(String.format("<b>%s</b> cleared data for app on %s", packageName, device.getName()));
                 return true;
             } else {

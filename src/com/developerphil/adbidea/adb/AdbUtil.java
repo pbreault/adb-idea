@@ -19,7 +19,7 @@ public class AdbUtil {
         GenericReceiver receiver = new GenericReceiver();
         // "pm list packages com.my.package" will return one line per package installed that corresponds to this package.
         // if this list is empty, we know for sure that the app is not installed
-        device.executeShellCommand("pm list packages " + packageName, receiver, 5L, TimeUnit.MINUTES);
+        device.executeShellCommand("pm list packages " + packageName, receiver, 15L, TimeUnit.SECONDS);
 
         //TODO make sure that it is the exact package name and not a subset.
         // e.g. if our app is called com.example but there is another app called com.example.another.app, it will match and return a false positive
@@ -44,7 +44,7 @@ public class AdbUtil {
     public static String getDefaultLauncherActivityName(AndroidFacet facet) {
         try {
             return DefaultActivityLocator.getDefaultLauncherActivityName(facet.getManifest());
-        } catch (Exception e) {
+        } catch (Error e) {
             return Reflect.on(AndroidUtils.class).call("getDefaultLauncherActivityName", facet.getManifest()).get();
         }
     }

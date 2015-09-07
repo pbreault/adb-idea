@@ -16,7 +16,7 @@ public class KillCommand implements Command {
     public boolean run(Project project, IDevice device, AndroidFacet facet, String packageName) {
         try {
             if (isAppInstalled(device, packageName)) {
-                device.executeShellCommand("am force-stop " + packageName, new GenericReceiver(), 5L, TimeUnit.MINUTES);
+                device.executeShellCommand("am force-stop " + packageName, new GenericReceiver(), 15L, TimeUnit.SECONDS);
                 info(String.format("<b>%s</b> forced-stop on %s", packageName, device.getName()));
                 return true;
             } else {

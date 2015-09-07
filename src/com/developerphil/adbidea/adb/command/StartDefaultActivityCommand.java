@@ -26,7 +26,7 @@ public class StartDefaultActivityCommand implements Command {
 
         try {
             StartActivityReceiver receiver = new StartActivityReceiver();
-            device.executeShellCommand("am start " + component, receiver, 5L, TimeUnit.MINUTES);
+            device.executeShellCommand("am start " + component, receiver, 15L, TimeUnit.SECONDS);
             if (receiver.isSuccess()) {
                 info(String.format("<b>%s</b> started on %s", packageName, device.getName()));
                 return true;
