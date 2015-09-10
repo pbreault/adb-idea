@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="adb_idea" default="all">
+<project name="adb_tools" default="all">
 
 
     <property file="local.properties"/>
     <xmlproperty file="META-INF/plugin.xml"/>
-    <property name="plugin.name">adb_idea</property>
+    <property name="plugin.name">adb_tools</property>
     <property name="plugin.version">${idea-plugin.version}</property>
 
     <echo message="VERSION == ${plugin.version}"/>
@@ -194,137 +194,137 @@
     <!-- Modules -->
 
 
-    <!-- Module adb_idea -->
+    <!-- Module adb_tools -->
 
-    <dirname property="module.adb_idea.basedir" file="${ant.file}"/>
+    <dirname property="module.adb_tools.basedir" file="${ant.file}"/>
 
 
-    <property name="module.jdk.home.adb_idea" value="${project.jdk.home}"/>
-    <property name="module.jdk.bin.adb_idea" value="${project.jdk.bin}"/>
-    <property name="module.jdk.classpath.adb_idea" value="${project.jdk.classpath}"/>
+    <property name="module.jdk.home.adb_tools" value="${project.jdk.home}"/>
+    <property name="module.jdk.bin.adb_tools" value="${project.jdk.bin}"/>
+    <property name="module.jdk.classpath.adb_tools" value="${project.jdk.classpath}"/>
 
-    <property name="compiler.args.adb_idea" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+    <property name="compiler.args.adb_tools" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
 
-    <property name="adb_idea.output.dir" value="${module.adb_idea.basedir}/out/production/adb_idea"/>
-    <property name="adb_idea.testoutput.dir" value="${module.adb_idea.basedir}/out/test/adb_idea"/>
+    <property name="adb_tools.output.dir" value="${module.adb_tools.basedir}/out/production/adb_tools"/>
+    <property name="adb_tools.testoutput.dir" value="${module.adb_tools.basedir}/out/test/adb_tools"/>
 
-    <path id="adb_idea.module.bootclasspath">
+    <path id="adb_tools.module.bootclasspath">
         <!-- Paths to be included in compilation bootclasspath -->
     </path>
 
-    <path id="adb_idea.module.production.classpath">
-        <path refid="${module.jdk.classpath.adb_idea}"/>
-        <path refid="adb_idea.module.classpath" />
+    <path id="adb_tools.module.production.classpath">
+        <path refid="${module.jdk.classpath.adb_tools}"/>
+        <path refid="adb_tools.module.classpath" />
     </path>
 
-    <path id="adb_idea.runtime.production.module.classpath">
-        <pathelement location="${adb_idea.output.dir}"/>
+    <path id="adb_tools.runtime.production.module.classpath">
+        <pathelement location="${adb_tools.output.dir}"/>
     </path>
 
-    <path id="adb_idea.module.classpath">
-        <path refid="${module.jdk.classpath.adb_idea}"/>
-        <pathelement location="${adb_idea.output.dir}"/>
+    <path id="adb_tools.module.classpath">
+        <path refid="${module.jdk.classpath.adb_tools}"/>
+        <pathelement location="${adb_tools.output.dir}"/>
         <fileset dir="lib/main">
             <include name="**/*.jar" />
             <exclude name="**/*-sources.jar" />
         </fileset>
     </path>
 
-    <path id="adb_idea.module.test.classpath">
-        <path refid="adb_idea.module.classpath"/>
+    <path id="adb_tools.module.test.classpath">
+        <path refid="adb_tools.module.classpath"/>
         <fileset dir="lib/test">
               <include name="**/*.jar" />
               <exclude name="**/*-sources.jar" />
         </fileset>
     </path>
 
-    <path id="adb_idea.runtime.module.classpath">
-        <pathelement location="${adb_idea.testoutput.dir}"/>
-        <pathelement location="${adb_idea.output.dir}"/>
+    <path id="adb_tools.runtime.module.classpath">
+        <pathelement location="${adb_tools.testoutput.dir}"/>
+        <pathelement location="${adb_tools.output.dir}"/>
     </path>
 
 
-    <patternset id="excluded.from.module.adb_idea">
+    <patternset id="excluded.from.module.adb_tools">
         <patternset refid="ignored.files"/>
     </patternset>
 
-    <patternset id="excluded.from.compilation.adb_idea">
-        <patternset refid="excluded.from.module.adb_idea"/>
+    <patternset id="excluded.from.compilation.adb_tools">
+        <patternset refid="excluded.from.module.adb_tools"/>
     </patternset>
 
-    <path id="adb_idea.module.sourcepath">
-        <dirset dir="${module.adb_idea.basedir}">
+    <path id="adb_tools.module.sourcepath">
+        <dirset dir="${module.adb_tools.basedir}">
             <include name="src"/>
         </dirset>
     </path>
 
-    <path id="adb_idea.module.test.sourcepath">
-        <dirset dir="${module.adb_idea.basedir}">
+    <path id="adb_tools.module.test.sourcepath">
+        <dirset dir="${module.adb_tools.basedir}">
             <include name="test"/>
         </dirset>
     </path>
 
 
-    <target name="compile.module.adb_idea" depends="compile.module.adb_idea.production,compile.module.adb_idea.tests"
-            description="Compile module adb_idea"/>
+    <target name="compile.module.adb_tools" depends="compile.module.adb_tools.production,compile.module.adb_tools.tests"
+            description="Compile module adb_tools"/>
 
-    <target name="compile.module.adb_idea.production" depends="register.custom.compilers"
-            description="Compile module adb_idea; production classes">
-        <mkdir dir="${adb_idea.output.dir}"/>
-        <javac2 destdir="${adb_idea.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}"
-                memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.adb_idea}/javac"
+    <target name="compile.module.adb_tools.production" depends="register.custom.compilers"
+            description="Compile module adb_tools; production classes">
+        <mkdir dir="${adb_tools.output.dir}"/>
+        <javac2 destdir="${adb_tools.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}"
+                memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.adb_tools}/javac"
                 target="1.6" source="1.6">
-            <compilerarg line="${compiler.args.adb_idea}"/>
-            <bootclasspath refid="adb_idea.module.bootclasspath"/>
-            <classpath refid="adb_idea.module.production.classpath"/>
-            <src refid="adb_idea.module.sourcepath"/>
-            <patternset refid="excluded.from.compilation.adb_idea"/>
+            <compilerarg line="${compiler.args.adb_tools}"/>
+            <bootclasspath refid="adb_tools.module.bootclasspath"/>
+            <classpath refid="adb_tools.module.production.classpath"/>
+            <src refid="adb_tools.module.sourcepath"/>
+            <patternset refid="excluded.from.compilation.adb_tools"/>
         </javac2>
 
-        <copy todir="${adb_idea.output.dir}">
-            <fileset dir="${module.adb_idea.basedir}/src">
+        <copy todir="${adb_tools.output.dir}">
+            <fileset dir="${module.adb_tools.basedir}/src">
                 <patternset refid="compiler.resources"/>
                 <type type="file"/>
             </fileset>
         </copy>
     </target>
 
-    <target name="compile.module.adb_idea.tests" depends="register.custom.compilers,compile.module.adb_idea.production"
-            description="compile module adb_idea; test classes" unless="skip.tests">
-        <mkdir dir="${adb_idea.testoutput.dir}"/>
-        <javac2 destdir="${adb_idea.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}"
-                memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.adb_idea}/javac">
-            <compilerarg line="${compiler.args.adb_idea}"/>
-            <bootclasspath refid="adb_idea.module.bootclasspath"/>
-            <classpath refid="adb_idea.module.test.classpath"/>
-            <src refid="adb_idea.module.test.sourcepath"/>
-            <patternset refid="excluded.from.compilation.adb_idea"/>
+    <target name="compile.module.adb_tools.tests" depends="register.custom.compilers,compile.module.adb_tools.production"
+            description="compile module adb_tools; test classes" unless="skip.tests">
+        <mkdir dir="${adb_tools.testoutput.dir}"/>
+        <javac2 destdir="${adb_tools.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}"
+                memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.adb_tools}/javac">
+            <compilerarg line="${compiler.args.adb_tools}"/>
+            <bootclasspath refid="adb_tools.module.bootclasspath"/>
+            <classpath refid="adb_tools.module.test.classpath"/>
+            <src refid="adb_tools.module.test.sourcepath"/>
+            <patternset refid="excluded.from.compilation.adb_tools"/>
         </javac2>
 
-        <copy todir="${adb_idea.testoutputdir}">
-            <fileset dir="${module.adb_idea.basedir}/test">
+        <copy todir="${adb_tools.testoutputdir}">
+            <fileset dir="${module.adb_tools.basedir}/test">
                 <patternset refid="compiler.resources"/>
                 <type type="file"/>
             </fileset>
         </copy>
     </target>
 
-    <target name="clean.module.adb_idea" description="cleanup module">
-        <delete dir="${adb_idea.output.dir}"/>
-        <delete dir="${adb_idea.testoutput.dir}"/>
+    <target name="clean.module.adb_tools" description="cleanup module">
+        <delete dir="${adb_tools.output.dir}"/>
+        <delete dir="${adb_tools.testoutput.dir}"/>
     </target>
 
-    <property name="adb_idea.plugin.path.jar" value="${module.adb_idea.basedir}/${plugin.name}-${plugin.version}.jar"/>
+    <property name="adb_tools.plugin.path.jar" value="${module.adb_tools.basedir}/${plugin.name}-${plugin.version}.jar"/>
 
-    <!-- Build archive for plugin 'adb_idea' -->
-    <target name="plugin.build.jar.adb_idea" depends="compile.module.adb_idea"
-            description="Build plugin archive for module &#39;adb_idea&#39;">
-        <jar destfile="${adb_idea.plugin.path.jar}" duplicate="preserve">
-            <zipfileset dir="${module.adb_idea.basedir}/out/production/adb_idea"/>
-            <zipfileset file="${module.adb_idea.basedir}/META-INF/plugin.xml" prefix="META-INF"/>
-            <zipfileset file="${module.adb_idea.basedir}/res/icons/circle_stop.png" prefix="icons"/>
-            <zipfileset file="${module.adb_idea.basedir}/res/icons/circle_run.png" prefix="icons"/>
-            <zipfileset file="${module.adb_idea.basedir}/res/icons/circle_debug.png" prefix="icons"/>
+    <!-- Build archive for plugin 'adb_tools' -->
+    <target name="plugin.build.jar.adb_tools" depends="compile.module.adb_tools"
+            description="Build plugin archive for module &#39;adb_tools&#39;">
+        <jar destfile="${adb_tools.plugin.path.jar}" duplicate="preserve">
+            <zipfileset dir="${module.adb_tools.basedir}/out/production/adb_tools"/>
+            <zipfileset file="${module.adb_tools.basedir}/META-INF/plugin.xml" prefix="META-INF"/>
+            <zipfileset file="${module.adb_tools.basedir}/res/icons/circle_stop.png" prefix="icons"/>
+            <zipfileset file="${module.adb_tools.basedir}/res/icons/circle_run.png" prefix="icons"/>
+            <zipfileset file="${module.adb_tools.basedir}/res/icons/circle_debug.png" prefix="icons"/>
             <manifest>
                 <attribute name="Created-By" value="IntelliJ IDEA"/>
                 <attribute name="Manifest-Version" value="1.2"/>
@@ -336,9 +336,9 @@
         <!-- Perform any build initialization in this target -->
     </target>
 
-    <target name="clean" depends="clean.module.adb_idea" description="cleanup all"/>
+    <target name="clean" depends="clean.module.adb_tools" description="cleanup all"/>
 
-    <target name="build.modules" depends="init, clean, plugin.build.jar.adb_idea" description="build all modules"/>
+    <target name="build.modules" depends="init, clean, plugin.build.jar.adb_tools" description="build all modules"/>
 
     <target name="all" depends="build.modules" description="build all"/>
 
@@ -351,7 +351,7 @@
         <delete>
             <fileset dir="${deploy.plugin.dir}" includes="${plugin.name}*"/>
         </delete>
-        <copy file="${adb_idea.plugin.path.jar}" todir="${deploy.plugin.dir}"/>
+        <copy file="${adb_tools.plugin.path.jar}" todir="${deploy.plugin.dir}"/>
     </target>
 
 </project>
