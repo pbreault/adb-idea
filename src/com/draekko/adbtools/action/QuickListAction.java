@@ -25,7 +25,7 @@ public class QuickListAction extends QuickSwitchSchemeAction implements DumbAwar
         addAction("adbtools.action.RestartWithDebuggerAction", group);
         addAction("adbtools.action.ClearDataAction", group);
         addAction("adbtools.action.ClearDataAndRestartAction", group);
-        addAction("adbtools.action.ClearDataAndRestartWithDebugerAction", group);
+        addAction("adbtools.action.ClearDataAndRestartWithDebuggerAction", group);
     }
 
     protected boolean isEnabled() {
