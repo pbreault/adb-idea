@@ -1,7 +1,7 @@
 ADB Tools
 =========
 
-A plugin for Android Studio and Intellij IDEA that speeds up your day to day android development.
+A plugin for Android Studio and Intellij IDEA that speeds up your day to day android development. (Fork from adb-idea)
 
 The following commands are provided:
 
