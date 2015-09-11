@@ -24,16 +24,24 @@ Also included are three toolbar icon shortcuts:
 Usage
 =====
 
-The Warrrior's Way
-------------------
-Each command is prefixed by "ADB", so you can quickly filter through adb commands using the "[Find Actions](http://www.jetbrains.com/idea/webhelp/navigating-to-action.html)" shortcut. 
+Quick Operations Popup
+----------------------
+The number on the left is a shortcut that will stay the same for your muscle memory pleasure.
+
+* Mac OSX: Ctrl+Shift+A
+* Windows/Linux: Ctrl+Alt+Shift+A
+
+![Logo](website/adb_operations_popup.png)
+
+Find Actions
+-----------------
+Each command is prefixed by "ADB", so you can quickly filter through adb commands using the "[Find Actions](http://www.jetbrains.com/idea/webhelp/navigating-to-action.html)" shortcut.
 
 ![Logo](website/find_actions.png)
 
 The Menu Way
 ------------
-You can find every command in the following top level menu:
-`ADB Tools` 
+You can find every command in the following top level menu: `ADB Tools`
 
 The Toolbar Way
 ---------------
