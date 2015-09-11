@@ -14,7 +14,7 @@ public class NotificationHelper {
     }
 
     public static void sendNotification(String message, NotificationType notificationType) {
-        Notification notification = new Notification("com.draekko.adbtools", "ADB IDEA", espaceString(message), notificationType);
+        Notification notification = new Notification("com.draekko.adbtools", "ADB TOOLS", espaceString(message), notificationType);
         Notifications.Bus.notify(notification);
     }
 
