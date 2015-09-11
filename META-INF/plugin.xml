@@ -1,7 +1,7 @@
 <idea-plugin version="3" url="https://github.com/draekko/adb-tools">
     <id>com.draekko.adbtools</id>
     <name>ADB Tools</name>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
     <vendor url="http://www.draekko.com">Draekko</vendor>
 
     <description><![CDATA[
@@ -38,9 +38,14 @@
 
 
     <change-notes><![CDATA[
+        <b>1.2.3</b>
+        <ul>
+            <li>BUGFIX: Sometimes can't start or restart app with debugger.</li>
+            <li>BUGFIX: No quick action popup</li>
+        </ul>
         <b>1.2.2</b>
         <ul>
-            <li>BUGFIX: Can't start or restart app in Android Studio 1.4</li>
+            <li>BUGFIX: NULL Pointer error when opening device chooser.</li>
         </ul>
         <b>1.2.1</b>
         <ul>
@@ -95,8 +100,8 @@
     <depends>org.jetbrains.android</depends>
 
     <actions>
-        <group id="AdbIdeaPluginMainMenu" text="_ADB Tools" description="ADB Tools" popup="true">
-            <action id="com.developerphil.adbidea.action.AdbIdeaQuickList"
+        <group id="AdbToolsPluginMainMenu" text="_ADB Tools" description="ADB Tools" popup="true">
+            <action id="adbtools.action.AdbToolsQuickList"
                     class="com.draekko.adbtools.action.QuickListAction" text="ADB Operations Popup..."
                     description="List all the ADB Tools operations in a popup">
                 <keyboard-shortcut keymap="Mac OS X" first-keystroke="shift ctrl A"/>
@@ -104,37 +109,37 @@
                 <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt A"/>
             </action>
             <separator />
-            <action id="adbidea.action.UninstallAction"
+            <action id="adbtools.action.UninstallAction"
                     class="com.draekko.adbtools.action.UninstallAction"
                     text="ADB Uninstall App"
                     description="Uninstalls the current application">
                 <keyboard-shortcut first-keystroke="control alt 0" keymap="$default"/>
             </action>
-            <action id="adbidea.action.KillAction"
+            <action id="adbtools.action.KillAction"
                     class="com.draekko.adbtools.action.KillAction"
                     text="ADB Kill App"
                     description="Kills the current application">
                 <keyboard-shortcut first-keystroke="control alt 1" keymap="$default"/>
             </action>
-            <action id="adbidea.action.StartAction"
+            <action id="adbtools.action.StartAction"
                     class="com.draekko.adbtools.action.StartAction"
                     text="ADB Start App"
                     description="Starts the current application">
                 <keyboard-shortcut first-keystroke="control alt 2" keymap="$default"/>
             </action>
-            <action id="adbidea.action.RestartAction"
+            <action id="adbtools.action.RestartAction"
                     class="com.draekko.adbtools.action.RestartAction"
                     text="ADB Restart App"
                     description="Restarts the current application">
                 <keyboard-shortcut first-keystroke="control alt 3" keymap="$default"/>
             </action>
-            <action id="adbidea.action.ClearDataAction"
+            <action id="adbtools.action.ClearDataAction"
                     class="com.draekko.adbtools.action.ClearDataAction"
                     text="ADB Clear App Data"
                     description="Clears the private storage of the app">
                 <keyboard-shortcut first-keystroke="control alt 4" keymap="$default"/>
             </action>
-            <action id="adbidea.action.ClearDataAndRestartAction"
+            <action id="adbtools.action.ClearDataAndRestartAction"
                     class="com.draekko.adbtools.action.ClearDataAndRestartAction"
                     text="ADB Clear App Data and Restart"
                     description="Clears the private storage of the app and restarts it">
@@ -142,25 +147,25 @@
             </action>
 
             <!-- DEBUGGING ENABLED -->
-            <action id="adbidea.action.StartWithDebuggerAction"
+            <action id="adbtools.action.StartWithDebuggerAction"
                     class="com.draekko.adbtools.action.StartWithDebuggerAction"
                     text="ADB Start App With Debugger"
                     description="Starts the current application">
                 <keyboard-shortcut first-keystroke="control alt 6" keymap="$default"/>
             </action>
-            <action id="adbidea.action.RestartWithDebuggerAction"
+            <action id="adbtools.action.RestartWithDebuggerAction"
                     class="com.draekko.adbtools.action.RestartWithDebuggerAction"
                     text="ADB Restart App With Debugger"
                     description="Restarts the current application">
                 <keyboard-shortcut first-keystroke="control alt 7" keymap="$default"/>
             </action>
-            <action id="adbidea.action.ClearDataAndRestartWithDebuggerAction"
+            <action id="adbtools.action.ClearDataAndRestartWithDebuggerAction"
                     class="com.draekko.adbtools.action.ClearDataAndRestartWithDebuggerAction"
                     text="ADB Clear App Data and Restart With Debugger"
                     description="Clears the private storage of the app and restarts it">
                 <keyboard-shortcut first-keystroke="control alt 8" keymap="$default"/>
             </action>
-            <action id="adbidea.action.RebootAction"
+            <action id="adbtools.action.RebootAction"
                     class="com.draekko.adbtools.action.RebootAction"
                     text="ADB Reboot Device"
                     description="Reboot the device">
@@ -171,7 +176,7 @@
             <add-to-group group-id="MainMenu" relative-to-action="ToolsMenu" anchor="after"/>
         </group>
 
-        <action id="adbidea.action.ADBIdeaRunApp"
+        <action id="adbtools.action.ADBIdeaRunApp"
                 class="com.draekko.adbtools.action.RestartAction"
                 text="ADB Tools Run App"
                 icon="/icons/circle_run.png"
@@ -180,7 +185,7 @@
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt 3"/>
         </action>
 
-        <action id="adbidea.action.ADBIdeaDebugApp"
+        <action id="adbtools.action.ADBIdeaDebugApp"
                 class="com.draekko.adbtools.action.RestartWithDebuggerAction"
                 text="ADB Tools Debug App"
                 icon="/icons/circle_debug.png"
@@ -189,7 +194,7 @@
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt 7"/>
         </action>
 
-        <action id="adbidea.action.ADBIdeaKillApp"
+        <action id="adbtools.action.ADBIdeaKillApp"
                 class="com.draekko.adbtools.action.KillAction"
                 text="ADB Tools Kill App"
                 icon="/icons/circle_stop.png"

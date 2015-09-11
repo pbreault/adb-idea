@@ -8,6 +8,7 @@ import com.android.tools.idea.ddms.adb.AdbService;
 import com.draekko.adbtools.adb.command.receiver.GenericReceiver;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
+import com.google.common.util.concurrent.Uninterruptibles;
 import com.intellij.execution.*;
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.executors.DefaultDebugExecutor;
@@ -141,7 +142,6 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
         }
     }
 
-    // copied from AOSP since it changed between 0.4.3 and 0.4.4
     @Nullable
     public static String getDefaultLauncherActivityName(@NotNull Manifest manifest) {
         Application application = manifest.getApplication();
@@ -234,8 +234,11 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
 
     private boolean startDebugging(final IDevice device, final Project project, final String packageName) {
         Client clients[];
-        Client client;
-        if (device == null) throw new IllegalArgumentException(String.format("ERROR: startDebugging(): device == null"));
+        Client client = null;
+        if (device == null) {
+            throw new IllegalArgumentException(
+                    String.format("ERROR: startDebugging(): device == null"));
+        }
         info(String.format("Target device: " + device.getName(), ProcessOutputTypes.STDOUT));
 
         try {
@@ -245,33 +248,42 @@ public class StartDefaultActivityCommandWithDebugger implements Command {
                 return false;
             }
 
-            /* AS 0.8.9 */
-            /* boolean canDdmsBeCorrupted = AndroidSdkUtils.canDdmsBeCorrupted(bridge); */
-            /* as of AS 0.8.10 */
+            Uninterruptibles.sleepUninterruptibly(1, TimeUnit.SECONDS);
+
+            IDevice [] devices = bridge.getDevices();
+            for (int loop = 0; loop < devices.length; loop++) {
+                if (devices[loop] != null) {
+                    client = devices[loop].getClient(packageName);
+                }
+                if (client != null) break;
+            }
             boolean canDdmsBeCorrupted = AdbService.canDdmsBeCorrupted(bridge);
             if (bridge != null && canDdmsBeCorrupted) {
                 error(String.format("ERROR: ddms can be corrupted, can't start debugger."));
                 return false;
             }
 
-            if (device.hasClients()) {
-                client = null;
-                clients = device.getClients();
-                for (int i=0; i<clients.length; i++) {
-                    if (packageName.equalsIgnoreCase(clients[i].getClientData().getClientDescription())) {
-                        client = clients[i];
-                        break;
+            if (client == null) {
+                info("Trying to find client for device.");
+                if (device.hasClients()) {
+                    client = null;
+                    clients = device.getClients();
+                    for (int i=0; i<clients.length; i++) {
+                        if (packageName.equalsIgnoreCase(clients[i].getClientData().getClientDescription())) {
+                            client = clients[i];
+                            break;
+                        }
                     }
-                }
-                if (client == null) {
+                    if (client == null) {
+                        client = device.getClient(packageName);
+                    }
+                } else{
                     client = device.getClient(packageName);
                 }
-            } else{
-                client = device.getClient(packageName);
             }
 
             if (client == null) {
-                error(String.format("ERROR: client == null, can't start debugger."));
+                error(String.format("ERROR: Can't start debugger."));
                 return false;
             }
 

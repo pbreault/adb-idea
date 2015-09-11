@@ -17,12 +17,15 @@ public class QuickListAction extends QuickSwitchSchemeAction implements DumbAwar
             return;
         }
 
-        addAction("com.draekko.adbtools.action.UninstallAction", group);
-        addAction("com.draekko.adbtools.action.KillAction", group);
-        addAction("com.draekko.adbtools.action.StartAction", group);
-        addAction("com.draekko.adbtools.action.RestartAction", group);
-        addAction("com.draekko.adbtools.action.ClearDataAction", group);
-        addAction("com.draekko.adbtools.action.ClearDataAndRestartAction", group);
+        addAction("adbtools.action.UninstallAction", group);
+        addAction("adbtools.action.KillAction", group);
+        addAction("adbtools.action.StartAction", group);
+        addAction("adbtools.action.StartWithDebuggerAction", group);
+        addAction("adbtools.action.RestartAction", group);
+        addAction("adbtools.action.RestartWithDebuggerAction", group);
+        addAction("adbtools.action.ClearDataAction", group);
+        addAction("adbtools.action.ClearDataAndRestartAction", group);
+        addAction("adbtools.action.ClearDataAndRestartWithDebugerAction", group);
     }
 
     protected boolean isEnabled() {
