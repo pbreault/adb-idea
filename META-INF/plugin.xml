@@ -78,6 +78,12 @@
                     description="Uninstalls the current application">
             </action>
 
+            <action id="com.developerphil.adbidea.action.InstallAction"
+                    class="com.developerphil.adbidea.action.InstallAction"
+                    text="ADB Install App"
+                    description="Installs the current application">
+            </action>
+
             <action id="com.developerphil.adbidea.action.KillAction"
                     class="com.developerphil.adbidea.action.KillAction"
                     text="ADB Kill App"
@@ -103,6 +109,7 @@
                     text="ADB Clear App Data and Restart"
                     description="Clears the private storage of the app and restarts it">
             </action>
+
             <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
         </group>
     </actions>

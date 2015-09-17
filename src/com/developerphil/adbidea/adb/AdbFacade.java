@@ -3,6 +3,7 @@ package com.developerphil.adbidea.adb;
 import com.android.ddmlib.AndroidDebugBridge;
 import com.android.ddmlib.IDevice;
 import com.developerphil.adbidea.adb.command.*;
+import com.developerphil.adbidea.ui.ApkChooserDialog;
 import com.developerphil.adbidea.ui.DeviceChooserDialog;
 import com.developerphil.adbidea.ui.ModuleChooserDialogHelper;
 import com.google.common.collect.Lists;
@@ -13,6 +14,8 @@ import org.jetbrains.android.facet.AndroidFacet;
 import org.jetbrains.android.sdk.AndroidSdkUtils;
 import org.jetbrains.android.util.AndroidUtils;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,6 +28,46 @@ public class AdbFacade {
 
     public static void uninstall(Project project) {
         executeOnDevice(project, new UninstallCommand());
+    }
+
+    public static void install(Project project) {
+
+        final DeviceResult result = getDevice(project);
+        final List<File> apk = getApk(result.facet);
+        if (result != null && apk != null && !apk.isEmpty()) {
+            for (final IDevice device : result.devices) {
+                EXECUTOR.submit(new Runnable() {
+                    @Override
+                    public void run() {
+                        new InstallCommand().run(device, apk.get(0));
+                    }
+                });
+            }
+        } else {
+            error("No Device found");
+        }
+
+//        executeOnDevice(project, new InstallCommand());
+    }
+
+    private static List<File> getApk(AndroidFacet facet) {
+        List<File> items = new ArrayList<File>();
+        File file = new File(facet.getModule().getModuleFile().getParent().getPath() +
+                File.separator +
+                "build" +
+                File.separator +
+                "outputs" +
+                File.separator +
+                "apk"
+        );
+
+        if (file.exists()) {
+            items = Lists.newArrayList(file.listFiles());
+        }
+        ApkChooserDialog apkChooserDialog = new ApkChooserDialog(facet.getModule().getProject(), items);
+        apkChooserDialog.show();
+
+        return apkChooserDialog.getChosenElements();
     }
 
     public static void kill(Project project) {
