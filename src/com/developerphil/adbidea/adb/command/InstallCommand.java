@@ -12,17 +12,12 @@ public class InstallCommand{
     public boolean run(IDevice device, File apk) {
         try {
 
-            String errorCode = null;
             if (apk.exists()) {
-                errorCode = device.installPackage(apk.getAbsolutePath(), true, new String[]{});
+                device.installPackage(apk.getAbsolutePath(), true);
             }
 
-            if (errorCode == null) {
-                info(String.format("<b>%s</b> installed on %s", apk.getName(), device.getName()));
-                return true;
-            } else {
-                error(String.format("<b>%s</b> is not installed on %s\n%s", apk.getName(), device.getName(), errorCode));
-            }
+            info(String.format("<b>%s</b> installed on %s", apk.getName(), device.getName()));
+            return true;
         } catch (InstallException e1) {
             error("Install fail... " + e1.getMessage());
         }
