@@ -1,7 +1,7 @@
 <idea-plugin version="3" url="https://github.com/pbreault/adb-idea">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
     <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
     <description><![CDATA[
@@ -24,6 +24,10 @@
 
 
     <change-notes><![CDATA[
+        <b>1.2.3</b>
+        <ul>
+            <li>BUGFIX: NoSuchMethodError on Android Studio 1.5</li>
+        </ul>
         <b>1.2.2</b>
         <ul>
             <li>BUGFIX: Doesn't work on Android Studio 1.4 with multiple devices attached</li>
@@ -61,7 +65,8 @@
         ]]>
     </change-notes>
 
-    <idea-version since-build="107.105"/>
+    <!-- Android Studio 1.2 and Intellij 14-->
+    <idea-version since-build="141"/>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.android</depends>
