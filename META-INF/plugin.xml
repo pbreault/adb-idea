@@ -1,7 +1,7 @@
 <idea-plugin version="3" url="https://github.com/pbreault/adb-idea">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>1.2.6</version>
+    <version>1.2.7</version>
     <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
     <description><![CDATA[
@@ -24,6 +24,10 @@
 
 
     <change-notes><![CDATA[
+        <b>1.2.7</b>
+        <ul>
+            <li>BUGFIX: Can't start or restart on Android Studio 2.1 Preview</li>
+        </ul>
         <b>1.2.6</b>
         <ul>
             <li>BUGFIX: NoSuchMethodException on Android Studio 2.0 Preview 8</li>
