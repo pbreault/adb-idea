@@ -33,6 +33,6 @@ public class CanRunOnDeviceCompat extends BackwardCompatibleGetter<LaunchCompati
     @Override
     // Android Studio 2.0 Preview 7
     protected LaunchCompatibility getPreviousImplementation() {
-        return new CanRunOnDeviceCompatBeforeTwoDotZero(myMinSdkVersion, myProjectTarget, myRequiredHardwareFeatures, device).get();
+        return new CanRunOnDeviceCompatBefore2_0(myMinSdkVersion, myProjectTarget, myRequiredHardwareFeatures, device).get();
     }
 }

@@ -2,7 +2,7 @@ package com.developerphil.adbidea.adb.command;
 
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.MultiLineReceiver;
-import com.developerphil.adbidea.adb.AdbUtil;
+import com.developerphil.adbidea.compatibility.GetDefaultLauncherActivityNameCompat;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.intellij.openapi.application.ApplicationManager;
@@ -21,7 +21,7 @@ public class StartDefaultActivityCommand implements Command {
 
     @Override
     public boolean run(Project project, IDevice device, AndroidFacet facet, String packageName) {
-        String defaultActivityName = getDefaultActivityName(facet);
+        String defaultActivityName = getDefaultActivityName(project, facet);
         String component = packageName + "/" + defaultActivityName;
 
         try {
@@ -40,14 +40,14 @@ public class StartDefaultActivityCommand implements Command {
         return false;
     }
 
-    private String getDefaultActivityName(final AndroidFacet facet) {
+    private String getDefaultActivityName(final Project project, final AndroidFacet facet) {
         return ApplicationManager.getApplication().runReadAction(new Computable<String>() {
             @Override
             public String compute() {
                 return ApplicationManager.getApplication().runReadAction(new Computable<String>() {
                     @Override
                     public String compute() {
-                        return AdbUtil.getDefaultLauncherActivityName(facet);
+                        return new GetDefaultLauncherActivityNameCompat(project, facet).get();
                     }
                 });
             }

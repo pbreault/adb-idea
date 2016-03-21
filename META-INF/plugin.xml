@@ -77,8 +77,8 @@
         ]]>
     </change-notes>
 
-    <!-- Android Studio 1.3 and Intellij 14.1 -->
-    <idea-version since-build="141.1532"/>
+    <!-- Android Studio 2.0 and Intellij 15 -->
+    <idea-version since-build="143.1184"/>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.android</depends>

@@ -10,14 +10,14 @@ import org.joor.Reflect;
 import java.util.EnumSet;
 
 // Up until android studio 2.0 preview 8
-public class CanRunOnDeviceCompatBeforeTwoDotZero extends BackwardCompatibleGetter<LaunchCompatibility> {
+public class CanRunOnDeviceCompatBefore2_0 extends BackwardCompatibleGetter<LaunchCompatibility> {
 
     private final AndroidVersion myMinSdkVersion;
     private final IAndroidTarget myProjectTarget;
     private final EnumSet<IDevice.HardwareFeature> myRequiredHardwareFeatures;
     private final IDevice device;
 
-    public CanRunOnDeviceCompatBeforeTwoDotZero(AndroidVersion myMinSdkVersion, IAndroidTarget myProjectTarget, EnumSet<IDevice.HardwareFeature> myRequiredHardwareFeatures, IDevice device) {
+    public CanRunOnDeviceCompatBefore2_0(AndroidVersion myMinSdkVersion, IAndroidTarget myProjectTarget, EnumSet<IDevice.HardwareFeature> myRequiredHardwareFeatures, IDevice device) {
         this.myMinSdkVersion = myMinSdkVersion;
         this.myProjectTarget = myProjectTarget;
         this.myRequiredHardwareFeatures = myRequiredHardwareFeatures;
