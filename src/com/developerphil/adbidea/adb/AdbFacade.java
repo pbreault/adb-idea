@@ -46,6 +46,10 @@ public class AdbFacade {
     public static void clearDataAndRestart(Project project) {
         executeOnDevice(project, new ClearDataAndRestartCommand());
     }
+    
+    public static void toggleDisplay(Project project) {
+        executeOnDevice(project, new ToggleDisplayCommand());
+    }
 
     private static void executeOnDevice(final Project project, final Command runnable) {
         final DeviceResult result = getDevice(project);
