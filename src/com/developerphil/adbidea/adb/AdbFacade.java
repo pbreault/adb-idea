@@ -3,6 +3,7 @@ package com.developerphil.adbidea.adb;
 import com.android.ddmlib.AndroidDebugBridge;
 import com.android.ddmlib.IDevice;
 import com.developerphil.adbidea.adb.command.*;
+import com.developerphil.adbidea.ui.ApkChooserDialog;
 import com.developerphil.adbidea.ui.DeviceChooserDialog;
 import com.developerphil.adbidea.ui.ModuleChooserDialogHelper;
 import com.google.common.collect.Lists;
@@ -13,6 +14,8 @@ import org.jetbrains.android.facet.AndroidFacet;
 import org.jetbrains.android.sdk.AndroidSdkUtils;
 import org.jetbrains.android.util.AndroidUtils;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,6 +28,29 @@ public class AdbFacade {
 
     public static void uninstall(Project project) {
         executeOnDevice(project, new UninstallCommand());
+    }
+
+    public static void install(Project project) {
+
+        final DeviceResult result = getDevice(project);
+        if (result == null) {
+            error("No Device found");
+        } else {
+            final List<File> apk = getApk(result.facet);
+            if (apk != null && !apk.isEmpty()) {
+                for (final IDevice device : result.devices) {
+                    EXECUTOR.submit(new Runnable() {
+                        @Override
+                        public void run() {
+                            new InstallCommand().run(device, apk.get(0));
+                        }
+                    });
+                }
+            } else {
+                error("No Apk File found");
+            }
+        }
+
     }
 
     public static void kill(Project project) {
@@ -95,6 +121,31 @@ public class AdbFacade {
             }
         }
         return null;
+    }
+
+    private static List<File> getApk(AndroidFacet facet) {
+        List<File> items = new ArrayList<File>();
+        File file = new File(facet.getModule().getModuleFile().getParent().getPath() +
+                File.separator +
+                "build" +
+                File.separator +
+                "outputs" +
+                File.separator +
+                "apk"
+        );
+
+        if (file.exists()) {
+            items = Lists.newArrayList(file.listFiles());
+        }
+
+        if (items == null || items.isEmpty()) {
+            return new ArrayList<File>();
+        }
+
+        ApkChooserDialog apkChooserDialog = new ApkChooserDialog(facet.getModule().getProject(), items);
+        apkChooserDialog.show();
+
+        return apkChooserDialog.getChosenElements();
     }
 
     private static List<AndroidFacet> getApplicationFacets(Project project) {
