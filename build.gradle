@@ -1,0 +1,28 @@
+plugins {
+  id 'org.jetbrains.intellij' version "0.0.43"
+}
+
+apply plugin: 'org.jetbrains.intellij'
+apply plugin: 'groovy'
+
+sourceCompatibility = 1.6
+
+intellij {
+  version project.hasProperty('ideaVersion') ? ideaVersion : 'IC-15.0.5'
+  plugins 'android'
+  pluginName 'adb-idea'
+}
+
+sourceSets {
+    main.resources.srcDirs += '.'
+
+    test.java.srcDirs += 'test'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testCompile 'org.junit:com.springsource.org.junit:4.11.0'
+}

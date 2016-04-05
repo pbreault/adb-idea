@@ -26,6 +26,12 @@ The Menu Way
 You can find every command in the following menu:
 `Tools->Android->ADB Idea` 
 
+Build
+=====
+
+For build plugin can be use [gradle-intellij-plugin](https://github.com/JetBrains/gradle-intellij-plugin).
+For details info about [build-steps](https://github.com/JetBrains/gradle-intellij-plugin#build-steps) see plugin documentation
+
 
 Installation
 ========
