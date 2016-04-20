@@ -1,7 +1,8 @@
+apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion "22.0.1"
 
     defaultConfig {
@@ -34,3 +35,4 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:+'
 }
+

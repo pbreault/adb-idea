@@ -1,0 +1,7 @@
+# Copy this file as gradle.properties and assign AndroidStudioPath to the path of your target Android Studio. It will be used for both compiling and running the adb-idea plugin.
+#
+# In OS X it will typically have the following value:
+AndroidStudioPath=/Applications/Android Studio.app/Contents
+#
+# You'll know it's right if you can find $AndroidStudioPath/lib/idea.jar
+#
