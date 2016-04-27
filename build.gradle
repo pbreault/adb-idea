@@ -1,0 +1,41 @@
+
+plugins {
+    id "org.jetbrains.intellij" version "0.0.43"
+}
+
+apply plugin: 'org.jetbrains.intellij'
+apply plugin: 'java'
+
+sourceSets {
+    main {
+        resources {
+            exclude 'website/adb_operations_popup.pn'
+            exclude 'website/find_actions.png'
+        }
+    }
+}
+
+intellij {
+    version 'IC-15.0.5' // this value is not important, as long as you can compile
+
+    pluginName 'adb_idea'
+    updateSinceUntilBuild false
+
+    intellij.alternativeIdePath = AndroidStudioPath
+
+}
+
+group 'com.developerphil.intellij.plugin.adbidea'
+def majorVersion = '1.3.0-experimental'
+
+dependencies {
+    compileOnly fileTree(dir: "$AndroidStudioPath/plugins/android/lib", include: ['*.jar'])
+    compileOnly fileTree(dir: "$AndroidStudioPath/lib", include: ['*.jar'])
+
+}
+
+configurations {
+    compile.exclude module:'android'
+    compile.exclude module:'idea'
+}
+
