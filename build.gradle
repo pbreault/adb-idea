@@ -1,4 +1,3 @@
-
 plugins {
     id "org.jetbrains.intellij" version "0.1.10"
 }
@@ -15,36 +14,39 @@ sourceSets {
     }
 }
 
+if (!hasProperty('StudioCompilePath')) {
+    throw new GradleException("No StudioCompilePath value was set, please create gradle.properties file")
+}
+
 intellij {
     version 'IC-15.0.5' // this value is not important, as long as you can compile
 
     pluginName 'adb_idea'
     updateSinceUntilBuild false
 
-    intellij.alternativeIdePath = AndroidStudioPath
-
+    intellij.alternativeIdePath = project.hasProperty("StudioRunPath") ? StudioRunPath : StudioCompilePath
 }
 
 group 'com.developerphil.intellij.plugin.adbidea'
-def majorVersion = '1.3.0-experimental'
 
+def majorVersion = '1.3.0-experimental'
 dependencies {
-    compileOnly fileTree(dir: "$AndroidStudioPath/plugins/android/lib", include: ['*.jar'])
-    compileOnly fileTree(dir: "$AndroidStudioPath/lib", include: ['*.jar'])
+    compileOnly fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
+    compileOnly fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
 
 }
 
 configurations {
-    compile.exclude module:'idea'
+    compile.exclude module: 'idea'
 }
-
 
 task(verifySetup) << {
 
-    def ideaJar = "$AndroidStudioPath/lib/idea.jar"
-    if ( ! file(ideaJar).exists() ) {
-        throw new GradleException("$ideaJar not found, set AndroidStudioPath in gradle.properties")
+    def ideaJar = "$StudioCompilePath/lib/idea.jar"
+    if (!file(ideaJar).exists()) {
+        throw new GradleException("$ideaJar not found, set StudioCompilePath in gradle.properties")
     }
 }
+
 
 compileJava.dependsOn verifySetup

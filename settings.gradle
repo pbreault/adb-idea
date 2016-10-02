@@ -1,3 +1,0 @@
-if ( ! hasProperty('AndroidStudioPath') ) {
-    throw new GradleException("No AndroidStudioPath value was set, please create gradle.properties file")
-}
