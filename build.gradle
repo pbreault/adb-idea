@@ -1,8 +1,25 @@
+buildscript {
+
+    ext.kotlin_version = '1.0.4'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
 plugins {
     id "org.jetbrains.intellij" version "0.1.10"
 }
 
+
+
+
+
 apply plugin: 'java'
+apply plugin: 'kotlin'
 
 
 repositories {
@@ -35,6 +52,8 @@ intellij {
 group 'com.developerphil.intellij.plugin.adbidea'
 
 dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
+    compile "org.jetbrains.kotlin:kotlin-runtime:${kotlin_version}"
     compileOnly fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
     compileOnly fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
 
