@@ -4,6 +4,11 @@ plugins {
 
 apply plugin: 'java'
 
+
+repositories {
+    mavenCentral()
+}
+
 sourceSets {
     main {
         resources {
@@ -29,10 +34,14 @@ intellij {
 
 group 'com.developerphil.intellij.plugin.adbidea'
 
-def majorVersion = '1.3.0-experimental'
 dependencies {
     compileOnly fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
     compileOnly fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
+
+    testCompile 'junit:junit:4.12'
+    testCompile fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
+    testCompile fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
+
 
 }
 
