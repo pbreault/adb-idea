@@ -1,18 +1,21 @@
 package com.developerphil.adbidea.ui;
 
 import com.android.ddmlib.IDevice;
-import com.intellij.ide.util.PropertiesComponent;
+import com.developerphil.adbidea.PluginPreferences;
+import com.developerphil.adbidea.PluginPreferencesImpl;
+import com.developerphil.adbidea.accessor.preference.ProjectPreferenceAccessor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.Disposer;
 import org.jetbrains.android.facet.AndroidFacet;
 import org.jetbrains.android.util.AndroidBundle;
-import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joor.Reflect;
 
 import javax.swing.*;
+import java.util.stream.Collectors;
+
+import static java.util.Arrays.stream;
 
 public class DeviceChooserDialog extends DialogWrapper {
     private final Project myProject;
@@ -21,52 +24,35 @@ public class DeviceChooserDialog extends DialogWrapper {
     private JPanel myPanel;
     private JPanel myDeviceChooserWrapper;
 
-    @NonNls
-    private static final String SELECTED_SERIALS_PROPERTY = DeviceChooserDialog.class.getCanonicalName() + "-SELECTED_DEVICES";
+    private final PluginPreferences pluginPreferences;
 
     public DeviceChooserDialog(@NotNull final AndroidFacet facet) {
         super(facet.getModule().getProject(), true);
         setTitle(AndroidBundle.message("choose.device.dialog.title"));
 
         myProject = facet.getModule().getProject();
-        final PropertiesComponent properties = PropertiesComponent.getInstance(myProject);
+        pluginPreferences = new PluginPreferencesImpl(new ProjectPreferenceAccessor(myProject));
 
         getOKAction().setEnabled(false);
 
         myDeviceChooser = new MyDeviceChooser(true, getOKAction(), facet, facet.getConfiguration().getAndroidTarget(), null);
         Disposer.register(myDisposable, myDeviceChooser);
-        myDeviceChooser.addListener(new DeviceChooserListener() {
-            @Override
-            public void selectedDevicesChanged() {
-                    updateOkButton();
-            }
-        });
+        myDeviceChooser.addListener(this::updateOkButton);
 
         myDeviceChooserWrapper.add(myDeviceChooser.getPanel());
 
-        final String[] selectedSerials = getSelectedSerialsFromPreferences(properties);
-        myDeviceChooser.init(selectedSerials);
+        myDeviceChooser.init(pluginPreferences.getSelectedDeviceSerials());
 
         init();
 
         updateEnabled();
     }
 
-    @Nullable
-    private String[] getSelectedSerialsFromPreferences(PropertiesComponent properties) {
-        final String[] selectedSerials;
-        final String serialsStr = properties.getValue(SELECTED_SERIALS_PROPERTY);
-        if (serialsStr != null) {
-            selectedSerials = serialsStr.split(" ");
-        } else {
-            selectedSerials = null;
-        }
-        return selectedSerials;
-    }
-
     private void persistSelectedSerialsToPreferences() {
-        final PropertiesComponent properties = PropertiesComponent.getInstance(myProject);
-        properties.setValue(SELECTED_SERIALS_PROPERTY, toString(myDeviceChooser.getSelectedDevices()));
+        pluginPreferences.saveSelectedDeviceSerials(
+                stream(myDeviceChooser.getSelectedDevices())
+                        .map(IDevice::getSerialNumber)
+                        .collect(Collectors.toList()));
     }
 
     private void updateOkButton() {

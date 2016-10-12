@@ -206,6 +206,10 @@ public class MyDeviceChooser implements Disposable {
     addUpdatingRequest();
   }
 
+  public void init(List<String> selectedSerials) {
+    init(selectedSerials.stream().toArray(String[]::new));
+  }
+
   private void updatePreviouslySelectedSerials() {
     if (previouslySelectedSerials != null && !hadUserInteraction) {
       resetSelection(previouslySelectedSerials);

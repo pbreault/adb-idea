@@ -62,7 +62,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
     testCompile fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
-
+    testCompile "org.mockito:mockito-core:1.+"
 
 }
 
