@@ -1,5 +1,6 @@
 package com.developerphil.adbidea.dagger;
 
+import com.developerphil.adbidea.adb.DeviceResultFetcher;
 import com.developerphil.adbidea.PluginPreferences;
 import com.developerphil.adbidea.PluginPreferencesImpl;
 import com.developerphil.adbidea.accessor.preference.PreferenceAccessor;
@@ -31,5 +32,9 @@ public class PluginModule {
         return new PluginPreferencesImpl(preferenceAccessor);
     }
 
+    @Provides
+    DeviceResultFetcher provideDeviceResultFetcher() {
+        return new DeviceResultFetcher(project);
+    }
 
 }
