@@ -14,7 +14,20 @@
         </constraints>
         <properties/>
         <border type="none"/>
-        <children/>
+        <children>
+          <component id="fd959" class="javax.swing.JCheckBox" binding="useSameDeviceSCheckBox" default-binding="true">
+            <constraints border-constraint="South"/>
+            <properties>
+              <borderPainted value="true"/>
+              <margin top="1" left="1" bottom="1" right="1"/>
+              <maximumSize width="280" height="25"/>
+              <minimumSize width="280" height="25"/>
+              <preferredSize width="280" height="25"/>
+              <text value="Use same device(s) for future commands"/>
+              <verticalAlignment value="3"/>
+            </properties>
+          </component>
+        </children>
       </grid>
     </children>
   </grid>

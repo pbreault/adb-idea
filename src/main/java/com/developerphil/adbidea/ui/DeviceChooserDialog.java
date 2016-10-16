@@ -23,6 +23,7 @@ public class DeviceChooserDialog extends DialogWrapper {
 
     private JPanel myPanel;
     private JPanel myDeviceChooserWrapper;
+    private JCheckBox useSameDeviceSCheckBox;
 
     @Inject
     PluginPreferences pluginPreferences;
