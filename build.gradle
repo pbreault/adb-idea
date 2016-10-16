@@ -4,9 +4,11 @@ buildscript {
 
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "net.ltgt.gradle:gradle-apt-plugin:0.9"
     }
 }
 
@@ -36,6 +38,12 @@ sourceSets {
             exclude 'website/debug_howto.png'
         }
     }
+
+    main.java.srcDirs += 'build/generated/source/kapt/main'
+}
+
+kapt {
+    generateStubs = true
 }
 
 if (!hasProperty('StudioCompilePath')) {
@@ -58,6 +66,8 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-runtime:${kotlin_version}"
     compileOnly fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
     compileOnly fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
+    compile 'com.google.dagger:dagger:2.6'
+    kapt "com.google.dagger:dagger-compiler:2.6"
 
     testCompile 'junit:junit:4.12'
     testCompile fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])

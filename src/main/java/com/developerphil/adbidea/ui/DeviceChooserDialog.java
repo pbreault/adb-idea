@@ -1,9 +1,8 @@
 package com.developerphil.adbidea.ui;
 
 import com.android.ddmlib.IDevice;
+import com.developerphil.adbidea.ObjectGraph;
 import com.developerphil.adbidea.PluginPreferences;
-import com.developerphil.adbidea.PluginPreferencesImpl;
-import com.developerphil.adbidea.accessor.preference.ProjectPreferenceAccessor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.Disposer;
@@ -12,6 +11,7 @@ import org.jetbrains.android.util.AndroidBundle;
 import org.jetbrains.annotations.NotNull;
 import org.joor.Reflect;
 
+import javax.inject.Inject;
 import javax.swing.*;
 import java.util.stream.Collectors;
 
@@ -24,14 +24,15 @@ public class DeviceChooserDialog extends DialogWrapper {
     private JPanel myPanel;
     private JPanel myDeviceChooserWrapper;
 
-    private final PluginPreferences pluginPreferences;
+    @Inject
+    PluginPreferences pluginPreferences;
 
     public DeviceChooserDialog(@NotNull final AndroidFacet facet) {
         super(facet.getModule().getProject(), true);
         setTitle(AndroidBundle.message("choose.device.dialog.title"));
 
         myProject = facet.getModule().getProject();
-        pluginPreferences = new PluginPreferencesImpl(new ProjectPreferenceAccessor(myProject));
+        myProject.getComponent(ObjectGraph.class).inject(this);
 
         getOKAction().setEnabled(false);
 

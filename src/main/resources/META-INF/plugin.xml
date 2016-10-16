@@ -102,7 +102,7 @@
                 <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="shift ctrl A"/>
                 <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt A"/>
             </action>
-            <separator />
+            <separator/>
             <action id="com.developerphil.adbidea.action.UninstallAction"
                     class="com.developerphil.adbidea.action.UninstallAction"
                     text="ADB Uninstall App"
@@ -137,4 +137,10 @@
             <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
         </group>
     </actions>
+
+    <project-components>
+        <component>
+            <implementation-class>com.developerphil.adbidea.ObjectGraph</implementation-class>
+        </component>
+    </project-components>
 </idea-plugin>
