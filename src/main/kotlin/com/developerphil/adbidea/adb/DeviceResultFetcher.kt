@@ -8,42 +8,40 @@ import com.google.common.collect.Lists
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import org.jetbrains.android.facet.AndroidFacet
-import org.jetbrains.android.sdk.AndroidSdkUtils
 import org.jetbrains.android.util.AndroidUtils
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class DeviceResultFetcher @Inject constructor(private val project: Project) {
+
+class DeviceResultFetcher constructor(private val project: Project, private val useSameDevicesHelper: UseSameDevicesHelper, private val bridge: Bridge) {
 
     fun fetch(): DeviceResult? {
         val facets = getApplicationFacets(project)
         if (!facets.isEmpty()) {
-            val facet = getFacet() ?: return null
+            val facet = getFacet(facets) ?: return null
             val packageName = AdbUtil.computePackageName(facet) ?: return null
 
-            val bridge = AndroidSdkUtils.getDebugBridge(project)
-            if (bridge == null) {
+            if (!bridge.isReady()) {
                 NotificationHelper.error("No platform configured")
                 return null
             }
 
-            if (bridge.isConnected && bridge.hasInitialDeviceList()) {
-                val devices = bridge.devices
-                if (devices.size == 1) {
-                    return DeviceResult(devices.asList(), facet, packageName)
-                } else if (devices.size > 1) {
-                    return showDeviceChooserDialog(facet, packageName)
-                } else {
-                    return null
-                }
+            val rememberedDevices = useSameDevicesHelper.getRememberedDevices()
+            if (rememberedDevices.isNotEmpty()) {
+                return DeviceResult(rememberedDevices, facet, packageName)
+            }
+
+            val devices = bridge.connectedDevices()
+            if (devices.size == 1) {
+                return DeviceResult(devices, facet, packageName)
+            } else if (devices.size > 1) {
+                return showDeviceChooserDialog(facet, packageName)
+            } else {
+                return null
             }
         }
         return null
     }
 
-    private fun getFacet(): AndroidFacet? {
-        val facets = getApplicationFacets(project)
+    private fun getFacet(facets: List<AndroidFacet>): AndroidFacet? {
         val facet: AndroidFacet?
         if (facets.size > 1) {
             facet = ModuleChooserDialogHelper.showDialogForFacets(project, facets)
@@ -77,7 +75,13 @@ class DeviceResultFetcher @Inject constructor(private val project: Project) {
             return null
         }
 
+
         val selectedDevices = chooser.selectedDevices
+
+        if (chooser.useSameDevices()) {
+            useSameDevicesHelper.rememberDevices()
+        }
+
         if (selectedDevices.size == 0) {
             return null
         }

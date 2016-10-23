@@ -1,10 +1,13 @@
 package com.developerphil.adbidea.dagger;
 
-import com.developerphil.adbidea.adb.DeviceResultFetcher;
 import com.developerphil.adbidea.PluginPreferences;
 import com.developerphil.adbidea.PluginPreferencesImpl;
 import com.developerphil.adbidea.accessor.preference.PreferenceAccessor;
 import com.developerphil.adbidea.accessor.preference.ProjectPreferenceAccessor;
+import com.developerphil.adbidea.adb.Bridge;
+import com.developerphil.adbidea.adb.BridgeImpl;
+import com.developerphil.adbidea.adb.DeviceResultFetcher;
+import com.developerphil.adbidea.adb.UseSameDevicesHelper;
 import com.intellij.openapi.project.Project;
 import dagger.Module;
 import dagger.Provides;
@@ -21,6 +24,11 @@ public class PluginModule {
     }
 
     @Singleton
+    @Provides Project provideProject() {
+        return project;
+    }
+
+    @Singleton
     @Provides
     PreferenceAccessor providePreferenceAccessor() {
         return new ProjectPreferenceAccessor(project);
@@ -32,9 +40,20 @@ public class PluginModule {
         return new PluginPreferencesImpl(preferenceAccessor);
     }
 
+    @Singleton
     @Provides
-    DeviceResultFetcher provideDeviceResultFetcher() {
-        return new DeviceResultFetcher(project);
+    UseSameDevicesHelper provideUseSameDeviceController(PluginPreferences preferences, Bridge bridge) {
+        return new UseSameDevicesHelper(preferences, bridge);
+    }
+
+    @Provides
+    DeviceResultFetcher provideDeviceResultFetcher(UseSameDevicesHelper useSameDevicesHelper, Bridge bridge) {
+        return new DeviceResultFetcher(project, useSameDevicesHelper, bridge);
+    }
+
+    @Provides
+    Bridge provideBridge(BridgeImpl bridgeImpl) {
+        return bridgeImpl;
     }
 
 }

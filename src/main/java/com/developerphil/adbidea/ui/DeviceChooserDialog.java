@@ -97,6 +97,10 @@ public class DeviceChooserDialog extends DialogWrapper {
         return myDeviceChooser.getSelectedDevices();
     }
 
+    public boolean useSameDevices() {
+        return useSameDeviceSCheckBox.isSelected();
+    }
+
     @NotNull
     public static String toString(@NotNull IDevice[] devices) {
         StringBuilder builder = new StringBuilder();
