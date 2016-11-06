@@ -2,7 +2,9 @@ package com.developerphil.adbidea.adb.command;
 
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.MultiLineReceiver;
+import com.developerphil.adbidea.adb.ShellCommandsFactory;
 import com.developerphil.adbidea.compatibility.GetDefaultLauncherActivityNameCompat;
+import com.developerphil.adbidea.debugger.Debugger;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.intellij.openapi.application.ApplicationManager;
@@ -19,14 +21,25 @@ import static com.developerphil.adbidea.ui.NotificationHelper.info;
 
 public class StartDefaultActivityCommand implements Command {
 
+    private final boolean withDebugger;
+
+    public StartDefaultActivityCommand(boolean withDebugger) {
+        this.withDebugger = withDebugger;
+    }
+
     @Override
     public boolean run(Project project, IDevice device, AndroidFacet facet, String packageName) {
-        String defaultActivityName = getDefaultActivityName(project, facet);
-        String component = packageName + "/" + defaultActivityName;
-
         try {
+            String activityName = getDefaultActivityName(project, facet);
             StartActivityReceiver receiver = new StartActivityReceiver();
-            device.executeShellCommand("am start " + component, receiver, 15L, TimeUnit.SECONDS);
+            String shellCommand = ShellCommandsFactory.startActivity(packageName, activityName, withDebugger);
+
+            device.executeShellCommand(shellCommand, receiver, 15L, TimeUnit.SECONDS);
+
+            if (withDebugger) {
+                new Debugger(project, device, packageName).attach();
+            }
+
             if (receiver.isSuccess()) {
                 info(String.format("<b>%s</b> started on %s", packageName, device.getName()));
                 return true;
@@ -44,12 +57,7 @@ public class StartDefaultActivityCommand implements Command {
         return ApplicationManager.getApplication().runReadAction(new Computable<String>() {
             @Override
             public String compute() {
-                return ApplicationManager.getApplication().runReadAction(new Computable<String>() {
-                    @Override
-                    public String compute() {
-                        return new GetDefaultLauncherActivityNameCompat(project, facet).get();
-                    }
-                });
+                return new GetDefaultLauncherActivityNameCompat(project, facet).get();
             }
         });
     }

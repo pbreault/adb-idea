@@ -24,11 +24,19 @@ public class AdbFacade {
     }
 
     public static void startDefaultActivity(Project project) {
-        executeOnDevice(project, new StartDefaultActivityCommand());
+        executeOnDevice(project, new StartDefaultActivityCommand(false));
+    }
+
+    public static void startDefaultActivityWithDebugger(Project project) {
+        executeOnDevice(project, new StartDefaultActivityCommand(true));
     }
 
     public static void restartDefaultActivity(Project project) {
         executeOnDevice(project, new RestartPackageCommand());
+    }
+
+    public static void restartDefaultActivityWithDebugger(Project project) {
+        executeOnDevice(project, new CommandList(new KillCommand(), new StartDefaultActivityCommand(true)));
     }
 
     public static void clearData(Project project) {

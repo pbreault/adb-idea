@@ -24,6 +24,7 @@
 
 
     <change-notes><![CDATA[
+
         <b>1.3.0</b>
         <ul>
             <li>FEATURE: Checkbox to reuse the same devices for the current session</li>
@@ -138,6 +139,17 @@
                     class="com.developerphil.adbidea.action.ClearDataAndRestartAction"
                     text="ADB Clear App Data and Restart"
                     description="Clears the private storage of the app and restarts it">
+            </action>
+            <action id="com.developerphil.adbidea.action.StartWithDebuggerAction"
+                    class="com.developerphil.adbidea.action.StartWithDebuggerAction"
+                    text="ADB Start App With Debugger"
+                    description="Starts the current application and attach the debugger">
+            </action>
+
+            <action id="com.developerphil.adbidea.action.RestartWithDebuggerAction"
+                    class="com.developerphil.adbidea.action.RestartWithDebuggerAction"
+                    text="ADB Restart App With Debugger"
+                    description="Restarts the current application and attach the debugger">
             </action>
             <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
         </group>
