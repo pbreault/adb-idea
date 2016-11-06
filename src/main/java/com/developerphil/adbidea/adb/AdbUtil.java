@@ -6,6 +6,7 @@ import com.android.ddmlib.ShellCommandUnresponsiveException;
 import com.android.ddmlib.TimeoutException;
 import com.developerphil.adbidea.adb.command.receiver.GenericReceiver;
 import org.jetbrains.android.facet.AndroidFacet;
+import org.joor.Reflect;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -36,6 +37,18 @@ public class AdbUtil {
         }
 
         return null;
+    }
+
+    // The android debugger class is not available in Intellij 2016.1.
+    // Nobody should use that version but it's still the minimum "supported" version since android studio 2.2
+    // shares the same base version.
+    public static Boolean isDebuggingAvailable() {
+        try {
+            Reflect.on("com.android.tools.idea.run.editor.AndroidDebugger").get();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }

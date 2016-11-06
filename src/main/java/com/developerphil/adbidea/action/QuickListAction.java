@@ -7,8 +7,9 @@ import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class QuickListAction extends QuickSwitchSchemeAction implements DumbAware {
+import static com.developerphil.adbidea.adb.AdbUtil.isDebuggingAvailable;
 
+public class QuickListAction extends QuickSwitchSchemeAction implements DumbAware {
     protected void fillActions(@Nullable final Project project,
                                @NotNull final DefaultActionGroup group,
                                @NotNull final DataContext dataContext) {
@@ -24,10 +25,12 @@ public class QuickListAction extends QuickSwitchSchemeAction implements DumbAwar
         addAction("com.developerphil.adbidea.action.ClearDataAction", group);
         addAction("com.developerphil.adbidea.action.ClearDataAndRestartAction", group);
 
-        group.addSeparator();
+        if (isDebuggingAvailable()) {
+            group.addSeparator();
 
-        addAction("com.developerphil.adbidea.action.StartWithDebuggerAction", group);
-        addAction("com.developerphil.adbidea.action.RestartWithDebuggerAction", group);
+            addAction("com.developerphil.adbidea.action.StartWithDebuggerAction", group);
+            addAction("com.developerphil.adbidea.action.RestartWithDebuggerAction", group);
+        }
 
     }
 
