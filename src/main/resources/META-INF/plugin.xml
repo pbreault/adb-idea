@@ -1,7 +1,7 @@
 <idea-plugin version="3" url="https://github.com/pbreault/adb-idea">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
     <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
     <description><![CDATA[
@@ -24,7 +24,10 @@
 
 
     <change-notes><![CDATA[
-
+        <b>1.4.0</b>
+        <ul>
+          <li>FEATURE: Restart the app and attach the debugger</li>
+        </ul>
         <b>1.3.0</b>
         <ul>
             <li>FEATURE: Checkbox to reuse the same devices for the current session</li>
