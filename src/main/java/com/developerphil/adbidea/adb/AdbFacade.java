@@ -61,6 +61,15 @@ public class AdbFacade {
         executeOnDevice(project, new ClearDataAndRestartCommand());
     }
 
+    public static void pressPower(Project project) {
+        executeOnDevice(project, new PressPowerCommand());
+    }
+
+    public static void toggleInternet(Project project,boolean toggle) {
+        executeOnDevice(project, new ToggleInternet(toggle));
+
+    }
+
     private static void executeOnDevice(final Project project, final Command runnable) {
 
         if (isGradleSyncInProgress(project)) {

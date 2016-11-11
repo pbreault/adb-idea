@@ -25,6 +25,10 @@ public class QuickListAction extends QuickSwitchSchemeAction implements DumbAwar
         addAction("com.developerphil.adbidea.action.ClearDataAction", group);
         addAction("com.developerphil.adbidea.action.ClearDataAndRestartAction", group);
         addAction("com.developerphil.adbidea.action.RevokePermissionsAction", group);
+        addAction("com.developerphil.adbidea.action.PressPower", group);
+        addAction("com.developerphil.adbidea.action.InternetOff", group);
+        addAction("com.developerphil.adbidea.action.InternetOn", group);
+
 
         if (isDebuggingAvailable()) {
             group.addSeparator();
