@@ -1,7 +1,7 @@
 <idea-plugin version="3" url="https://github.com/pbreault/adb-idea">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
     <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
     <description><![CDATA[
@@ -24,6 +24,10 @@
 
 
     <change-notes><![CDATA[
+        <b>1.4.1</b>
+        <ul>
+          <li>BUGFIX: No Device </li>
+        </ul>
         <b>1.4.0</b>
         <ul>
           <li>FEATURE: Restart the app and attach the debugger</li>
