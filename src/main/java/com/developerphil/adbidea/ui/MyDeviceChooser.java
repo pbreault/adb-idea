@@ -20,7 +20,6 @@ import com.android.ddmlib.AndroidDebugBridge;
 import com.android.ddmlib.IDevice;
 import com.android.sdklib.AndroidVersion;
 import com.android.sdklib.IAndroidTarget;
-import com.android.tools.idea.ddms.DeviceRenderer;
 import com.android.tools.idea.model.AndroidModuleInfo;
 import com.android.tools.idea.run.LaunchCompatibility;
 import com.developerphil.adbidea.compatibility.CanRunOnDeviceCompat;
@@ -113,7 +112,7 @@ public class MyDeviceChooser implements Disposable {
 
     myFacet = facet;
     myFilter = filter;
-    myMinSdkVersion = AndroidModuleInfo.get(facet).getRuntimeMinSdkVersion();
+    myMinSdkVersion = AndroidModuleInfo.getInstance(facet).getRuntimeMinSdkVersion();
     myProjectTarget = projectTarget;
     if (new IsWatchFeatureRequiredCompat(facet).get()) {
       myRequiredHardwareFeatures = EnumSet.of(IDevice.HardwareFeature.WATCH);
@@ -150,7 +149,6 @@ public class MyDeviceChooser implements Disposable {
     }.installOn(myDeviceTable);
 
     myDeviceTable.setDefaultRenderer(LaunchCompatibility.class, new LaunchCompatibilityRenderer());
-    myDeviceTable.setDefaultRenderer(IDevice.class, new DeviceRenderer.DeviceNameRenderer(facet.getAvdManagerSilently()));
     myDeviceTable.addKeyListener(new KeyAdapter() {
       @Override
       public void keyPressed(KeyEvent e) {

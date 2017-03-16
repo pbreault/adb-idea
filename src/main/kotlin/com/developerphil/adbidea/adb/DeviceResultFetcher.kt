@@ -17,7 +17,7 @@ class DeviceResultFetcher constructor(private val project: Project, private val 
         val facets = getApplicationFacets(project)
         if (!facets.isEmpty()) {
             val facet = getFacet(facets) ?: return null
-            val packageName = AdbUtil.computePackageName(facet) ?: return null
+            val packageName = facet.androidModel?.applicationId ?: return null
 
             if (!bridge.isReady()) {
                 NotificationHelper.error("No platform configured")

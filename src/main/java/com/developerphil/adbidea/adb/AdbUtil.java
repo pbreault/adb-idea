@@ -5,7 +5,6 @@ import com.android.ddmlib.IDevice;
 import com.android.ddmlib.ShellCommandUnresponsiveException;
 import com.android.ddmlib.TimeoutException;
 import com.developerphil.adbidea.adb.command.receiver.GenericReceiver;
-import org.jetbrains.android.facet.AndroidFacet;
 import org.joor.Reflect;
 
 import java.io.IOException;
@@ -22,21 +21,6 @@ public class AdbUtil {
         //TODO make sure that it is the exact package name and not a subset.
         // e.g. if our app is called com.example but there is another app called com.example.another.app, it will match and return a false positive
         return !receiver.getAdbOutputLines().isEmpty();
-    }
-
-
-    /**
-     * Computes the project's package while preserving backward compatibility between android studio 0.4.3 and 0.4.4
-     */
-    public static String computePackageName(AndroidFacet facet) {
-        try {
-            Object androidModuleInfo = facet.getClass().getMethod("getAndroidModuleInfo").invoke(facet);
-            return (String) androidModuleInfo.getClass().getMethod("getPackage").invoke(androidModuleInfo);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
     }
 
     // The android debugger class is not available in Intellij 2016.1.
