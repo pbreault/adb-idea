@@ -27,29 +27,29 @@ The number on the left is a shortcut that will stay the same for your muscle mem
 
 Find Actions
 -----------------
-Each command is prefixed by "ADB", so you can quickly filter through adb commands using the "[Find Actions](http://www.jetbrains.com/idea/webhelp/navigating-to-action.html)" shortcut. 
+Each command is prefixed by "ADB", so you can quickly filter through adb commands using the "[Find Actions](http://www.jetbrains.com/idea/webhelp/navigating-to-action.html)" shortcut.
 
 ![Logo](website/find_actions.png)
 
 The Menu Way
 ------------
 You can find every command in the following menu:
-`Tools->Android->ADB Idea` 
+`Tools->Android->ADB Idea`
 
 
 Installation
 ========
 
 Download and install *ADB Idea* directly from Intellij / Android Studio:
-`Preferences/Settings->Plugins->Browse Repositories` 
+`Preferences/Settings->Plugins->Browse Repositories`
 
 Alternatively, you can [dowload the plugin](http://plugins.jetbrains.com/plugin/7380?pr=idea) from the jetbrains plugin site and install it manually in:
-`Preferences/Settings->Plugins->Install plugin from disk` 
+`Preferences/Settings->Plugins->Install plugin from disk`
 
 License
 =======
 
-    Copyright 2016 Philippe Breault
+    Copyright 2017 Philippe Breault
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
