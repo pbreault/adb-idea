@@ -64,4 +64,8 @@ public class AdbFacade {
             error("No Device found");
         }
     }
+
+    public static void grantPermissions(Project project) {
+        executeOnDevice(project, new GrantPermissionsCommand());
+    }
 }

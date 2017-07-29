@@ -120,7 +120,13 @@
             <action id="com.developerphil.adbidea.action.RevokePermissions"
                     class="com.developerphil.adbidea.action.RevokePermissionsAction"
                     text="ADB Revoke Permissions"
-                    description="Revoking the granted runtime permissions of the current application">
+                    description="Revoking the runtime permissions of the current application">
+            </action>
+
+            <action id="com.developerphil.adbidea.action.GrantPermissions"
+                    class="com.developerphil.adbidea.action.GrantPermissionsAction"
+                    text="ADB Grant Permissions"
+                    description="Granting the runtime permissions of the current application">
             </action>
 
             <action id="com.developerphil.adbidea.action.UninstallAction"
