@@ -27,9 +27,7 @@ public class GrantPermissionsCommand implements Command {
                     device.executeShellCommand("dumpsys package " + packageName, shellOutputReceiver, 15L, TimeUnit.SECONDS);
                     List<String> adbOutputLines = getRequestedPermissions(shellOutputReceiver.getAdbOutputLines());
                     info(Arrays.toString(adbOutputLines.toArray()));
-                    adbOutputLines.stream()
-                            .map(s -> s.split(":")[0].trim())
-                            .forEach(s -> {
+                    adbOutputLines.forEach(s -> {
                                 try {
                                     device.executeShellCommand("pm grant " + packageName + " " + s, new GenericReceiver(), 15L, TimeUnit.SECONDS);
                                     info(String.format("Permission <b>%s</b> granted on %s", s, device.getName()));
@@ -55,19 +53,19 @@ public class GrantPermissionsCommand implements Command {
     }
 
     private List<String> getRequestedPermissions(List<String> list) {
-        boolean shouldRecord = false;
+        boolean requestedPermissionsSection = false;
         List<String> requestPermissions = new ArrayList<>();
         for (String s : list) {
             if (!s.contains(".permission.")) {
-                shouldRecord = false;
+                requestedPermissionsSection = false;
             }
             if (s.contains("requested permissions:")) {
-                shouldRecord = true;
+                requestedPermissionsSection = true;
                 continue;
             }
 
-            if (shouldRecord) {
-                String permissionName = s.replace(";", "").trim();
+            if (requestedPermissionsSection) {
+                String permissionName = s.replace(":", "").trim();
                 requestPermissions.add(permissionName);
             }
         }
