@@ -11,9 +11,6 @@ import static com.developerphil.adbidea.adb.AdbUtil.isAppInstalled;
 import static com.developerphil.adbidea.ui.NotificationHelper.error;
 import static com.developerphil.adbidea.ui.NotificationHelper.info;
 
-/**
- * Created by Stephan Hagios on 27.07.17.
- */
 public class RevokePermissionsCommand implements Command {
     @Override
     public boolean run(Project project, IDevice device, AndroidFacet facet, String packageName) {
