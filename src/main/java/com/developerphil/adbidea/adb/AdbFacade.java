@@ -23,6 +23,18 @@ public class AdbFacade {
         executeOnDevice(project, new KillCommand());
     }
 
+    public static void grantPermissions(Project project) {
+        executeOnDevice(project, new GrantPermissionsCommand());
+    }
+
+    public static void revokePermissions(Project project) {
+        executeOnDevice(project, new RevokePermissionsCommand());
+    }
+
+    public static void revokePermissionsAndRestart(Project project) {
+        executeOnDevice(project, new RevokePermissionsAndRestartCommand());
+    }
+
     public static void startDefaultActivity(Project project) {
         executeOnDevice(project, new StartDefaultActivityCommand(false));
     }

@@ -116,6 +116,25 @@
                 <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt A"/>
             </action>
             <separator/>
+
+            <action id="com.developerphil.adbidea.action.RevokePermissionsAction"
+                    class="com.developerphil.adbidea.action.RevokePermissionsAction"
+                    text="ADB Revoke Permissions"
+                    description="Revoking the runtime permissions of the current application">
+            </action>
+
+            <action id="com.developerphil.adbidea.action.RevokePermissionsAndRestartAction"
+                    class="com.developerphil.adbidea.action.RevokePermissionsAndRestartAction"
+                    text="ADB Revoke Permissions and Restart"
+                    description="Revoking the runtime permissions of the current application and restarts it">
+            </action>
+
+            <action id="com.developerphil.adbidea.action.GrantPermissionsAction"
+                    class="com.developerphil.adbidea.action.GrantPermissionsAction"
+                    text="ADB Grant Permissions"
+                    description="Granting the runtime permissions of the current application">
+            </action>
+
             <action id="com.developerphil.adbidea.action.UninstallAction"
                     class="com.developerphil.adbidea.action.UninstallAction"
                     text="ADB Uninstall App"

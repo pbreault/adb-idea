@@ -112,7 +112,7 @@ public class MyDeviceChooser implements Disposable {
 
     myFacet = facet;
     myFilter = filter;
-    myMinSdkVersion = AndroidModuleInfo.getInstance(facet).getRuntimeMinSdkVersion();
+      myMinSdkVersion = AndroidModuleInfo.getInstance(facet).getRuntimeMinSdkVersion();
     myProjectTarget = projectTarget;
     if (new IsWatchFeatureRequiredCompat(facet).get()) {
       myRequiredHardwareFeatures = EnumSet.of(IDevice.HardwareFeature.WATCH);
