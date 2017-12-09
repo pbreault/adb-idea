@@ -3,12 +3,14 @@ package com.developerphil.adbidea.adb;
 import com.android.ddmlib.IDevice;
 import com.developerphil.adbidea.ObjectGraph;
 import com.developerphil.adbidea.adb.command.*;
+import com.developerphil.adbidea.ui.NotificationHelper;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.intellij.openapi.project.Project;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static com.developerphil.adbidea.adb.AdbUtil.isGradleSyncInProgress;
 import static com.developerphil.adbidea.ui.NotificationHelper.error;
 
 public class AdbFacade {
@@ -60,6 +62,12 @@ public class AdbFacade {
     }
 
     private static void executeOnDevice(final Project project, final Command runnable) {
+
+        if (isGradleSyncInProgress(project)) {
+            NotificationHelper.error("Gradle sync is in progress");
+            return;
+        }
+
         final DeviceResult result = project.getComponent(ObjectGraph.class)
                 .getDeviceResultFetcher()
                 .fetch();

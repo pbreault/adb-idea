@@ -4,7 +4,10 @@ import com.android.ddmlib.AdbCommandRejectedException;
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.ShellCommandUnresponsiveException;
 import com.android.ddmlib.TimeoutException;
+import com.android.tools.idea.gradle.project.sync.GradleSyncState;
 import com.developerphil.adbidea.adb.command.receiver.GenericReceiver;
+import com.developerphil.adbidea.ui.NotificationHelper;
+import com.intellij.openapi.project.Project;
 import org.joor.Reflect;
 
 import java.io.IOException;
@@ -33,6 +36,17 @@ public class AdbUtil {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public static boolean isGradleSyncInProgress(Project project) {
+        try {
+            return GradleSyncState.getInstance(project).isSyncInProgress();
+        } catch (Throwable t) {
+            NotificationHelper.info("Couldn't determine if a gradle sync is in progress");
+            return false;
+        }
+
+
     }
 
 }
