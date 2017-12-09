@@ -2,14 +2,15 @@ package com.developerphil.adbidea.adb.command;
 
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.MultiLineReceiver;
+import com.android.tools.idea.run.activity.ActivityLocator;
+import com.android.tools.idea.run.activity.DefaultActivityLocator;
 import com.developerphil.adbidea.adb.ShellCommandsFactory;
-import com.developerphil.adbidea.compatibility.GetDefaultLauncherActivityNameCompat;
 import com.developerphil.adbidea.debugger.Debugger;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Computable;
+import com.intellij.openapi.util.ThrowableComputable;
 import org.jetbrains.android.facet.AndroidFacet;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class StartDefaultActivityCommand implements Command {
     @Override
     public boolean run(Project project, IDevice device, AndroidFacet facet, String packageName) {
         try {
-            String activityName = getDefaultActivityName(project, facet);
+            String activityName = getDefaultActivityName(facet, device);
             StartActivityReceiver receiver = new StartActivityReceiver();
             String shellCommand = ShellCommandsFactory.startActivity(packageName, activityName, withDebugger);
 
@@ -53,13 +54,10 @@ public class StartDefaultActivityCommand implements Command {
         return false;
     }
 
-    private String getDefaultActivityName(final Project project, final AndroidFacet facet) {
-        return ApplicationManager.getApplication().runReadAction(new Computable<String>() {
-            @Override
-            public String compute() {
-                return new GetDefaultLauncherActivityNameCompat(project, facet).get();
-            }
-        });
+    private String getDefaultActivityName(final AndroidFacet facet, final IDevice device) throws ActivityLocator.ActivityLocatorException {
+        return ApplicationManager.getApplication()
+                .runReadAction((ThrowableComputable<String, ActivityLocator.ActivityLocatorException>)
+                        () -> new DefaultActivityLocator(facet).getQualifiedActivityName(device));
     }
 
     public static class StartActivityReceiver extends MultiLineReceiver {
