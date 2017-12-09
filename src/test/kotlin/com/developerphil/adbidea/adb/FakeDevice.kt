@@ -17,6 +17,10 @@ data class FakeDevice(private val serialNumber: String) : IDevice {
     // NOT IMPLEMENTED
     // ---------------
 
+    override fun executeShellCommand(p0: String?, p1: IShellOutputReceiver?, p2: Long, p3: Long, p4: TimeUnit?) {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun isOffline(): Boolean {
         throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
