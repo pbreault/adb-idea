@@ -41,10 +41,6 @@ sourceSets {
     }
 }
 
-kapt {
-    generateStubs = true
-}
-
 if (!hasProperty('StudioCompilePath')) {
     throw new GradleException("No StudioCompilePath value was set, please create gradle.properties file")
 }
@@ -75,11 +71,12 @@ dependencies {
 
 }
 
-task(verifySetup) << {
-
-    def ideaJar = "$StudioCompilePath/lib/idea.jar"
-    if (!file(ideaJar).exists()) {
-        throw new GradleException("$ideaJar not found, set StudioCompilePath in gradle.properties")
+task(verifySetup) {
+    doLast {
+        def ideaJar = "$StudioCompilePath/lib/idea.jar"
+        if (!file(ideaJar).exists()) {
+            throw new GradleException("$ideaJar not found, set StudioCompilePath in gradle.properties")
+        }
     }
 }
 
