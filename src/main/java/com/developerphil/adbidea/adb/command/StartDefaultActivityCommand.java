@@ -45,7 +45,7 @@ public class StartDefaultActivityCommand implements Command {
                 info(String.format("<b>%s</b> started on %s", packageName, device.getName()));
                 return true;
             } else {
-                error(String.format("<b>%s</b> could not bet started on %s. \n\n<b>ADB Output:</b> \n%s", packageName, device.getName(), receiver.getMessage()));
+                error(String.format("<b>%s</b> could not be started on %s. \n\n<b>ADB Output:</b> \n%s", packageName, device.getName(), receiver.getMessage()));
             }
         } catch (Exception e) {
             error("Start fail... " + e.getMessage());
