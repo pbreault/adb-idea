@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/pbreault/adb-idea">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>1.5.1</version>
+    <version>1.5.2</version>
     <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
     <description><![CDATA[
@@ -27,6 +27,10 @@
 
 
     <change-notes><![CDATA[
+        <b>1.5.2</b>
+        <ul>
+          <li>BUGFIX: Show the name of the devices in addition to the serial number when multiple devices are connected</li>
+        </ul>
         <b>1.5.1</b>
         <ul>
           <li>BUGFIX: Support Android Studio 3.2 Preview1</li>
