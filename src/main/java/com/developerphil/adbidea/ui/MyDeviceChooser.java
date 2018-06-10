@@ -419,7 +419,7 @@ public class MyDeviceChooser implements Disposable {
       IDevice device = myDevices[rowIndex];
       switch (columnIndex) {
         case DEVICE_NAME_COLUMN_INDEX:
-          return device;
+          return generateDeviceName(device);
         case SERIAL_COLUMN_INDEX:
           return device.getSerialNumber();
         case DEVICE_STATE_COLUMN_INDEX:
@@ -429,6 +429,13 @@ public class MyDeviceChooser implements Disposable {
       }
       return null;
     }
+
+      private String generateDeviceName(IDevice device) {
+        return device.getName()
+          .replace(device.getSerialNumber(), "")
+          .replaceAll("[-_]", " ")
+          .replaceAll("[\\[\\]]", "");
+      }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
