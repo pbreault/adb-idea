@@ -43,7 +43,7 @@ Installation
 Download and install *ADB Idea* directly from Intellij / Android Studio:
 `Preferences/Settings->Plugins->Browse Repositories`
 
-Alternatively, you can [dowload the plugin](http://plugins.jetbrains.com/plugin/7380?pr=idea) from the jetbrains plugin site and install it manually in:
+Alternatively, you can [download the plugin](http://plugins.jetbrains.com/plugin/7380?pr=idea) from the jetbrains plugin site and install it manually in:
 `Preferences/Settings->Plugins->Install plugin from disk`
 
 License
