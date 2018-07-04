@@ -61,6 +61,14 @@ public class AdbFacade {
         executeOnDevice(project, new ClearDataAndRestartCommand());
     }
 
+    public static void enableDemoModeAction(Project project) {
+        executeOnDevice(project, new EnableDemoModeCommand());
+    }
+
+    public static void disableDemoModeAction(Project project) {
+        executeOnDevice(project, new DisableDemoModeCommand());
+    }
+
     private static void executeOnDevice(final Project project, final Command runnable) {
 
         if (isGradleSyncInProgress(project)) {

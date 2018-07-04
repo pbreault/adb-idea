@@ -190,6 +190,19 @@
                     text="ADB Restart App With Debugger"
                     description="Restarts the current application and attach the debugger">
             </action>
+
+            <action id="com.developerphil.adbidea.action.EnableDemoModeAction"
+                class="com.developerphil.adbidea.action.EnableDemoModeAction"
+                text="ADB Enable Demo mode"
+                description="Enable the Demo mode">
+            </action>
+
+            <action id="com.developerphil.adbidea.action.DisableDemoModeAction"
+                class="com.developerphil.adbidea.action.DisableDemoModeAction"
+                text="ADB Disable Demo mode"
+                description="Disable the Demo mode">
+            </action>
+
             <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
         </group>
     </actions>
