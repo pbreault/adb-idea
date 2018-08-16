@@ -2,7 +2,20 @@ package com.developerphil.adbidea.adb;
 
 import com.android.ddmlib.IDevice;
 import com.developerphil.adbidea.ObjectGraph;
-import com.developerphil.adbidea.adb.command.*;
+import com.developerphil.adbidea.adb.command.ClearDataAndRestartCommand;
+import com.developerphil.adbidea.adb.command.ClearDataCommand;
+import com.developerphil.adbidea.adb.command.Command;
+import com.developerphil.adbidea.adb.command.CommandList;
+import com.developerphil.adbidea.adb.command.DeviceIdleStepCommand;
+import com.developerphil.adbidea.adb.command.GrantPermissionsCommand;
+import com.developerphil.adbidea.adb.command.KillCommand;
+import com.developerphil.adbidea.adb.command.ResetBatteryChargingCommand;
+import com.developerphil.adbidea.adb.command.RestartPackageCommand;
+import com.developerphil.adbidea.adb.command.RevokePermissionsAndRestartCommand;
+import com.developerphil.adbidea.adb.command.RevokePermissionsCommand;
+import com.developerphil.adbidea.adb.command.StartDefaultActivityCommand;
+import com.developerphil.adbidea.adb.command.UninstallCommand;
+import com.developerphil.adbidea.adb.command.UnplugBatteryCharging;
 import com.developerphil.adbidea.ui.NotificationHelper;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.intellij.openapi.project.Project;
@@ -60,6 +73,19 @@ public class AdbFacade {
     public static void clearDataAndRestart(Project project) {
         executeOnDevice(project, new ClearDataAndRestartCommand());
     }
+
+    public static void unplugBatteryCharging(Project project) {
+        executeOnDevice(project, new UnplugBatteryCharging());
+    }
+
+    public static void resetBatteryCharging(Project project) {
+        executeOnDevice(project, new ResetBatteryChargingCommand());
+    }
+
+    public static void deviceIdleStep(Project project) {
+        executeOnDevice(project, new DeviceIdleStepCommand());
+    }
+
 
     private static void executeOnDevice(final Project project, final Command runnable) {
 
