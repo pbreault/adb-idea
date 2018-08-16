@@ -16,6 +16,9 @@
             <li>ADB Revoke Permissions</li>
             <li>ADB Start App With Debugger</li>
             <li>ADB Restart App With Debugger</li>
+            <li>Battery Unplug Battery Charging</li>
+            <li>Battery Reset Battery Charging</li>
+            <li>Battery Step into idle state</li>
         </ul>
         <br />
         There are two basic ways to invoke a command:
@@ -27,6 +30,10 @@
 
 
     <change-notes><![CDATA[
+        <b>1.5.3</b>
+        <ul>
+          <li>FEATURE: Added Battery and idle state commands</li>
+        </ul>
         <b>1.5.2</b>
         <ul>
           <li>BUGFIX: Show the name of the devices in addition to the serial number when multiple devices are connected</li>
