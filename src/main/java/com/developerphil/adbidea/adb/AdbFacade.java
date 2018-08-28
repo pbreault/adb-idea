@@ -7,8 +7,11 @@ import com.developerphil.adbidea.ui.NotificationHelper;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.intellij.openapi.project.Project;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 import static com.developerphil.adbidea.adb.AdbUtil.isGradleSyncInProgress;
 import static com.developerphil.adbidea.ui.NotificationHelper.error;
@@ -59,6 +62,11 @@ public class AdbFacade {
 
     public static void clearDataAndRestart(Project project) {
         executeOnDevice(project, new ClearDataAndRestartCommand());
+    }
+
+
+    public static void getAllApplicationList(Project project,String parameter, Function1<? super List<String>, Unit> callback){
+        executeOnDevice(project, new GetApplicationListCommand(parameter,callback));
     }
 
     private static void executeOnDevice(final Project project, final Command runnable) {

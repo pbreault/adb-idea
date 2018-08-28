@@ -196,6 +196,15 @@
             </action>
             <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
         </group>
+        <group id="AdbIdea_ext_app_manger" text="_ADB Idea Application management" description="ADB Idea Application management" popup="true">
+            <action id="com.developerphil.adbidea.action.extend.ApplicationManagementPopupAction"
+                    class="com.developerphil.adbidea.action.extend.ApplicationManagementPopupAction" text="ADB Application management Popup..."
+                    description="List all the adb idea application management operations in a popup">
+            </action>
+            <separator/>
+
+            <add-to-group group-id="AdbIdea" anchor="last"/>
+        </group>
     </actions>
 
     <project-components>

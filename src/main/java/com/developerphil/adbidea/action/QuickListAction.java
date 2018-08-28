@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import static com.developerphil.adbidea.adb.AdbUtil.isDebuggingAvailable;
 
 public class QuickListAction extends QuickSwitchSchemeAction implements DumbAware {
+    @Override
     protected void fillActions(@Nullable final Project project,
                                @NotNull final DefaultActionGroup group,
                                @NotNull final DataContext dataContext) {
@@ -32,6 +33,8 @@ public class QuickListAction extends QuickSwitchSchemeAction implements DumbAwar
             addAction("com.developerphil.adbidea.action.StartWithDebuggerAction", group);
             addAction("com.developerphil.adbidea.action.RestartWithDebuggerAction", group);
         }
+        group.addSeparator();
+        addAction("com.developerphil.adbidea.action.extend.ApplicationManagementPopupAction", group);
 
     }
 

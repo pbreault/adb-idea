@@ -7,6 +7,7 @@ import com.intellij.openapi.project.Project;
 
 public abstract class AdbAction extends AnAction {
 
+
     @Override
     public final void actionPerformed(AnActionEvent e) {
         final Project project = e.getData(PlatformDataKeys.PROJECT);
