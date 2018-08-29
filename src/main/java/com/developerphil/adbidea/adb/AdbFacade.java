@@ -2,11 +2,20 @@ package com.developerphil.adbidea.adb;
 
 import com.android.ddmlib.IDevice;
 import com.developerphil.adbidea.ObjectGraph;
-import com.developerphil.adbidea.adb.command.*;
+import com.developerphil.adbidea.adb.command.ClearDataAndRestartCommand;
+import com.developerphil.adbidea.adb.command.ClearDataCommand;
+import com.developerphil.adbidea.adb.command.Command;
+import com.developerphil.adbidea.adb.command.CommandList;
+import com.developerphil.adbidea.adb.command.GrantPermissionsCommand;
+import com.developerphil.adbidea.adb.command.KillCommand;
+import com.developerphil.adbidea.adb.command.RestartPackageCommand;
+import com.developerphil.adbidea.adb.command.RevokePermissionsAndRestartCommand;
+import com.developerphil.adbidea.adb.command.RevokePermissionsCommand;
+import com.developerphil.adbidea.adb.command.StartDefaultActivityCommand;
+import com.developerphil.adbidea.adb.command.UninstallCommand;
 import com.developerphil.adbidea.ui.NotificationHelper;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.intellij.openapi.project.Project;
-
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -19,6 +28,10 @@ import static com.developerphil.adbidea.ui.NotificationHelper.error;
 public class AdbFacade {
 
     private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool(new ThreadFactoryBuilder().setNameFormat("AdbIdea-%d").build());
+
+    public static void uninstall(Project project, String packageName) {
+        executeOnDevice(project, new UninstallCommand(packageName));
+    }
 
     public static void uninstall(Project project) {
         executeOnDevice(project, new UninstallCommand());
@@ -59,6 +72,15 @@ public class AdbFacade {
     public static void clearData(Project project) {
         executeOnDevice(project, new ClearDataCommand());
     }
+    public static void getPackageDetail(Project project,String packageName,Function1<? super String, Unit> callback) {
+        executeOnDevice(project, new PackageDetailCommand(packageName,callback));
+    }
+    public static void getPackagePath(Project project,String packageName,Function1<? super String, Unit> callback) {
+        executeOnDevice(project, new PackagePathCommand(packageName,callback));
+    }
+    public static void getActivityService(Project project,String packageName,Function1<? super String, Unit> callback) {
+        executeOnDevice(project, new ActivityServiceCommand(packageName,callback));
+    }
 
     public static void clearDataAndRestart(Project project) {
         executeOnDevice(project, new ClearDataAndRestartCommand());
@@ -87,5 +109,9 @@ public class AdbFacade {
         } else {
             error("No Device found");
         }
+    }
+
+    public static void clearData(Project project, String realPackageName) {
+        executeOnDevice(project, new ClearDataCommand(realPackageName));
     }
 }

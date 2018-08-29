@@ -9,8 +9,21 @@ import static com.developerphil.adbidea.ui.NotificationHelper.error;
 import static com.developerphil.adbidea.ui.NotificationHelper.info;
 
 public class UninstallCommand implements Command {
+
+    private  String mPackageName;
+
+    public UninstallCommand() {
+    }
+
+    public UninstallCommand(String packageName) {
+        mPackageName = packageName;
+    }
+
     @Override
     public boolean run(Project project, IDevice device, AndroidFacet facet, String packageName) {
+        if (mPackageName != null) {
+            packageName = mPackageName;
+        }
         try {
             String errorCode = device.uninstallPackage(packageName);
             if (errorCode == null) {

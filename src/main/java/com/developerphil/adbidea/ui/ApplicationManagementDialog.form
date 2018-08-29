@@ -2,30 +2,29 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.developerphil.adbidea.ui.ApplicationManagementDialog">
   <grid id="27dc6" binding="mPanel" layout-manager="FormLayout">
     <rowspec value="center:max(d;4px):noGrow"/>
-    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:44px:noGrow"/>
+    <rowspec value="center:32px:noGrow"/>
     <rowspec value="center:d:noGrow"/>
-    <rowspec value="top:4dlu:noGrow"/>
-    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="center:32px:noGrow"/>
     <rowspec value="top:4dlu:noGrow"/>
     <rowspec value="center:d:grow"/>
-    <rowspec value="top:4dlu:noGrow"/>
-    <rowspec value="center:max(d;4px):noGrow"/>
-    <colspec value="fill:338px:noGrow"/>
-    <colspec value="left:4dlu:noGrow"/>
+    <colspec value="fill:341px:noGrow"/>
     <colspec value="fill:d:grow"/>
     <colspec value="fill:d:noGrow"/>
     <colspec value="fill:d:noGrow"/>
     <constraints>
-      <xy x="20" y="13" width="732" height="573"/>
+      <xy x="20" y="13" width="849" height="402"/>
     </constraints>
     <properties>
+      <minimumSize width="590" height="280"/>
       <name value=""/>
+      <preferredSize width="590" height="480"/>
     </properties>
     <border type="none" title="All Application"/>
     <children>
       <grid id="c9a14" layout-manager="GridBagLayout">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="5" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="413" height="44"/>
           </grid>
           <forms/>
@@ -64,7 +63,7 @@
       </grid>
       <component id="ce557" class="javax.swing.JButton" binding="mQueryButton" default-binding="true">
         <constraints>
-          <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties>
@@ -74,7 +73,7 @@
       <grid id="e8227" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="4" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties/>
@@ -110,7 +109,7 @@
         <colspec value="left:4dlu:noGrow"/>
         <colspec value="fill:max(d;4px):noGrow"/>
         <constraints>
-          <grid row="8" column="0" row-span="1" col-span="5" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties/>
@@ -165,15 +164,19 @@
       </grid>
       <scrollpane id="7d7ef" binding="sp">
         <constraints>
-          <grid row="6" column="0" row-span="1" col-span="5" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="0" row-span="1" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms defaultalign-horz="false" defaultalign-vert="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <minimumSize width="0" height="100"/>
+        </properties>
         <border type="none"/>
         <children>
-          <component id="458e9" class="javax.swing.JList" binding="mList1" default-binding="true">
+          <component id="458e9" class="javax.swing.JList" binding="mJList" default-binding="true">
             <constraints/>
-            <properties/>
+            <properties>
+              <minimumSize width="0" height="100"/>
+            </properties>
           </component>
         </children>
       </scrollpane>
@@ -219,7 +222,7 @@
       </grid>
       <grid id="6c579" layout-manager="GridBagLayout">
         <constraints>
-          <grid row="0" column="2" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="0" column="1" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="413" height="66"/>
           </grid>
           <forms/>
@@ -265,6 +268,27 @@
           </component>
         </children>
       </grid>
+      <scrollpane id="32cc2" binding="sp_tp">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <preferredSize width="590" height="200"/>
+          <visible value="true"/>
+          <wheelScrollingEnabled value="true"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="a12df" class="javax.swing.JTextPane" binding="tp">
+            <constraints/>
+            <properties>
+              <preferredSize width="590" height="200"/>
+              <visible value="true"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
     </children>
   </grid>
   <buttonGroups>

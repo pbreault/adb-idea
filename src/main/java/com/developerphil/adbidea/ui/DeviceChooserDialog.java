@@ -11,14 +11,15 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.util.stream.Collectors;
+import javax.inject.Inject;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 import org.jetbrains.android.facet.AndroidFacet;
 import org.jetbrains.android.util.AndroidBundle;
 import org.jetbrains.annotations.NotNull;
 import org.joor.Reflect;
-
-import javax.inject.Inject;
-import javax.swing.*;
-import java.util.stream.Collectors;
 
 import static java.util.Arrays.stream;
 
