@@ -45,6 +45,7 @@ import org.jetbrains.annotations.Nullable;
  */
 
 public class ApplicationManagementDialog extends JDialog {
+    private MyApplistModel mModel;
     private List<String> mList;
     private JRadioButton mAllStatusRadioButton;
     private JRadioButton mDisabledRadioButton;
@@ -135,17 +136,24 @@ public class ApplicationManagementDialog extends JDialog {
             AdbFacade.getAllApplicationList(mProject, sb.toString(), strings -> {
                 Collections.sort(strings);
                 mList = strings;
-                mJList.setListData(strings.toArray());
+                mModel = new MyApplistModel(mList);
+                mJList.setModel(mModel);
                 return null;
             });
         });
         mUninstallButton.addActionListener(e -> {
             int[] selectedIndices = mJList.getSelectedIndices();
-            for (int index : selectedIndices) {
-                AdbFacade.uninstall(mProject, getRealPackageName(mList.get(index)));
-                mJList.remove(index);
+            String[] selected = new String[selectedIndices.length];
+            for (int i = 0; i < selectedIndices.length; i++) {
+                String packageName = mList.get(selectedIndices[i]);
+                AdbFacade.uninstall(mProject, getRealPackageName(packageName));
+                selected[i] = packageName;
+            }
+            for (String s : selected) {
+                mModel.delete(s);
             }
         });
+
         mClearAppCacheDataButton.addActionListener(e -> {
             List<String> selectedValuesList = mJList.getSelectedValuesList();
             for (String packageName : selectedValuesList) {

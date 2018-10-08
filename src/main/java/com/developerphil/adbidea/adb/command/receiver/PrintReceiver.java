@@ -1,31 +1,37 @@
 package com.developerphil.adbidea.adb.command.receiver;
 
-import java.util.List;
+import com.android.ddmlib.IShellOutputReceiver;
+import com.google.common.base.Charsets;
 
-public class PrintReceiver extends GenericReceiver {
+public class PrintReceiver implements IShellOutputReceiver {
+
+    private String mString;
+
+
+    public final void addOutput(byte[] data, int offset, int length) {
+        if (!this.isCancelled()) {
+            mString = new String(data, offset, length, Charsets.UTF_8)+"\r\n";
+        }
+
+    }
+
+    @Override
+    public void flush() {
+
+    }
+
+    public void done() {
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return false;
+    }
+
+
 
     @Override
     public String toString() {
-        List<String> outputLines = getAdbOutputLines();
-        if (!outputLines.isEmpty()) {
-            StringBuilder stringBuilder = new StringBuilder();
-            int tabCount = 0;
-            for (String line : outputLines) {
-                stringBuilder.append(line);
-                stringBuilder.append("\n");
-                if (line.isEmpty()) {
-                    tabCount = 0;
-                    continue;
-                }
-                if (line.endsWith(":")) {
-                    tabCount++;
-                }
-                for (int i = 0; i < tabCount; i++) {
-                    stringBuilder.append("  ");
-                }
-            }
-            return stringBuilder.toString();
-        }
-        return super.toString();
+        return mString;
     }
 }

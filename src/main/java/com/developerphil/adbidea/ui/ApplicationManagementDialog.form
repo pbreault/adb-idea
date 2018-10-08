@@ -13,7 +13,7 @@
     <colspec value="fill:d:noGrow"/>
     <colspec value="fill:d:noGrow"/>
     <constraints>
-      <xy x="20" y="13" width="849" height="402"/>
+      <xy x="20" y="13" width="901" height="624"/>
     </constraints>
     <properties>
       <minimumSize width="590" height="280"/>
