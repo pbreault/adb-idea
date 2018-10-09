@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.developerphil.adbidea.ui.ApplicationManagementDialog">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.developerphil.adbidea.ui.ApplicationManagementFrame">
   <grid id="27dc6" binding="mPanel" layout-manager="FormLayout">
     <rowspec value="center:max(d;4px):noGrow"/>
     <rowspec value="center:44px:noGrow"/>
     <rowspec value="center:32px:noGrow"/>
     <rowspec value="center:d:noGrow"/>
-    <rowspec value="center:32px:noGrow"/>
+    <rowspec value="center:p:noGrow"/>
+    <rowspec value="center:d:grow"/>
     <rowspec value="top:4dlu:noGrow"/>
     <rowspec value="center:max(d;4px):noGrow"/>
-    <rowspec value="top:4dlu:noGrow"/>
-    <rowspec value="center:d:grow"/>
     <colspec value="fill:341px:noGrow"/>
     <colspec value="fill:d:grow"/>
     <colspec value="fill:d:noGrow"/>
@@ -20,7 +19,7 @@
     <properties>
       <minimumSize width="590" height="280"/>
       <name value=""/>
-      <preferredSize width="690" height="580"/>
+      <preferredSize width="800" height="620"/>
     </properties>
     <border type="none" title="All Application"/>
     <children>
@@ -100,16 +99,14 @@
         </children>
       </grid>
       <grid id="92b42" layout-manager="FormLayout">
-        <rowspec value="center:d:noGrow"/>
+        <rowspec value="center:30px:grow"/>
+        <rowspec value="center:max(d;4px):noGrow"/>
+        <colspec value="fill:170px:grow"/>
         <colspec value="fill:d:grow"/>
-        <colspec value="left:4dlu:noGrow"/>
+        <colspec value="fill:153px:grow"/>
         <colspec value="fill:d:grow"/>
-        <colspec value="left:4dlu:noGrow"/>
         <colspec value="fill:d:grow"/>
-        <colspec value="left:4dlu:noGrow"/>
         <colspec value="fill:d:grow"/>
-        <colspec value="left:4dlu:noGrow"/>
-        <colspec value="fill:max(d;4px):noGrow"/>
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms/>
@@ -119,7 +116,9 @@
         <children>
           <component id="def34" class="javax.swing.JButton" binding="mUninstallButton" default-binding="true">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="80" height="35"/>
+              </grid>
               <forms/>
             </constraints>
             <properties>
@@ -128,7 +127,9 @@
           </component>
           <component id="227e7" class="javax.swing.JButton" binding="mClearAppCacheDataButton" default-binding="true">
             <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="43"/>
+              </grid>
               <forms/>
             </constraints>
             <properties>
@@ -137,7 +138,9 @@
           </component>
           <component id="eca5a" class="javax.swing.JButton" binding="mRunningServicesButton" default-binding="true">
             <constraints>
-              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="124" height="43"/>
+              </grid>
               <forms/>
             </constraints>
             <properties>
@@ -146,7 +149,9 @@
           </component>
           <component id="8dab1" class="javax.swing.JButton" binding="mViewDetailButton" default-binding="true">
             <constraints>
-              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="92" height="43"/>
+              </grid>
               <forms/>
             </constraints>
             <properties>
@@ -155,11 +160,35 @@
           </component>
           <component id="7d003" class="javax.swing.JButton" binding="mViewPathButton" default-binding="true">
             <constraints>
-              <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="86" height="43"/>
+              </grid>
               <forms/>
             </constraints>
             <properties>
               <text value="View Path"/>
+            </properties>
+          </component>
+          <component id="eab49" class="javax.swing.JButton" binding="mForceStopButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="89" height="43"/>
+              </grid>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="Force stop"/>
+            </properties>
+          </component>
+          <component id="da7f6" class="javax.swing.JButton" binding="mForegroundActivityButton" default-binding="true">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="139" height="43"/>
+              </grid>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="Foreground Activity"/>
             </properties>
           </component>
         </children>
@@ -272,7 +301,7 @@
       </grid>
       <scrollpane id="32cc2" binding="sp_tp">
         <constraints>
-          <grid row="8" column="0" row-span="1" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="5" column="0" row-span="1" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms defaultalign-horz="false" defaultalign-vert="false"/>
         </constraints>
         <properties>
@@ -291,15 +320,6 @@
           </component>
         </children>
       </scrollpane>
-      <component id="eab49" class="javax.swing.JButton" binding="mForceStopButton" default-binding="true">
-        <constraints>
-          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <forms/>
-        </constraints>
-        <properties>
-          <text value="Force stop"/>
-        </properties>
-      </component>
     </children>
   </grid>
   <buttonGroups>

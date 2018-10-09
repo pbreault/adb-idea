@@ -1,7 +1,7 @@
 package com.developerphil.adbidea.action.extend
 
 import com.developerphil.adbidea.action.AdbAction
-import com.developerphil.adbidea.ui.ApplicationManagementDialog
+import com.developerphil.adbidea.ui.ApplicationManagementFrame
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.Project
 
@@ -13,7 +13,7 @@ class ApplicationManagementPopupAction:AdbAction(){
 
 
     override fun actionPerformed(e: AnActionEvent?, project: Project?) {
-        val popup = ApplicationManagementDialog(project)
+        val popup = ApplicationManagementFrame(project)
         popup.pack()
         popup.isVisible = true
     }

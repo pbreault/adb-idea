@@ -122,4 +122,8 @@ public class AdbFacade {
     public static void clearData(Project project, String realPackageName) {
         executeOnDevice(project, new ClearDataCommand(realPackageName));
     }
+
+    public static void showForegroundActivity(Project project,Function1<? super String, Unit> callback) {
+        executeOnDevice(project, new ForegroundActivityCommand(callback));
+    }
 }
