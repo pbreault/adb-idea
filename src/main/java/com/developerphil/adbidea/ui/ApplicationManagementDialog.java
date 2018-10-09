@@ -68,6 +68,7 @@ public class ApplicationManagementDialog extends JDialog {
     private JScrollPane sp;
     private JTextPane tp;
     private JScrollPane sp_tp;
+    private JButton mForceStopButton;
 
     private static final String PARAMETER_DISABLED = "-d ";
     private static final String PARAMETER_ENABLED = "-e ";
@@ -84,8 +85,8 @@ public class ApplicationManagementDialog extends JDialog {
         setResizable(true);
         setModal(true);
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (int) screensize.getWidth() / 3 - getWidth() / 2;
-        int y = (int) screensize.getHeight() / 3 - getHeight() / 2;
+        int x = (int) screensize.getWidth() / 2 - mPanel.getPreferredSize().width / 2;
+        int y = (int) screensize.getHeight() / 2 - mPanel.getPreferredSize().height / 2;
         setTitle("Adb Application Management");
         setLocation(x, y);
         mProject = project;
@@ -207,6 +208,14 @@ public class ApplicationManagementDialog extends JDialog {
                     append2Ta(s);
                     return null;
                 });
+            }
+        });
+        mForceStopButton.addActionListener(e -> {
+            List<String> selectedValuesList = mJList.getSelectedValuesList();
+            for (String packageName : selectedValuesList) {
+                String name = getRealPackageName(packageName);
+                append2Ta("Force-stop : " + name + "\n", JBColor.BLUE);
+                AdbFacade.forceStop(mProject, name);
             }
         });
         setContentPane($$$getRootComponent$$$());

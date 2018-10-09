@@ -16,6 +16,7 @@ import com.developerphil.adbidea.adb.command.UninstallCommand;
 import com.developerphil.adbidea.ui.NotificationHelper;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.intellij.openapi.project.Project;
+import java.io.File;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -35,6 +36,10 @@ public class AdbFacade {
 
     public static void uninstall(Project project) {
         executeOnDevice(project, new UninstallCommand());
+    }
+
+    public static void installApk(Project project,List<File> apks) {
+        executeOnDevice(project, new InstallApkCommand(apks));
     }
 
     public static void kill(Project project) {
@@ -74,6 +79,9 @@ public class AdbFacade {
     }
     public static void getPackageDetail(Project project,String packageName,Function1<? super String, Unit> callback) {
         executeOnDevice(project, new PackageDetailCommand(packageName,callback));
+    }
+    public static void forceStop(Project project,String packageName) {
+        executeOnDevice(project, new ForceStopCommand(packageName));
     }
     public static void getPackagePath(Project project,String packageName,Function1<? super String, Unit> callback) {
         executeOnDevice(project, new PackagePathCommand(packageName,callback));

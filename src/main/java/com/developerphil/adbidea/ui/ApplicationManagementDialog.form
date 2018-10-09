@@ -7,6 +7,8 @@
     <rowspec value="center:d:noGrow"/>
     <rowspec value="center:32px:noGrow"/>
     <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
     <rowspec value="center:d:grow"/>
     <colspec value="fill:341px:noGrow"/>
     <colspec value="fill:d:grow"/>
@@ -18,7 +20,7 @@
     <properties>
       <minimumSize width="590" height="280"/>
       <name value=""/>
-      <preferredSize width="590" height="480"/>
+      <preferredSize width="690" height="580"/>
     </properties>
     <border type="none" title="All Application"/>
     <children>
@@ -270,7 +272,7 @@
       </grid>
       <scrollpane id="32cc2" binding="sp_tp">
         <constraints>
-          <grid row="6" column="0" row-span="1" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="0" row-span="1" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms defaultalign-horz="false" defaultalign-vert="false"/>
         </constraints>
         <properties>
@@ -289,6 +291,15 @@
           </component>
         </children>
       </scrollpane>
+      <component id="eab49" class="javax.swing.JButton" binding="mForceStopButton" default-binding="true">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Force stop"/>
+        </properties>
+      </component>
     </children>
   </grid>
   <buttonGroups>
