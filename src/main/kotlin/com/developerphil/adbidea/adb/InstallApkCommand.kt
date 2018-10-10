@@ -20,6 +20,7 @@ class InstallApkCommand(val apks: MutableList<File>) : Command {
         try {
             device.installPackages(apks, true, listOf(), 15, TimeUnit.SECONDS)
             info(String.format("Install %d apk file to %s", apks.size, device.name))
+            return true
         } catch (e1: InstallException) {
             error("Install fail... " + e1.message)
         }

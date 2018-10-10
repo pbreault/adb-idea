@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.developerphil.adbidea.ui.InteractingForm">
+  <grid id="27dc6" binding="mPanel" layout-manager="FormLayout">
+    <rowspec value="center:d:noGrow"/>
+    <rowspec value="center:56px:noGrow"/>
+    <rowspec value="center:56px:noGrow"/>
+    <rowspec value="center:57px:noGrow"/>
+    <rowspec value="center:220px:grow"/>
+    <rowspec value="center:p:noGrow"/>
+    <colspec value="fill:d:grow"/>
+    <constraints>
+      <xy x="20" y="20" width="696" height="480"/>
+    </constraints>
+    <properties>
+      <minimumSize width="305" height="480"/>
+      <preferredSize width="800" height="480"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="e9af2" layout-manager="FormLayout">
+        <rowspec value="center:d:noGrow"/>
+        <colspec value="fill:d:grow"/>
+        <colspec value="left:4dlu:noGrow"/>
+        <colspec value="fill:d:grow"/>
+        <colspec value="left:4dlu:noGrow"/>
+        <colspec value="fill:d:grow"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="305" height="37"/>
+          </grid>
+          <forms/>
+        </constraints>
+        <properties/>
+        <border type="none" title="Command Type"/>
+        <children>
+          <component id="3e242" class="javax.swing.JRadioButton" binding="mStartActivityRadioButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Start Activity"/>
+            </properties>
+          </component>
+          <component id="321b1" class="javax.swing.JRadioButton" binding="mStartServiceRadioButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="Start Service"/>
+            </properties>
+          </component>
+          <component id="f7b0c" class="javax.swing.JRadioButton" binding="mSendBroadcastRadioButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="Send Broadcast"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="3b138" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <toolTipText value="Specify the action, such as android.intent.action.VIEW"/>
+        </properties>
+        <border type="none" title="Action"/>
+        <children>
+          <component id="11b3e" class="javax.swing.JComboBox" binding="mCbAction">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <editable value="true"/>
+              <toolTipText value="Specify the action, such as android.intent.action.VIEW"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="6e7b6" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <toolTipText value="Specify the category, such as  android.intent.category.APP_CONTACTS"/>
+        </properties>
+        <border type="none" title="Category"/>
+        <children>
+          <component id="d294f" class="javax.swing.JComboBox" binding="mCbCategory">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <editable value="true"/>
+              <toolTipText value="Specify the category, such as  android.intent.category.APP_CONTACTS"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="75afd" layout-manager="FormLayout">
+        <rowspec value="center:d:grow"/>
+        <rowspec value="center:max(d;4px):noGrow"/>
+        <colspec value="fill:d:grow"/>
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <toolTipText value="Specify the complete component, which is used to explicitly specify the start Activity, such as com.example.app/.ExampleActivity"/>
+        </properties>
+        <border type="none" title="Component"/>
+        <children>
+          <component id="54d3f" class="javax.swing.JComboBox" binding="mCbComponent">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <editable value="true"/>
+              <toolTipText value="Specify the complete component, which is used to explicitly specify the start Activity, such as com.example.app/.ExampleActivity"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="7d6bb" layout-manager="FormLayout">
+        <rowspec value="center:39px:noGrow"/>
+        <colspec value="fill:d:grow"/>
+        <colspec value="left:4dlu:noGrow"/>
+        <colspec value="fill:d:noGrow"/>
+        <colspec value="left:4dlu:noGrow"/>
+        <colspec value="fill:d:grow"/>
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="74c82" class="javax.swing.JButton" binding="mGoButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <maximumSize width="178" height="40"/>
+              <minimumSize width="178" height="40"/>
+              <preferredSize width="178" height="40"/>
+              <text value="Go"/>
+            </properties>
+          </component>
+          <hspacer id="7622d">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <forms defaultalign-horz="false"/>
+            </constraints>
+          </hspacer>
+          <hspacer id="db625">
+            <constraints>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <forms defaultalign-horz="false"/>
+            </constraints>
+          </hspacer>
+        </children>
+      </grid>
+      <grid id="f3ed9" layout-manager="FormLayout">
+        <rowspec value="center:170px:noGrow"/>
+        <rowspec value="center:30px:noGrow"/>
+        <colspec value="fill:d:grow"/>
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <preferredSize width="258" height="400"/>
+          <requestFocusEnabled value="false"/>
+        </properties>
+        <border type="none" title="Bundle"/>
+        <children>
+          <scrollpane id="45b01">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="11" height="85"/>
+              </grid>
+              <forms defaultalign-horz="false" defaultalign-vert="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="502b4" class="com.developerphil.adbidea.ui.BoundTypeJTable" binding="mTable" custom-create="true">
+                <constraints/>
+                <properties/>
+              </component>
+            </children>
+          </scrollpane>
+          <grid id="3dbfb" layout-manager="FormLayout">
+            <rowspec value="center:30px:noGrow"/>
+            <colspec value="fill:d:grow"/>
+            <colspec value="left:4dlu:noGrow"/>
+            <colspec value="fill:d:grow"/>
+            <colspec value="left:4dlu:noGrow"/>
+            <colspec value="fill:d:grow"/>
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="77326" class="javax.swing.JButton" binding="mAddRowButton" default-binding="true">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <forms/>
+                </constraints>
+                <properties>
+                  <text value="Add Row"/>
+                </properties>
+              </component>
+              <component id="5d386" class="javax.swing.JButton" binding="mDeleteRowButton" default-binding="true">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <forms/>
+                </constraints>
+                <properties>
+                  <text value="Delete Row"/>
+                </properties>
+              </component>
+              <component id="72b3b" class="javax.swing.JButton" binding="mClearButton" default-binding="true">
+                <constraints>
+                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <forms/>
+                </constraints>
+                <properties>
+                  <text value="Clear"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+    </children>
+  </grid>
+  <buttonGroups>
+    <group name="rgCommandType">
+      <member id="3e242"/>
+      <member id="321b1"/>
+      <member id="f7b0c"/>
+    </group>
+  </buttonGroups>
+</form>

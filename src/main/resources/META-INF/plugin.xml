@@ -199,6 +199,10 @@
                 class="com.developerphil.adbidea.action.extend.ApplicationManagementPopupAction" text="ADB Application management Popup..."
                 description="List all the adb idea application management operations in a popup">
             </action>
+            <action id="com.developerphil.adbidea.action.extend.InteractingAction"
+                class="com.developerphil.adbidea.action.extend.InteractingAction" text="ADB Application Interacting Popup..."
+                description="Interacting with applications, e.g. start activity ,send broadcast">
+            </action>
             <action id="com.developerphil.adbidea.action.extend.InstallApkAction"
                 class="com.developerphil.adbidea.action.extend.InstallApkAction" text="ADB Install Apk file"
                 description="Install Apk file to phone">

@@ -13,6 +13,7 @@ import com.developerphil.adbidea.adb.command.RevokePermissionsAndRestartCommand;
 import com.developerphil.adbidea.adb.command.RevokePermissionsCommand;
 import com.developerphil.adbidea.adb.command.StartDefaultActivityCommand;
 import com.developerphil.adbidea.adb.command.UninstallCommand;
+import com.developerphil.adbidea.bean.BoundItemBean;
 import com.developerphil.adbidea.ui.NotificationHelper;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.intellij.openapi.project.Project;
@@ -40,7 +41,7 @@ public class AdbFacade {
         executeOnDevice(project, new UninstallCommand());
     }
 
-    public static void installApk(Project project,List<File> apks) {
+    public static void installApk(Project project, List<File> apks) {
         executeOnDevice(project, new InstallApkCommand(apks));
     }
 
@@ -79,26 +80,29 @@ public class AdbFacade {
     public static void clearData(Project project) {
         executeOnDevice(project, new ClearDataCommand());
     }
-    public static void getPackageDetail(Project project,String packageName,Function1<? super String, Unit> callback) {
-        executeOnDevice(project, new PackageDetailCommand(packageName,callback));
+
+    public static void getPackageDetail(Project project, String packageName, Function1<? super String, Unit> callback) {
+        executeOnDevice(project, new PackageDetailCommand(packageName, callback));
     }
-    public static void forceStop(Project project,String packageName) {
+
+    public static void forceStop(Project project, String packageName) {
         executeOnDevice(project, new ForceStopCommand(packageName));
     }
-    public static void getPackagePath(Project project,String packageName,Function1<? super String, Unit> callback) {
-        executeOnDevice(project, new PackagePathCommand(packageName,callback));
+
+    public static void getPackagePath(Project project, String packageName, Function1<? super String, Unit> callback) {
+        executeOnDevice(project, new PackagePathCommand(packageName, callback));
     }
-    public static void getActivityService(Project project,String packageName,Function1<? super String, Unit> callback) {
-        executeOnDevice(project, new ActivityServiceCommand(packageName,callback));
+
+    public static void getActivityService(Project project, String packageName, Function1<? super String, Unit> callback) {
+        executeOnDevice(project, new ActivityServiceCommand(packageName, callback));
     }
 
     public static void clearDataAndRestart(Project project) {
         executeOnDevice(project, new ClearDataAndRestartCommand());
     }
 
-
-    public static void getAllApplicationList(Project project,String parameter, Function1<? super List<String>, Unit> callback){
-        executeOnDevice(project, new GetApplicationListCommand(parameter,callback));
+    public static void getAllApplicationList(Project project, String parameter, Function1<? super List<String>, Unit> callback) {
+        executeOnDevice(project, new GetApplicationListCommand(parameter, callback));
     }
 
     private static void executeOnDevice(final Project project, final Command runnable) {
@@ -108,9 +112,7 @@ public class AdbFacade {
             return;
         }
 
-        final DeviceResult result = project.getComponent(ObjectGraph.class)
-                .getDeviceResultFetcher()
-                .fetch();
+        final DeviceResult result = project.getComponent(ObjectGraph.class).getDeviceResultFetcher().fetch();
 
         if (result != null) {
             for (final IDevice device : result.getDevices()) {
@@ -125,11 +127,15 @@ public class AdbFacade {
         executeOnDevice(project, new ClearDataCommand(realPackageName));
     }
 
-    public static void showForegroundActivity(Project project,Function1<? super String, Unit> callback) {
+    public static void showForegroundActivity(Project project, Function1<? super String, Unit> callback) {
         executeOnDevice(project, new ForegroundActivityCommand(callback));
     }
 
     public static void putStringToDevice(@Nullable Project project, @NotNull String str) {
         executeOnDevice(project, new PutStringToDeviceCommand(str));
+    }
+
+    public static void interacting(Project project, int type, String action, String category, String name, List<BoundItemBean> boundData) {
+        executeOnDevice(project, InteractingCommandKt.getInteractingCommand(type,action,category,name,boundData));
     }
 }
