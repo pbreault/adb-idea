@@ -203,6 +203,10 @@
                 class="com.developerphil.adbidea.action.extend.InstallApkAction" text="ADB Install Apk file"
                 description="Install Apk file to phone">
             </action>
+            <action id="com.developerphil.adbidea.action.extend.PutStringAction"
+                class="com.developerphil.adbidea.action.extend.PutStringAction" text="ADB Put simple string to device"
+                description="Input simple string to device">
+            </action>
             <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
         </group>
     </actions>

@@ -72,6 +72,7 @@ public class ApplicationManagementFrame extends JFrame {
     private JScrollPane sp_tp;
     private JButton mForceStopButton;
     private JButton mForegroundActivityButton;
+    private JButton mTrimMemoryButton;
 
     private static final String PARAMETER_DISABLED = "-d ";
     private static final String PARAMETER_ENABLED = "-e ";
@@ -230,6 +231,14 @@ public class ApplicationManagementFrame extends JFrame {
                 return null;
             });
         });
+        //mTrimMemoryButton.addActionListener(e -> {
+        //    List<String> selectedValuesList = mJList.getSelectedValuesList();
+        //    for (String packageName : selectedValuesList) {
+        //        String name = getRealPackageName(packageName);
+        //        append2Ta("Trim Memory of " + name + ":\n", JBColor.BLUE);
+        //        AdbFacade.trimMemory(mProject, name);
+        //    }
+        //});
         setContentPane($$$getRootComponent$$$());
     }
 
@@ -293,10 +302,10 @@ public class ApplicationManagementFrame extends JFrame {
     private void $$$setupUI$$$() {
         mPanel = new JPanel();
         mPanel.setLayout(new FormLayout("fill:341px:noGrow,fill:d:grow,fill:d:noGrow,fill:d:noGrow",
-            "center:max(d;4px):noGrow,center:44px:noGrow,center:32px:noGrow,center:d:noGrow,center:p:noGrow,center:d:grow"));
+            "center:max(d;4px):noGrow,center:44px:noGrow,center:32px:noGrow,center:d:noGrow,center:p:noGrow,center:d:grow,top:4dlu:noGrow,center:max(d;4px):noGrow"));
         mPanel.setMinimumSize(new Dimension(590, 280));
         mPanel.setName("");
-        mPanel.setPreferredSize(new Dimension(690, 580));
+        mPanel.setPreferredSize(new Dimension(800, 620));
         mPanel.setBorder(BorderFactory.createTitledBorder("All Application"));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridBagLayout());
@@ -347,32 +356,32 @@ public class ApplicationManagementFrame extends JFrame {
             new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED,
                 null, new Dimension(150, -1), null, 0, false));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new FormLayout(
-            "fill:d:grow,left:4dlu:noGrow,fill:d:grow,left:4dlu:noGrow,fill:d:grow,left:4dlu:noGrow,fill:d:grow,left:4dlu:noGrow,fill:d:grow,left:4dlu:noGrow,fill:d:grow," +
-                "left:4dlu:noGrow,fill:d:grow",
-            "center:d:grow"));
+        panel3.setLayout(new FormLayout("fill:170px:grow,fill:d:grow,fill:153px:grow,fill:d:grow,fill:d:grow,fill:d:grow", "center:30px:grow,center:max(d;4px):noGrow"));
         mPanel.add(panel3, cc.xyw(1, 5, 4));
         mUninstallButton = new JButton();
         mUninstallButton.setText("Uninstall");
         panel3.add(mUninstallButton, cc.xy(1, 1));
         mClearAppCacheDataButton = new JButton();
         mClearAppCacheDataButton.setText("Clear app  cache  data");
-        panel3.add(mClearAppCacheDataButton, cc.xy(3, 1));
+        panel3.add(mClearAppCacheDataButton, cc.xy(2, 1));
         mRunningServicesButton = new JButton();
         mRunningServicesButton.setText("Running Services");
-        panel3.add(mRunningServicesButton, cc.xy(5, 1));
+        panel3.add(mRunningServicesButton, cc.xy(3, 1));
         mViewDetailButton = new JButton();
         mViewDetailButton.setText("View Detail");
-        panel3.add(mViewDetailButton, cc.xy(7, 1));
+        panel3.add(mViewDetailButton, cc.xy(4, 1));
         mViewPathButton = new JButton();
         mViewPathButton.setText("View Path");
-        panel3.add(mViewPathButton, cc.xy(9, 1));
+        panel3.add(mViewPathButton, cc.xy(5, 1));
         mForceStopButton = new JButton();
         mForceStopButton.setText("Force stop");
-        panel3.add(mForceStopButton, cc.xy(11, 1));
+        panel3.add(mForceStopButton, cc.xy(6, 1));
         mForegroundActivityButton = new JButton();
         mForegroundActivityButton.setText("Foreground Activity");
-        panel3.add(mForegroundActivityButton, cc.xy(13, 1));
+        panel3.add(mForegroundActivityButton, cc.xy(1, 2));
+        mTrimMemoryButton = new JButton();
+        mTrimMemoryButton.setText("Trim memory");
+        panel3.add(mTrimMemoryButton, cc.xy(2, 2));
         sp = new JScrollPane();
         sp.setMinimumSize(new Dimension(0, 100));
         mPanel.add(sp, cc.xyw(1, 4, 4, CellConstraints.FILL, CellConstraints.FILL));

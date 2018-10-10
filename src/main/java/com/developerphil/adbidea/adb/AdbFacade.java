@@ -22,6 +22,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import static com.developerphil.adbidea.adb.AdbUtil.isGradleSyncInProgress;
 import static com.developerphil.adbidea.ui.NotificationHelper.error;
@@ -125,5 +127,9 @@ public class AdbFacade {
 
     public static void showForegroundActivity(Project project,Function1<? super String, Unit> callback) {
         executeOnDevice(project, new ForegroundActivityCommand(callback));
+    }
+
+    public static void putStringToDevice(@Nullable Project project, @NotNull String str) {
+        executeOnDevice(project, new PutStringToDeviceCommand(str));
     }
 }
