@@ -215,6 +215,10 @@
                 class="com.developerphil.adbidea.action.extend.PutStringAction" text="ADB Put simple string to device"
                 description="Input simple string to device">
             </action>
+            <action id="com.developerphil.adbidea.action.extend.ScreenCaptureAction"
+                class="com.developerphil.adbidea.action.extend.ScreenCaptureAction" text="ADB Capture device screen"
+                description="Capture device screen via adb">
+            </action>
             <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
         </group>
     </actions>

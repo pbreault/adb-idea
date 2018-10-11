@@ -3,6 +3,7 @@ package com.developerphil.adbidea.adb;
 import com.android.ddmlib.IDevice;
 import com.developerphil.adbidea.ObjectGraph;
 import com.developerphil.adbidea.adb.command.ActivityServiceCommand;
+import com.developerphil.adbidea.adb.command.CaptureScreenCommand;
 import com.developerphil.adbidea.adb.command.ClearDataAndRestartCommand;
 import com.developerphil.adbidea.adb.command.ClearDataCommand;
 import com.developerphil.adbidea.adb.command.Command;
@@ -151,5 +152,9 @@ public class AdbFacade {
 
     public static void getSimpleInfo(Project project, String command, String desc,Function1<? super String, Unit> callback) {
         executeOnDevice(project,new CommonStringResultCommand(command, desc,callback));
+    }
+
+    public static void captureScreen(@Nullable Project project, @Nullable File dir,String name) {
+        executeOnDevice(project,new CaptureScreenCommand(dir,name));
     }
 }
