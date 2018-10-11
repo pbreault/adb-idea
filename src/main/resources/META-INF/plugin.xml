@@ -203,6 +203,10 @@
                 class="com.developerphil.adbidea.action.extend.InteractingAction" text="ADB Application Interacting Popup..."
                 description="Interacting with applications, e.g. start activity ,send broadcast">
             </action>
+            <action id="com.developerphil.adbidea.action.extend.ShowDeviceInfoAction"
+                class="com.developerphil.adbidea.action.extend.ShowDeviceInfoAction" text="ADB Device information Popup..."
+                description="Show device information , e.g. model ,battery Service state">
+            </action>
             <action id="com.developerphil.adbidea.action.extend.InstallApkAction"
                 class="com.developerphil.adbidea.action.extend.InstallApkAction" text="ADB Install Apk file"
                 description="Install Apk file to phone">

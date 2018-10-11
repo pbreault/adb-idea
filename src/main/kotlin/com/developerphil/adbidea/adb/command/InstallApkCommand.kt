@@ -1,8 +1,7 @@
-package com.developerphil.adbidea.adb
+package com.developerphil.adbidea.adb.command
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.InstallException
-import com.developerphil.adbidea.adb.command.Command
 import com.developerphil.adbidea.ui.NotificationHelper.error
 import com.developerphil.adbidea.ui.NotificationHelper.info
 import com.intellij.openapi.project.Project

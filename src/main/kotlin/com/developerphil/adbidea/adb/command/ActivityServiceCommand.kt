@@ -1,8 +1,7 @@
-package com.developerphil.adbidea.adb
+package com.developerphil.adbidea.adb.command
 
 import com.android.ddmlib.IDevice
 import com.developerphil.adbidea.adb.AdbUtil.isAppInstalled
-import com.developerphil.adbidea.adb.command.Command
 import com.developerphil.adbidea.adb.command.receiver.PrintReceiver
 import com.developerphil.adbidea.ui.NotificationHelper
 import com.developerphil.adbidea.ui.NotificationHelper.*

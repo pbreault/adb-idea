@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
  * Description :
  */
 
-public class InteractingForm extends JFrame {
+public class InteractingFrame extends JFrame {
 
     private final Project         mProject;
     private       JPanel          mPanel;
@@ -43,7 +43,7 @@ public class InteractingForm extends JFrame {
     private       JButton         mClearButton;
     private       BoundTableModel mModel;
 
-    public InteractingForm(@Nullable Project project) {
+    public InteractingFrame(@Nullable Project project) {
         setResizable(true);
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) screensize.getWidth() / 2 - mPanel.getPreferredSize().width / 2;

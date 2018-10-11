@@ -1,4 +1,4 @@
-package com.developerphil.adbidea.adb
+package com.developerphil.adbidea.adb.command
 
 import com.developerphil.adbidea.bean.BoundItemBean
 

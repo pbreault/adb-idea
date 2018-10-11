@@ -2,12 +2,22 @@ package com.developerphil.adbidea.adb;
 
 import com.android.ddmlib.IDevice;
 import com.developerphil.adbidea.ObjectGraph;
+import com.developerphil.adbidea.adb.command.ActivityServiceCommand;
 import com.developerphil.adbidea.adb.command.ClearDataAndRestartCommand;
 import com.developerphil.adbidea.adb.command.ClearDataCommand;
 import com.developerphil.adbidea.adb.command.Command;
 import com.developerphil.adbidea.adb.command.CommandList;
+import com.developerphil.adbidea.adb.command.CommonStringResultCommand;
+import com.developerphil.adbidea.adb.command.ForceStopCommand;
+import com.developerphil.adbidea.adb.command.ForegroundActivityCommand;
+import com.developerphil.adbidea.adb.command.GetApplicationListCommand;
 import com.developerphil.adbidea.adb.command.GrantPermissionsCommand;
+import com.developerphil.adbidea.adb.command.InstallApkCommand;
+import com.developerphil.adbidea.adb.command.InteractingCommandKt;
 import com.developerphil.adbidea.adb.command.KillCommand;
+import com.developerphil.adbidea.adb.command.PackageDetailCommand;
+import com.developerphil.adbidea.adb.command.PackagePathCommand;
+import com.developerphil.adbidea.adb.command.PutStringToDeviceCommand;
 import com.developerphil.adbidea.adb.command.RestartPackageCommand;
 import com.developerphil.adbidea.adb.command.RevokePermissionsAndRestartCommand;
 import com.developerphil.adbidea.adb.command.RevokePermissionsCommand;
@@ -137,5 +147,9 @@ public class AdbFacade {
 
     public static void interacting(Project project, int type, String action, String category, String name, List<BoundItemBean> boundData) {
         executeOnDevice(project, InteractingCommandKt.getInteractingCommand(type,action,category,name,boundData));
+    }
+
+    public static void getSimpleInfo(Project project, String command, String desc,Function1<? super String, Unit> callback) {
+        executeOnDevice(project,new CommonStringResultCommand(command, desc,callback));
     }
 }

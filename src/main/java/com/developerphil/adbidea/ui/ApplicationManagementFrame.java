@@ -7,7 +7,6 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -34,11 +33,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.event.MouseInputAdapter;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.MutableAttributeSet;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -171,9 +165,9 @@ public class ApplicationManagementFrame extends JFrame {
             List<String> selectedValuesList = mJList.getSelectedValuesList();
             for (String packageName : selectedValuesList) {
                 String name = getRealPackageName(packageName);
-                append2Ta("View " + name + " detail : \n", JBColor.BLUE);
+                Utils.append2TextPane("View " + name + " detail : \n", JBColor.BLUE, tp);
                 AdbFacade.getPackageDetail(mProject, name, s -> {
-                    append2Ta(s);
+                    Utils.append2TextPane(s, tp);
                     return null;
                 });
             }
@@ -182,9 +176,9 @@ public class ApplicationManagementFrame extends JFrame {
             List<String> selectedValuesList = mJList.getSelectedValuesList();
             for (String packageName : selectedValuesList) {
                 String name = getRealPackageName(packageName);
-                append2Ta("View " + name + "apk path : \n", JBColor.BLUE);
+                Utils.append2TextPane("View " + name + "apk path : \n", JBColor.BLUE, tp);
                 AdbFacade.getPackagePath(mProject, name, s -> {
-                    append2Ta(s);
+                    Utils.append2TextPane(s, tp);
                     return null;
                 });
             }
@@ -194,24 +188,24 @@ public class ApplicationManagementFrame extends JFrame {
             if (selectedValuesList.isEmpty()) {
                 String keywordText = tv_keyword.getText();
                 if (!Utils.isEmpty(keywordText)) {
-                    append2Ta("View running services related with" + keywordText + " : \n", JBColor.BLUE);
+                    Utils.append2TextPane("View running services related with" + keywordText + " : \n", JBColor.BLUE, tp);
                     AdbFacade.getActivityService(mProject, keywordText, s -> {
-                        append2Ta(s);
+                        Utils.append2TextPane(s, tp);
                         return null;
                     });
                 } else {
-                    append2Ta("View all running services : \n", JBColor.BLUE);
+                    Utils.append2TextPane("View all running services : \n", JBColor.BLUE, tp);
                     AdbFacade.getActivityService(mProject, "", s -> {
-                        append2Ta(s);
+                        Utils.append2TextPane(s, tp);
                         return null;
                     });
                 }
             }
             for (String packageName : selectedValuesList) {
                 String name = getRealPackageName(packageName);
-                append2Ta("View running services related with" + name + " : \n", JBColor.BLUE);
+                Utils.append2TextPane("View running services related with" + name + " : \n", JBColor.BLUE, tp);
                 AdbFacade.getActivityService(mProject, name, s -> {
-                    append2Ta(s);
+                    Utils.append2TextPane(s, tp);
                     return null;
                 });
             }
@@ -220,14 +214,14 @@ public class ApplicationManagementFrame extends JFrame {
             List<String> selectedValuesList = mJList.getSelectedValuesList();
             for (String packageName : selectedValuesList) {
                 String name = getRealPackageName(packageName);
-                append2Ta("Force-stop : " + name + "\n", JBColor.BLUE);
+                Utils.append2TextPane("Force-stop : " + name + "\n", JBColor.BLUE, tp);
                 AdbFacade.forceStop(mProject, name);
             }
         });
         mForegroundActivityButton.addActionListener(e -> {
-            append2Ta("Foreground Activity : \n", JBColor.BLUE);
+            Utils.append2TextPane("Foreground Activity : \n", JBColor.BLUE, tp);
             AdbFacade.showForegroundActivity(mProject, s -> {
-                append2Ta(s);
+                Utils.append2TextPane(s, tp);
                 return null;
             });
         });
@@ -235,32 +229,13 @@ public class ApplicationManagementFrame extends JFrame {
         //    List<String> selectedValuesList = mJList.getSelectedValuesList();
         //    for (String packageName : selectedValuesList) {
         //        String name = getRealPackageName(packageName);
-        //        append2Ta("Trim Memory of " + name + ":\n", JBColor.BLUE);
+        //        Utils.append2TextPane("Trim Memory of " + name + ":\n", JBColor.BLUE);
         //        AdbFacade.trimMemory(mProject, name);
         //    }
         //});
         setContentPane($$$getRootComponent$$$());
     }
 
-    private void append2Ta(String str, Color color) {
-        Document doc = tp.getDocument();
-        if (doc != null) {
-            try {
-                MutableAttributeSet attr = null;
-                if (color != null) {
-                    attr = new SimpleAttributeSet();
-                    StyleConstants.setForeground(attr, color);
-                    StyleConstants.setBold(attr, true);
-                }
-                doc.insertString(doc.getLength(), str, attr);
-            } catch (BadLocationException e) {
-            }
-        }
-    }
-
-    private void append2Ta(String str) {
-        append2Ta(str, null);
-    }
 
     private String getRealPackageName(String packageName) {
         if (mShowApkFileCheckBox.isSelected() && mShowInstallersCheckBox.isSelected()) {
