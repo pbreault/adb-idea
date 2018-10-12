@@ -2,6 +2,7 @@ package com.developerphil.adbidea.action.extend
 
 import com.developerphil.adbidea.action.AdbAction
 import com.developerphil.adbidea.adb.AdbFacade
+import com.developerphil.adbidea.ui.RecordOptionDialog
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
 import com.intellij.openapi.fileChooser.ex.FileChooserDialogImpl
@@ -14,12 +15,12 @@ import java.util.*
 
 /**
  * Created by XQ Yang on 8/28/2018  2:53 PM.
- * Description : capture device screen via adb
+ * Description : record device screen via adb
  */
-class ScreenCaptureAction : AdbAction() {
+class ScreenRecordAction : AdbAction() {
     var deviceName = ""
     init {
-        saveDirChooserDescriptor.title = "Select capture png file save to..."
+        saveDirChooserDescriptor.title = "Select record .mp4 file save to..."
     }
 
 
@@ -32,8 +33,13 @@ class ScreenCaptureAction : AdbAction() {
         val choose = FileChooserDialogImpl(saveDirChooserDescriptor, project)
             .choose(project, selectedFile)
         if (choose.isNotEmpty()) {
-            selectedFile = choose[0]
-            AdbFacade.captureScreen(project, File(selectedFile?.canonicalPath, "${deviceName}_${dateFormat.format(Date())}.png").absolutePath)
+            val dialog = RecordOptionDialog { showTouches,length->
+                selectedFile = choose[0]
+                val videoName = "${deviceName}_${dateFormat.format(Date())}.mp4"
+                AdbFacade.recordScreen(project, File(selectedFile?.canonicalPath, videoName).absolutePath,videoName,length,showTouches)
+            }
+            dialog.pack()
+            dialog.isVisible = true
         }
     }
 

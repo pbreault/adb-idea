@@ -22,6 +22,7 @@ import com.developerphil.adbidea.adb.command.PutStringToDeviceCommand;
 import com.developerphil.adbidea.adb.command.RestartPackageCommand;
 import com.developerphil.adbidea.adb.command.RevokePermissionsAndRestartCommand;
 import com.developerphil.adbidea.adb.command.RevokePermissionsCommand;
+import com.developerphil.adbidea.adb.command.ScreenRecordCommand;
 import com.developerphil.adbidea.adb.command.StartDefaultActivityCommand;
 import com.developerphil.adbidea.adb.command.UninstallCommand;
 import com.developerphil.adbidea.bean.BoundItemBean;
@@ -154,7 +155,11 @@ public class AdbFacade {
         executeOnDevice(project,new CommonStringResultCommand(command, desc,callback));
     }
 
-    public static void captureScreen(@Nullable Project project, @Nullable File dir,String name) {
-        executeOnDevice(project,new CaptureScreenCommand(dir,name));
+    public static void captureScreen(@Nullable Project project, String path) {
+        executeOnDevice(project,new CaptureScreenCommand(path));
+    }
+    public static void recordScreen(@Nullable Project project, String path,String videoName,int length,boolean showTouches) {
+        ScreenRecordCommand command = new ScreenRecordCommand(path, videoName,length,showTouches);
+        executeOnDevice(project, command);
     }
 }
