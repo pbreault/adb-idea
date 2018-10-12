@@ -26,7 +26,7 @@ class ScreenCaptureAction : AdbAction() {
     override fun actionPerformed(e: AnActionEvent?, project: Project?) {
         if (deviceName.isEmpty()) {
             AdbFacade.getSimpleInfo(project, "getprop ro.product.model", "get Device model ") { name ->
-               deviceName = name.replace("\r\n","").replace(" ","")
+               deviceName = name.replace("\n","").replace("\r","").replace(" ","")
             }
         }
         val choose = FileChooserDialogImpl(saveDirChooserDescriptor, project)
