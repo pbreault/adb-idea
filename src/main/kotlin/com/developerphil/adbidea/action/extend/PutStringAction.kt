@@ -15,7 +15,7 @@ class PutStringAction : AdbAction() {
 
 
     override fun actionPerformed(e: AnActionEvent?, project: Project?) {
-        var result = JOptionPane.showInputDialog("Input simple string put to device")
+        var result = JOptionPane.showInputDialog("Input simple string(ASCII) put to device")
         if (!result.isNullOrEmpty()) {
             result = result.replace(" ","")
             AdbFacade.putStringToDevice(project,result)

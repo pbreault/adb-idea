@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by XQ Yang on 10/11/2018  11:45 AM.
- * Description :
+ * Description : show some device information
  */
 
 public class DeviceInfoFrame extends JFrame {
@@ -120,11 +120,13 @@ public class DeviceInfoFrame extends JFrame {
                     if (verison >= 5) {
                         //cannot work
                         //getInfo2Show("IMEI 1 :", "service call iphonesubinfo 1 | awk -F \"'\" '{print $2}' | sed '1 d' | tr -d '.' | awk '{print}' ORS=", "get IMEI 1 ");
+                        Utils.append2TextPaneNewLine("Can not get IMEI", JBColor.red, mTextPane);
                     } else {
                         getInfo2Show("IMEI 1 :", "dumpsys iphonesubinfo", "get IMEI 1 ");
                     }
                 } catch (NumberFormatException e1) {
                     e1.printStackTrace();
+                    Utils.append2TextPaneNewLine("Can not get IMEI", JBColor.red, mTextPane);
                 }
             }
             AdbFacade.getSimpleInfo(mProject, "ifconfig | grep Mask", "get IP Address ", s -> {

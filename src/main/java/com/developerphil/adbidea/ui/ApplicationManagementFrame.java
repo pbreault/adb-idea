@@ -1,5 +1,6 @@
 package com.developerphil.adbidea.ui;
 
+import com.developerphil.adbidea.HelperMethodsKt;
 import com.developerphil.adbidea.adb.AdbFacade;
 import com.intellij.openapi.project.Project;
 import com.intellij.ui.JBColor;
@@ -26,6 +27,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
@@ -53,20 +55,20 @@ public class ApplicationManagementFrame extends JFrame {
     private JCheckBox mShowInstallersCheckBox;
     private JCheckBox mContainsUninstalledCheckBox;
     private JButton mQueryButton;
-    private JTextField tv_keyword;
-    private JList mJList;
-    private JButton mUninstallButton;
-    private JButton mClearAppCacheDataButton;
-    private JButton mRunningServicesButton;
-    private JButton mViewDetailButton;
-    private JButton mViewPathButton;
-    private JPanel mPanel;
+    private JTextField  tv_keyword;
+    private JList       mJList;
+    private JButton     mUninstallButton;
+    private JButton     mClearAppCacheDataButton;
+    private JButton     mRunningServicesButton;
+    private JButton     mViewDetailButton;
+    private JButton     mViewPathButton;
+    private JPanel      mPanel;
     private JScrollPane sp;
-    private JTextPane tp;
+    private JTextPane   tp;
     private JScrollPane sp_tp;
-    private JButton mForceStopButton;
-    private JButton mForegroundActivityButton;
-    private JButton mTrimMemoryButton;
+    private JButton     mForceStopButton;
+    private JButton     mForegroundActivityButton;
+    private JButton     mMonkeyTestButton;
 
     private static final String PARAMETER_DISABLED = "-d ";
     private static final String PARAMETER_ENABLED = "-e ";
@@ -176,7 +178,7 @@ public class ApplicationManagementFrame extends JFrame {
             List<String> selectedValuesList = mJList.getSelectedValuesList();
             for (String packageName : selectedValuesList) {
                 String name = getRealPackageName(packageName);
-                Utils.append2TextPane("View " + name + "apk path : \n", JBColor.BLUE, tp);
+                Utils.append2TextPane("View " + name + "apk saveFile : \n", JBColor.BLUE, tp);
                 AdbFacade.getPackagePath(mProject, name, s -> {
                     Utils.append2TextPane(s, tp);
                     return null;
@@ -225,14 +227,33 @@ public class ApplicationManagementFrame extends JFrame {
                 return null;
             });
         });
-        //mTrimMemoryButton.addActionListener(e -> {
-        //    List<String> selectedValuesList = mJList.getSelectedValuesList();
-        //    for (String packageName : selectedValuesList) {
-        //        String name = getRealPackageName(packageName);
-        //        Utils.append2TextPane("Trim Memory of " + name + ":\n", JBColor.BLUE);
-        //        AdbFacade.trimMemory(mProject, name);
-        //    }
-        //});
+        mMonkeyTestButton.addActionListener(e -> {
+            List<String> selectedValuesList = mJList.getSelectedValuesList();
+            String name = "";
+            if (!selectedValuesList.isEmpty()) {
+                name = getRealPackageName(selectedValuesList.get(0));
+                Utils.append2TextPane("Monkey test of " + name + ":\n", JBColor.BLUE,tp);
+            }
+            String countStr = JOptionPane.showInputDialog("Enter test count(only integers):");
+            if (countStr.isEmpty()) {
+                HelperMethodsKt.showErrorMsg("count can not empty");
+                return;
+            }
+            int count = 0;
+            try {
+                count = Integer.parseInt(countStr);
+            } catch (NumberFormatException e1) {
+                HelperMethodsKt.showErrorMsg("parse count error,You can only enter integers");
+                return;
+            }
+            if (count > 0) {
+                AdbFacade.monkeyTest(mProject, name,count, s -> {
+                    Utils.append2TextPane(s, tp);
+                    return null;
+                });
+            }
+
+        });
         setContentPane($$$getRootComponent$$$());
     }
 
@@ -354,9 +375,6 @@ public class ApplicationManagementFrame extends JFrame {
         mForegroundActivityButton = new JButton();
         mForegroundActivityButton.setText("Foreground Activity");
         panel3.add(mForegroundActivityButton, cc.xy(1, 2));
-        mTrimMemoryButton = new JButton();
-        mTrimMemoryButton.setText("Trim memory");
-        panel3.add(mTrimMemoryButton, cc.xy(2, 2));
         sp = new JScrollPane();
         sp.setMinimumSize(new Dimension(0, 100));
         mPanel.add(sp, cc.xyw(1, 4, 4, CellConstraints.FILL, CellConstraints.FILL));

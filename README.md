@@ -12,6 +12,16 @@ The following commands are provided:
 * Clear App Data
 * Clear App Data and Restart
 
+  Start at 1.6:
+
+* Application management
+* Application Interacting
+* Show Device information
+* Install apk files on your computer to your device
+* Put simple string on your computer to your device
+* Record device screen save to computer
+* Capture device screen save to computer
+
 Usage
 =====
 
@@ -50,13 +60,13 @@ License
 =======
 
     Copyright 2017 Philippe Breault
-
+    
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
-
+    
        http://www.apache.org/licenses/LICENSE-2.0
-
+    
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.

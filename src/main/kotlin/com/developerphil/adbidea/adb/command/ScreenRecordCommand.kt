@@ -5,12 +5,12 @@ import com.android.ddmlib.ScreenRecorderOptions
 import com.android.ddmlib.SyncService
 import com.developerphil.adbidea.adb.AdbUtil
 import com.developerphil.adbidea.adb.command.receiver.PrintReceiver
+import com.developerphil.adbidea.openFileExplorer
 import com.developerphil.adbidea.ui.NotificationHelper
 import com.developerphil.adbidea.ui.NotificationHelper.NOOP_LISTENER
 import com.developerphil.adbidea.ui.NotificationHelper.error
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
-import org.jdesktop.swingx.util.OS
 import org.jetbrains.android.facet.AndroidFacet
 import java.io.File
 import java.util.*
@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
 
 /**
  * Created by XQ Yang on 2018-10-9 15:00:43
- * Description :
+ * Description : record screen to computer
  */
 
 class ScreenRecordCommand(private val localPath: File, videoName: String, val length: Int, val showTouches:Boolean) : Command {
@@ -44,11 +44,7 @@ class ScreenRecordCommand(private val localPath: File, videoName: String, val le
                         }
 
                         override fun stop() {
-                            if (OS.isWindows()) {
-                                Runtime.getRuntime().exec(arrayOf("cmd", "/C", "start ${localPath.parentFile.absolutePath}"))
-                            }else if (OS.isMacOSX()) {
-                                Runtime.getRuntime().exec("open ${localPath.parentFile.absolutePath}")
-                            }
+                            openFileExplorer(localPath.parentFile.absolutePath)
                             device.executeShellCommand("rm $remotePath",receiver,10L,TimeUnit.SECONDS)
                         }
 

@@ -18,8 +18,6 @@ data class BoundItemBean(var selected: Boolean, var key: String, var value: Stri
 }
 
 
-
-
 enum class BoundDataType(val prefix:String){
     STRING("--es"),
     BOOLEAN("--ez"),

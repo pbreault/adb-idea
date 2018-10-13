@@ -2,7 +2,7 @@ package com.developerphil.adbidea
 
 /**
  * Created by XQ Yang on 10/10/2018  3:28 PM.
- * Description :
+ * Description : some actions form android.content.Intent
  */
 
 val ACTION_MAIN = "android.intent.action.MAIN"

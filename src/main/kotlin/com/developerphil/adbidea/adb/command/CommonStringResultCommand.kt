@@ -8,6 +8,11 @@ import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
 import org.jetbrains.android.facet.AndroidFacet
 import java.util.concurrent.TimeUnit
+/**
+ * @describe
+ * @author  Void Young
+ * @date 2018-10-13 16:48:56
+ */
 
 class CommonStringResultCommand(private val commandStr:String,private val operationDesc:String,private val callback:((String)->Unit)? = null) : Command {
 

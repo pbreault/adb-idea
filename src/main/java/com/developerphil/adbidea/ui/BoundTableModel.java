@@ -35,7 +35,7 @@ public class BoundTableModel extends AbstractTableModel{
     }
 
     public void addEmptyRow() {
-        data.add(new BoundItemBean(true, "", "",BoundDataType.NULL));
+        data.add(new BoundItemBean(true, "", "",BoundDataType.STRING));
         fireTableRowsInserted(data.size() - 1, data.size() - 1);
     }
 

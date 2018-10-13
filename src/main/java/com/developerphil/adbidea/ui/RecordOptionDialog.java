@@ -20,7 +20,11 @@ import javax.swing.event.ChangeListener;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
 import org.jetbrains.annotations.NotNull;
-
+/**
+ * @describe
+ * @author  Void Young
+ * @date 2018-10-13 16:48:56
+ */
 public class RecordOptionDialog extends JDialog {
     private JPanel          contentPane;
     private JButton         buttonOK;

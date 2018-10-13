@@ -33,7 +33,7 @@ class ScreenCaptureAction : AdbAction() {
             .choose(project, selectedFile)
         if (choose.isNotEmpty()) {
             selectedFile = choose[0]
-            AdbFacade.captureScreen(project, File(selectedFile?.canonicalPath, "${deviceName}_${dateFormat.format(Date())}.png").absolutePath)
+            AdbFacade.captureScreen(project, File(selectedFile?.canonicalPath, "${deviceName}_${dateFormat.format(Date())}.png"))
         }
     }
 

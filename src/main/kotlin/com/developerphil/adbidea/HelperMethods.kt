@@ -1,6 +1,7 @@
 package com.developerphil.adbidea
 
 import com.intellij.openapi.application.ApplicationManager
+import org.jdesktop.swingx.util.OS
 import javax.swing.JOptionPane
 
 fun waitUntil(timeoutMillis: Long = 30000L, step: Long = 100L, condition: () -> Boolean) {
@@ -19,4 +20,13 @@ fun invokeLater(runnable: () -> Unit) {
 
 fun showErrorMsg(msg:String){
     JOptionPane.showMessageDialog(null, msg,"Error", JOptionPane.ERROR_MESSAGE)
+}
+
+
+fun openFileExplorer(path: String){
+    if (OS.isWindows()) {
+        Runtime.getRuntime().exec(arrayOf("cmd", "/C", "start $path"))
+    }else if (OS.isMacOSX()) {
+        Runtime.getRuntime().exec("open $path")
+    }
 }

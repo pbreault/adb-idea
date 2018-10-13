@@ -7,10 +7,8 @@
     <rowspec value="center:d:noGrow"/>
     <rowspec value="center:p:noGrow"/>
     <rowspec value="center:d:grow"/>
-    <rowspec value="top:4dlu:noGrow"/>
-    <rowspec value="center:max(d;4px):noGrow"/>
     <colspec value="fill:341px:noGrow"/>
-    <colspec value="fill:d:grow"/>
+    <colspec value="fill:392px:grow"/>
     <colspec value="fill:d:noGrow"/>
     <colspec value="fill:d:noGrow"/>
     <constraints>
@@ -19,7 +17,7 @@
     <properties>
       <minimumSize width="590" height="280"/>
       <name value=""/>
-      <preferredSize width="800" height="620"/>
+      <preferredSize width="810" height="620"/>
     </properties>
     <border type="none" title="All Application"/>
     <children>
@@ -105,11 +103,9 @@
         <colspec value="fill:d:grow"/>
         <colspec value="fill:153px:grow"/>
         <colspec value="fill:d:grow"/>
-        <colspec value="fill:d:grow"/>
-        <colspec value="fill:d:grow"/>
         <constraints>
-          <grid row="4" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <forms/>
+          <grid row="4" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-vert="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
@@ -147,39 +143,6 @@
               <text value="Running Services"/>
             </properties>
           </component>
-          <component id="8dab1" class="javax.swing.JButton" binding="mViewDetailButton" default-binding="true">
-            <constraints>
-              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="92" height="43"/>
-              </grid>
-              <forms/>
-            </constraints>
-            <properties>
-              <text value="View Detail"/>
-            </properties>
-          </component>
-          <component id="7d003" class="javax.swing.JButton" binding="mViewPathButton" default-binding="true">
-            <constraints>
-              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="86" height="43"/>
-              </grid>
-              <forms/>
-            </constraints>
-            <properties>
-              <text value="View Path"/>
-            </properties>
-          </component>
-          <component id="eab49" class="javax.swing.JButton" binding="mForceStopButton" default-binding="true">
-            <constraints>
-              <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="89" height="43"/>
-              </grid>
-              <forms/>
-            </constraints>
-            <properties>
-              <text value="Force stop"/>
-            </properties>
-          </component>
           <component id="da7f6" class="javax.swing.JButton" binding="mForegroundActivityButton" default-binding="true">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
@@ -191,13 +154,46 @@
               <text value="Foreground Activity"/>
             </properties>
           </component>
-          <component id="35ebb" class="javax.swing.JButton" binding="mTrimMemoryButton" default-binding="true">
+          <component id="48205" class="javax.swing.JButton" binding="mMonkeyTestButton" default-binding="true">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
               <forms/>
             </constraints>
             <properties>
-              <text value="Trim memory"/>
+              <text value="Monkey Test"/>
+            </properties>
+          </component>
+          <component id="eab49" class="javax.swing.JButton" binding="mForceStopButton" default-binding="true">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="89" height="43"/>
+              </grid>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="Force stop"/>
+            </properties>
+          </component>
+          <component id="7d003" class="javax.swing.JButton" binding="mViewPathButton" default-binding="true">
+            <constraints>
+              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="86" height="43"/>
+              </grid>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="View Path"/>
+            </properties>
+          </component>
+          <component id="8dab1" class="javax.swing.JButton" binding="mViewDetailButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="92" height="43"/>
+              </grid>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="View Detail"/>
             </properties>
           </component>
         </children>

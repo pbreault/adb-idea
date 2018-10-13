@@ -16,6 +16,7 @@ import com.developerphil.adbidea.adb.command.GrantPermissionsCommand;
 import com.developerphil.adbidea.adb.command.InstallApkCommand;
 import com.developerphil.adbidea.adb.command.InteractingCommandKt;
 import com.developerphil.adbidea.adb.command.KillCommand;
+import com.developerphil.adbidea.adb.command.MonkeyTestCommand;
 import com.developerphil.adbidea.adb.command.PackageDetailCommand;
 import com.developerphil.adbidea.adb.command.PackagePathCommand;
 import com.developerphil.adbidea.adb.command.PutStringToDeviceCommand;
@@ -143,6 +144,10 @@ public class AdbFacade {
         executeOnDevice(project, new ForegroundActivityCommand(callback));
     }
 
+    public static void monkeyTest(Project project,String packageName,int count ,Function1<? super String, Unit> callback) {
+        executeOnDevice(project, new MonkeyTestCommand(packageName,count,callback));
+    }
+
     public static void putStringToDevice(@Nullable Project project, @NotNull String str) {
         executeOnDevice(project, new PutStringToDeviceCommand(str));
     }
@@ -155,8 +160,8 @@ public class AdbFacade {
         executeOnDevice(project, new CommonStringResultCommand(command, desc, callback));
     }
 
-    public static void captureScreen(@Nullable Project project, String path) {
-        executeOnDevice(project, new CaptureScreenCommand(path));
+    public static void captureScreen(@Nullable Project project, File file) {
+        executeOnDevice(project, new CaptureScreenCommand(file));
     }
 
     public static void recordScreen(@Nullable Project project, File localFile, String videoName, int length, boolean showTouches) {
