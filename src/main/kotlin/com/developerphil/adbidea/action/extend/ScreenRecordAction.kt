@@ -36,7 +36,7 @@ class ScreenRecordAction : AdbAction() {
             val dialog = RecordOptionDialog { showTouches,length->
                 selectedFile = choose[0]
                 val videoName = "${deviceName}_${dateFormat.format(Date())}.mp4"
-                AdbFacade.recordScreen(project, File(selectedFile?.canonicalPath, videoName).absolutePath,videoName,length,showTouches)
+                AdbFacade.recordScreen(project, File(selectedFile?.canonicalPath, videoName),videoName,length,showTouches)
             }
             dialog.pack()
             dialog.isVisible = true

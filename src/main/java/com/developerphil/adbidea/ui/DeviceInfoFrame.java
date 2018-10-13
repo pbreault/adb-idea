@@ -44,10 +44,10 @@ public class DeviceInfoFrame extends JFrame {
         int x = (int) screensize.getWidth() / 2 - mPanel.getPreferredSize().width / 2;
         int y = (int) screensize.getHeight() / 2 - mPanel.getPreferredSize().height / 2;
         setTitle("Adb Interacting with applications");
+        setLocation(x, y);
         URL filename = getClass().getResource("/icon.png");
         ImageIcon icon = new ImageIcon(filename);
         setIconImage(icon.getImage());
-        setLocation(x, y);
         mProject = project;
         mPopupMenu = new JPopupMenu();
         JMenuItem clear = mPopupMenu.add(new JMenuItem("clear"));

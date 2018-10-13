@@ -2,16 +2,19 @@ package com.developerphil.adbidea.adb;
 
 import com.android.ddmlib.AdbCommandRejectedException;
 import com.android.ddmlib.IDevice;
+import com.android.ddmlib.Log;
 import com.android.ddmlib.ShellCommandUnresponsiveException;
+import com.android.ddmlib.SyncException;
+import com.android.ddmlib.SyncService;
 import com.android.ddmlib.TimeoutException;
 import com.android.tools.idea.gradle.project.sync.GradleSyncState;
 import com.developerphil.adbidea.adb.command.receiver.GenericReceiver;
 import com.developerphil.adbidea.ui.NotificationHelper;
 import com.intellij.openapi.project.Project;
-import org.joor.Reflect;
-
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import org.joor.Reflect;
 
 public class AdbUtil {
 
@@ -45,8 +48,35 @@ public class AdbUtil {
             NotificationHelper.info("Couldn't determine if a gradle sync is in progress");
             return false;
         }
+    }
 
 
+    public static void pullFile(IDevice  device,String remote, String local,SyncService.ISyncProgressMonitor monitor) throws IOException, AdbCommandRejectedException, com.android.ddmlib.TimeoutException, SyncException {
+        SyncService sync = null;
+        try {
+            String targetFileName =(new File(remote)).getName();
+            Log.d(targetFileName, String.format("Downloading %1$s from device '%2$s'", targetFileName, device.getSerialNumber()));
+            sync = device.getSyncService();
+            if (sync == null) {
+                throw new IOException("Unable to open sync connection!");
+            }
+            String message = String.format("Downloading file from device '%1$s'", device.getSerialNumber());
+            Log.d("Device", message);
+            sync.pullFile(remote, local, monitor);
+        } catch (com.android.ddmlib.TimeoutException var11) {
+            Log.e("Device", "Error during Sync: timeout.");
+            throw var11;
+        } catch (SyncException var12) {
+            Log.e("Device", String.format("Error during Sync: %1$s", var12.getMessage()));
+            throw var12;
+        } catch (IOException var13) {
+            Log.e("Device", String.format("Error during Sync: %1$s", var13.getMessage()));
+            throw var13;
+        } finally {
+            if (sync != null) {
+                sync.close();
+            }
+        }
     }
 
 }

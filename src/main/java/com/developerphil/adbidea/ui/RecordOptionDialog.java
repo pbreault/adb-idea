@@ -1,5 +1,7 @@
 package com.developerphil.adbidea.ui;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,9 +11,12 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.KeyStroke;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
 import org.jetbrains.annotations.NotNull;
@@ -22,6 +27,7 @@ public class RecordOptionDialog extends JDialog {
     private JButton         buttonCancel;
     private JCheckBox       mShowCheckBox;
     private JSlider         mSliderTime;
+    private JLabel mJLabel;
     @NotNull
     public  Function2<Boolean,Integer,Unit> okListener;
 
@@ -30,7 +36,11 @@ public class RecordOptionDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         this.okListener = okListener;
-
+        Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) screensize.getWidth() / 2 - contentPane.getPreferredSize().width / 2;
+        int y = (int) screensize.getHeight() / 2 - contentPane.getPreferredSize().height / 2;
+        setTitle("Adb set record option");
+        setLocation(x, y);
 
         mSliderTime.setMajorTickSpacing(10);
 
@@ -39,7 +49,13 @@ public class RecordOptionDialog extends JDialog {
         mSliderTime.setPaintTicks(true);
         mSliderTime.setPaintLabels(true);
 
-
+        mJLabel.setText("Selected length "+mSliderTime.getValue()+"s");
+        mSliderTime.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                mJLabel.setText("Selected length "+mSliderTime.getValue()+"s");
+            }
+        });
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
@@ -69,7 +85,7 @@ public class RecordOptionDialog extends JDialog {
     }
 
     private void onOK() {
-        okListener.invoke(mShowCheckBox.isSelected(), mSliderTime.getValue());
+        okListener.invoke(mShowCheckBox.isSelected(), mSliderTime.getValue()+1);
         dispose();
     }
 

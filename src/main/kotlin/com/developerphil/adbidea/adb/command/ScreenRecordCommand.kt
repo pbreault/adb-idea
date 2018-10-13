@@ -2,14 +2,17 @@ package com.developerphil.adbidea.adb.command
 
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.ScreenRecorderOptions
+import com.android.ddmlib.SyncService
+import com.developerphil.adbidea.adb.AdbUtil
 import com.developerphil.adbidea.adb.command.receiver.PrintReceiver
 import com.developerphil.adbidea.ui.NotificationHelper
 import com.developerphil.adbidea.ui.NotificationHelper.NOOP_LISTENER
 import com.developerphil.adbidea.ui.NotificationHelper.error
-import com.intellij.ide.actions.OpenFileAction
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
+import org.jdesktop.swingx.util.OS
 import org.jetbrains.android.facet.AndroidFacet
+import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -18,7 +21,7 @@ import java.util.concurrent.TimeUnit
  * Description :
  */
 
-class ScreenRecordCommand(private val savePath: String, videoName: String, val length: Int, val showTouches: Boolean = false) : Command {
+class ScreenRecordCommand(private val localPath: File, videoName: String, val length: Int, val showTouches:Boolean) : Command {
 
     lateinit var mDevice: IDevice
     val receiver = PrintReceiver()
@@ -32,14 +35,30 @@ class ScreenRecordCommand(private val savePath: String, videoName: String, val l
             val timer = Timer()
             timer.schedule(object : TimerTask() {
                 override fun run() {
-                    device.pullFile(remotePath, savePath)
-                    OpenFileAction.openFile(savePath, project)
-                    //todo:need optimize
-                    timer.schedule(object : TimerTask() {
-                        override fun run() {
+                    AdbUtil.pullFile(device,remotePath,localPath.absolutePath,object : SyncService.ISyncProgressMonitor{
+                        override fun startSubTask(p0: String?) {
+
+                        }
+                        override fun start(p0: Int) {
+
+                        }
+
+                        override fun stop() {
+                            if (OS.isWindows()) {
+                                Runtime.getRuntime().exec(arrayOf("cmd", "/C", "start ${localPath.parentFile.absolutePath}"))
+                            }else if (OS.isMacOSX()) {
+                                Runtime.getRuntime().exec("open ${localPath.parentFile.absolutePath}")
+                            }
                             device.executeShellCommand("rm $remotePath",receiver,10L,TimeUnit.SECONDS)
                         }
-                    }, 5 * 1000L)
+
+                        override fun isCanceled(): Boolean  = false
+
+                        override fun advance(p0: Int) {
+
+                        }
+
+                    })
                 }
             }, (length + 1) * 1000L)
             val string = receiver.toString()

@@ -216,7 +216,7 @@
                 description="Input simple string to device">
             </action>
             <action id="com.developerphil.adbidea.action.extend.ScreenRecordAction"
-                class="com.developerphil.adbidea.action.extend.ScreenRecordAction" text="ADB record device screen"
+                class="com.developerphil.adbidea.action.extend.ScreenRecordAction" text="ADB Record device screen"
                 description="Record device screen via adb">
             </action>
             <action id="com.developerphil.adbidea.action.extend.ScreenCaptureAction"

@@ -148,18 +148,18 @@ public class AdbFacade {
     }
 
     public static void interacting(Project project, int type, String action, String category, String name, List<BoundItemBean> boundData) {
-        executeOnDevice(project, InteractingCommandKt.getInteractingCommand(type,action,category,name,boundData));
+        executeOnDevice(project, InteractingCommandKt.getInteractingCommand(type, action, category, name, boundData));
     }
 
-    public static void getSimpleInfo(Project project, String command, String desc,Function1<? super String, Unit> callback) {
-        executeOnDevice(project,new CommonStringResultCommand(command, desc,callback));
+    public static void getSimpleInfo(Project project, String command, String desc, Function1<? super String, Unit> callback) {
+        executeOnDevice(project, new CommonStringResultCommand(command, desc, callback));
     }
 
     public static void captureScreen(@Nullable Project project, String path) {
-        executeOnDevice(project,new CaptureScreenCommand(path));
+        executeOnDevice(project, new CaptureScreenCommand(path));
     }
-    public static void recordScreen(@Nullable Project project, String path,String videoName,int length,boolean showTouches) {
-        ScreenRecordCommand command = new ScreenRecordCommand(path, videoName,length,showTouches);
-        executeOnDevice(project, command);
+
+    public static void recordScreen(@Nullable Project project, File localFile, String videoName, int length, boolean showTouches) {
+        executeOnDevice(project, new ScreenRecordCommand(localFile, videoName, length, showTouches));
     }
 }
