@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.developerphil.adbidea.ui.ApplicationManagementFrame">
+  <grid id="27dc6" binding="mPanel" layout-manager="FormLayout">
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="center:44px:noGrow"/>
+    <rowspec value="center:32px:noGrow"/>
+    <rowspec value="center:d:noGrow"/>
+    <rowspec value="center:p:noGrow"/>
+    <rowspec value="center:d:grow"/>
+    <colspec value="fill:341px:noGrow"/>
+    <colspec value="fill:392px:grow"/>
+    <colspec value="fill:d:noGrow"/>
+    <colspec value="fill:d:noGrow"/>
+    <constraints>
+      <xy x="20" y="13" width="901" height="624"/>
+    </constraints>
+    <properties>
+      <minimumSize width="590" height="280"/>
+      <name value=""/>
+      <preferredSize width="810" height="620"/>
+    </properties>
+    <border type="none" title="All Application"/>
+    <children>
+      <grid id="c9a14" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="413" height="44"/>
+          </grid>
+          <forms/>
+        </constraints>
+        <properties/>
+        <border type="none" title="Other"/>
+        <children>
+          <component id="1fecb" class="javax.swing.JCheckBox" binding="mShowApkFileCheckBox" default-binding="true">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value="Show Apk File"/>
+            </properties>
+          </component>
+          <component id="2e9bb" class="javax.swing.JCheckBox" binding="mShowInstallersCheckBox" default-binding="true">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value="Show installers"/>
+            </properties>
+          </component>
+          <component id="9cb4e" class="javax.swing.JCheckBox" binding="mContainsUninstalledCheckBox" default-binding="true">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value="Contains uninstalled"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <component id="ce557" class="javax.swing.JButton" binding="mQueryButton" default-binding="true">
+        <constraints>
+          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Query"/>
+        </properties>
+      </component>
+      <grid id="e8227" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="b0f9d" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Name Filter :"/>
+            </properties>
+          </component>
+          <component id="ce659" class="javax.swing.JTextField" binding="tv_keyword">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+        </children>
+      </grid>
+      <grid id="92b42" layout-manager="FormLayout">
+        <rowspec value="center:30px:grow"/>
+        <rowspec value="center:max(d;4px):noGrow"/>
+        <colspec value="fill:170px:grow"/>
+        <colspec value="fill:d:grow"/>
+        <colspec value="fill:153px:grow"/>
+        <colspec value="fill:d:grow"/>
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-vert="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="def34" class="javax.swing.JButton" binding="mUninstallButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="80" height="35"/>
+              </grid>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="Uninstall"/>
+            </properties>
+          </component>
+          <component id="227e7" class="javax.swing.JButton" binding="mClearAppCacheDataButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="43"/>
+              </grid>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="Clear app  cache  data"/>
+            </properties>
+          </component>
+          <component id="eca5a" class="javax.swing.JButton" binding="mRunningServicesButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="124" height="43"/>
+              </grid>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="Running Services"/>
+            </properties>
+          </component>
+          <component id="da7f6" class="javax.swing.JButton" binding="mForegroundActivityButton" default-binding="true">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="139" height="43"/>
+              </grid>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="Foreground Activity"/>
+            </properties>
+          </component>
+          <component id="48205" class="javax.swing.JButton" binding="mMonkeyTestButton" default-binding="true">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="Monkey Test"/>
+            </properties>
+          </component>
+          <component id="eab49" class="javax.swing.JButton" binding="mForceStopButton" default-binding="true">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="89" height="43"/>
+              </grid>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="Force stop"/>
+            </properties>
+          </component>
+          <component id="7d003" class="javax.swing.JButton" binding="mViewPathButton" default-binding="true">
+            <constraints>
+              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="86" height="43"/>
+              </grid>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="View Path"/>
+            </properties>
+          </component>
+          <component id="8dab1" class="javax.swing.JButton" binding="mViewDetailButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="92" height="43"/>
+              </grid>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="View Detail"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <scrollpane id="7d7ef" binding="sp">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <minimumSize width="0" height="100"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="458e9" class="javax.swing.JList" binding="mJList" default-binding="true">
+            <constraints/>
+            <properties>
+              <minimumSize width="0" height="100"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <grid id="b0b2c" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="215" height="66"/>
+          </grid>
+          <forms/>
+        </constraints>
+        <properties/>
+        <border type="none" title="Type"/>
+        <children>
+          <component id="37e65" class="javax.swing.JRadioButton" binding="mAllTypeRadioButton">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="All"/>
+            </properties>
+          </component>
+          <component id="9ad69" class="javax.swing.JRadioButton" binding="mSystemRadioButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value="System"/>
+            </properties>
+          </component>
+          <component id="b4d55" class="javax.swing.JRadioButton" binding="mThirdPartyRadioButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value="Third-party"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="6c579" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="413" height="66"/>
+          </grid>
+          <forms/>
+        </constraints>
+        <properties>
+          <toolTipText value="status"/>
+        </properties>
+        <border type="none" title="Status"/>
+        <children>
+          <component id="25249" class="javax.swing.JRadioButton" binding="mAllStatusRadioButton">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="37" height="17"/>
+              </grid>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="All"/>
+            </properties>
+          </component>
+          <component id="b8daf" class="javax.swing.JRadioButton" binding="mEnabledRadioButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="112" height="17"/>
+              </grid>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value="enabled"/>
+            </properties>
+          </component>
+          <component id="23d4d" class="javax.swing.JRadioButton" binding="mDisabledRadioButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="4" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="67" height="17"/>
+              </grid>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value="disabled"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <scrollpane id="32cc2" binding="sp_tp">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <forms defaultalign-horz="false" defaultalign-vert="false"/>
+        </constraints>
+        <properties>
+          <preferredSize width="590" height="200"/>
+          <visible value="true"/>
+          <wheelScrollingEnabled value="true"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="a12df" class="javax.swing.JTextPane" binding="tp">
+            <constraints/>
+            <properties>
+              <preferredSize width="590" height="200"/>
+              <visible value="true"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+    </children>
+  </grid>
+  <buttonGroups>
+    <group name="bg_status">
+      <member id="23d4d"/>
+      <member id="25249"/>
+      <member id="b8daf"/>
+    </group>
+    <group name="rg_type">
+      <member id="37e65"/>
+      <member id="9ad69"/>
+      <member id="b4d55"/>
+    </group>
+  </buttonGroups>
+</form>

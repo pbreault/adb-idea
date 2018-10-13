@@ -13,8 +13,20 @@ import static com.developerphil.adbidea.ui.NotificationHelper.info;
 
 public class ClearDataCommand implements Command {
 
+    private  String mPackageName;
+
+    public ClearDataCommand() {
+    }
+
+    public ClearDataCommand(String realPackageName) {
+        mPackageName = realPackageName;
+    }
+
     @Override
     public boolean run(Project project, IDevice device, AndroidFacet facet, String packageName) {
+        if (mPackageName != null) {
+            packageName = mPackageName;
+        }
         try {
             if (isAppInstalled(device, packageName)) {
                 device.executeShellCommand("pm clear " + packageName, new GenericReceiver(), 15L, TimeUnit.SECONDS);
