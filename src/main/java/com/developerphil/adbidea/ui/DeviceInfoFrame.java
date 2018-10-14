@@ -43,7 +43,7 @@ public class DeviceInfoFrame extends JFrame {
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) screensize.getWidth() / 2 - mPanel.getPreferredSize().width / 2;
         int y = (int) screensize.getHeight() / 2 - mPanel.getPreferredSize().height / 2;
-        setTitle("Adb Interacting with applications");
+        setTitle("Adb Device information");
         setLocation(x, y);
         URL filename = getClass().getResource("/icon.png");
         ImageIcon icon = new ImageIcon(filename);
