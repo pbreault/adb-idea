@@ -18,7 +18,7 @@ import java.util.*
  * Description : record device screen via adb
  */
 class ScreenRecordAction : AdbAction() {
-    private var deviceName = "Android"
+    private var deviceName = ""
 
     init {
         saveDirChooserDescriptor.title = "Select record .mp4 file save to..."
