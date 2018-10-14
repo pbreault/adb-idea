@@ -6,21 +6,37 @@ A plugin for Android Studio and Intellij IDEA that speeds up your day to day and
 The following commands are provided:
 
 * Uninstall App
+
 * Kill App
+
 * Start App
+
 * Restart App
+
 * Clear App Data
+
 * Clear App Data and Restart
 
   Start at 1.6:
 
 * Application management
+
 * Application Interacting
+
 * Show Device information
+
 * Install apk files on your computer to your device
+
 * Put simple string on your computer to your device
+
 * Record device screen save to computer
+
 * Capture device screen save to computer
+
+
+  [1.6 English Guide](./1.6EnglishGuide.md)
+
+  [1.6 中文指引](./1.6ChineseGuide.md)
 
 Usage
 =====
