@@ -36,7 +36,8 @@
   <change-notes><![CDATA[
         <b>1.6.0</b>
         <ul>
-          <li>Add some simple funcation</li>
+          <li>Add some simple function</li>
+            <ul>
             <li>ADB Application management</li>
             <li>ADB Application Interacting</li>
             <li>ADB Device information</li>
@@ -44,6 +45,7 @@
             <li>ADB Put simple string to device</li>
             <li>ADB Record device screen</li>
             <li>ADB Capture device screen</li>
+        </ul>
         </ul>
         <b>1.5.2</b>
         <ul>

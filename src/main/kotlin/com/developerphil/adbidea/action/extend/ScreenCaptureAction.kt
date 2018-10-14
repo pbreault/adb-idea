@@ -19,7 +19,7 @@ import java.util.*
 class ScreenCaptureAction : AdbAction() {
     var deviceName = ""
     init {
-        saveDirChooserDescriptor.title = "Select capture png file save to..."
+        saveDirChooserDescriptor.title = "Select capture .png file save to..."
     }
 
 

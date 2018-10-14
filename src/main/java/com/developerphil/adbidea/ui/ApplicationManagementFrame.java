@@ -178,7 +178,7 @@ public class ApplicationManagementFrame extends JFrame {
             List<String> selectedValuesList = mJList.getSelectedValuesList();
             for (String packageName : selectedValuesList) {
                 String name = getRealPackageName(packageName);
-                Utils.append2TextPane("View " + name + "apk saveFile : \n", JBColor.BLUE, tp);
+                Utils.append2TextPane("View " + name + " apk Path : \n", JBColor.BLUE, tp);
                 AdbFacade.getPackagePath(mProject, name, s -> {
                     Utils.append2TextPane(s, tp);
                     return null;
@@ -190,7 +190,7 @@ public class ApplicationManagementFrame extends JFrame {
             if (selectedValuesList.isEmpty()) {
                 String keywordText = tv_keyword.getText();
                 if (!Utils.isEmpty(keywordText)) {
-                    Utils.append2TextPane("View running services related with" + keywordText + " : \n", JBColor.BLUE, tp);
+                    Utils.append2TextPane("View running services related with " + keywordText + " : \n", JBColor.BLUE, tp);
                     AdbFacade.getActivityService(mProject, keywordText, s -> {
                         Utils.append2TextPane(s, tp);
                         return null;
@@ -205,7 +205,7 @@ public class ApplicationManagementFrame extends JFrame {
             }
             for (String packageName : selectedValuesList) {
                 String name = getRealPackageName(packageName);
-                Utils.append2TextPane("View running services related with" + name + " : \n", JBColor.BLUE, tp);
+                Utils.append2TextPane("View running services related with " + name + " : \n", JBColor.BLUE, tp);
                 AdbFacade.getActivityService(mProject, name, s -> {
                     Utils.append2TextPane(s, tp);
                     return null;
@@ -223,7 +223,11 @@ public class ApplicationManagementFrame extends JFrame {
         mForegroundActivityButton.addActionListener(e -> {
             Utils.append2TextPane("Foreground Activity : \n", JBColor.BLUE, tp);
             AdbFacade.showForegroundActivity(mProject, s -> {
-                Utils.append2TextPane(s, tp);
+                if (Utils.isEmpty(s)) {
+                    Utils.append2TextPaneNewLine("get foreground Activity failure",JBColor.RED, tp);
+                } else {
+                    Utils.append2TextPaneNewLine(s, tp);
+                }
                 return null;
             });
         });
@@ -232,7 +236,7 @@ public class ApplicationManagementFrame extends JFrame {
             String name = "";
             if (!selectedValuesList.isEmpty()) {
                 name = getRealPackageName(selectedValuesList.get(0));
-                Utils.append2TextPane("Monkey test of " + name + ":\n", JBColor.BLUE,tp);
+                Utils.append2TextPane("Monkey test of " + name + " :\n", JBColor.BLUE,tp);
             }
             String countStr = JOptionPane.showInputDialog("Enter test count(only integers):");
             if (countStr.isEmpty()) {

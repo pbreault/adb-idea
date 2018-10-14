@@ -18,7 +18,8 @@ import java.util.*
  * Description : record device screen via adb
  */
 class ScreenRecordAction : AdbAction() {
-    var deviceName = ""
+    private var deviceName = "Android"
+
     init {
         saveDirChooserDescriptor.title = "Select record .mp4 file save to..."
     }
@@ -33,10 +34,10 @@ class ScreenRecordAction : AdbAction() {
         val choose = FileChooserDialogImpl(saveDirChooserDescriptor, project)
             .choose(project, selectedFile)
         if (choose.isNotEmpty()) {
-            val dialog = RecordOptionDialog { showTouches,length->
+            val dialog = RecordOptionDialog { showTouches, length ->
                 selectedFile = choose[0]
                 val videoName = "${deviceName}_${dateFormat.format(Date())}.mp4"
-                AdbFacade.recordScreen(project, File(selectedFile?.canonicalPath, videoName),videoName,length,showTouches)
+                AdbFacade.recordScreen(project, File(selectedFile?.canonicalPath, videoName), videoName, length, showTouches)
             }
             dialog.pack()
             dialog.isVisible = true

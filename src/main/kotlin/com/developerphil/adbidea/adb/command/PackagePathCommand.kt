@@ -22,8 +22,8 @@ class PackagePathCommand(private val mPackageName: String,private val callback:(
         try {
             if (isAppInstalled(device, mPackageName)) {
                 val receiver = PrintReceiver()
-                device.executeShellCommand("pm saveFile $mPackageName", receiver, 15L, TimeUnit.SECONDS)
-                info(String.format("<b>%s</b> get package saveFile on %s", mPackageName, device.name))
+                device.executeShellCommand("pm path $mPackageName", receiver, 15L, TimeUnit.SECONDS)
+                info(String.format("<b>%s</b> get package path on %s", mPackageName, device.name))
                 val string = receiver.toString()
                 callback.invoke(string)
                 val notification = NotificationHelper.INFO.createNotification("ADB IDEA", string, NotificationType.INFORMATION, NOOP_LISTENER)
@@ -33,7 +33,7 @@ class PackagePathCommand(private val mPackageName: String,private val callback:(
                 error(String.format("<b>%s</b> is not installed on %s", mPackageName, device.name))
             }
         } catch (e1: Exception) {
-            error("Get package saveFile... " + e1.message)
+            error("Get package path... " + e1.message)
         }
 
         return false

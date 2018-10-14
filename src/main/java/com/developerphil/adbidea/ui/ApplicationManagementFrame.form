@@ -4,7 +4,7 @@
     <rowspec value="center:max(d;4px):noGrow"/>
     <rowspec value="center:44px:noGrow"/>
     <rowspec value="center:32px:noGrow"/>
-    <rowspec value="center:d:noGrow"/>
+    <rowspec value="center:130px:noGrow"/>
     <rowspec value="center:p:noGrow"/>
     <rowspec value="center:d:grow"/>
     <colspec value="fill:341px:noGrow"/>
@@ -17,7 +17,7 @@
     <properties>
       <minimumSize width="590" height="280"/>
       <name value=""/>
-      <preferredSize width="810" height="620"/>
+      <preferredSize width="820" height="620"/>
     </properties>
     <border type="none" title="All Application"/>
     <children>
