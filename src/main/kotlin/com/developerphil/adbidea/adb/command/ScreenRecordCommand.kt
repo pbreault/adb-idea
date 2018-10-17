@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit
  * Description : record screen to computer
  */
 
+@Deprecated("bad result")
 class ScreenRecordCommand(private val localPath: File, videoName: String, val length: Int, val showTouches:Boolean) : Command {
 
     lateinit var mDevice: IDevice

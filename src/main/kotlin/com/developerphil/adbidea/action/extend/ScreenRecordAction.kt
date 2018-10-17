@@ -2,6 +2,8 @@ package com.developerphil.adbidea.action.extend
 
 import com.developerphil.adbidea.action.AdbAction
 import com.developerphil.adbidea.adb.AdbFacade
+import com.developerphil.adbidea.terminal.CommandBuilder
+import com.developerphil.adbidea.terminal.Environment
 import com.developerphil.adbidea.ui.RecordOptionDialog
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
@@ -9,6 +11,7 @@ import com.intellij.openapi.fileChooser.ex.FileChooserDialogImpl
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import java.io.File
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -20,28 +23,38 @@ import java.util.*
 class ScreenRecordAction : AdbAction() {
     private var deviceName = ""
 
-    init {
-        saveDirChooserDescriptor.title = "Select record .mp4 file save to..."
-    }
-
-
+    val videoName:String by lazy { "${deviceName}_${dateFormat.format(Date())}.mp4" }
+    val remotePath:String by lazy { "/sdcard/$videoName" }
+    var getFiled = false
     override fun actionPerformed(e: AnActionEvent?, project: Project?) {
-        if (deviceName.isEmpty()) {
-            AdbFacade.getSimpleInfo(project, "getprop ro.product.model", "get Device model ") { name ->
-                deviceName = name.replace("\n", "").replace("\r", "").replace(" ", "")
-            }
+        AdbFacade.getSimpleInfo(project, "getprop ro.product.model", "get Device model ") { name ->
+            deviceName = name.replace("\n", "").replace("\r", "").replace(" ", "")
         }
-        val choose = FileChooserDialogImpl(saveDirChooserDescriptor, project)
-            .choose(project, selectedFile)
-        if (choose.isNotEmpty()) {
-            val dialog = RecordOptionDialog { showTouches, length ->
+        val dialog = RecordOptionDialog { deleteRemoteFile ->
+            saveDirChooserDescriptor.title = "Select $videoName save to..."
+            val choose = FileChooserDialogImpl(saveDirChooserDescriptor, project)
+                .choose(project, selectedFile)
+            if (choose.isNotEmpty()) {
                 selectedFile = choose[0]
-                val videoName = "${deviceName}_${dateFormat.format(Date())}.mp4"
-                AdbFacade.recordScreen(project, File(selectedFile?.canonicalPath, videoName), videoName, length, showTouches)
+                AdbFacade.pullFile(project, remotePath, File(selectedFile?.canonicalPath, videoName),deleteRemoteFile)
             }
-            dialog.pack()
-            dialog.isVisible = true
         }
+        dialog.onStartListener = {
+            try {
+                val env = Environment.environment
+                val command = CommandBuilder.createCommand(env, "adb shell screenrecord $remotePath")
+                command.execute()
+            } catch (e: IOException) {
+                getFiled = true
+                throw RuntimeException("Failed to execute the command!", e)
+            }
+        }
+        dialog.pack()
+        dialog.isVisible = true
+
+
+
+
     }
 
     companion object {
@@ -50,5 +63,6 @@ class ScreenRecordAction : AdbAction() {
         private var dateFormat = SimpleDateFormat("yyyyMMddHHmmss")
 
     }
+
 
 }

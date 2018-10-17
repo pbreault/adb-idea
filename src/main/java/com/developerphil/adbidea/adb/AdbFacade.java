@@ -19,6 +19,7 @@ import com.developerphil.adbidea.adb.command.KillCommand;
 import com.developerphil.adbidea.adb.command.MonkeyTestCommand;
 import com.developerphil.adbidea.adb.command.PackageDetailCommand;
 import com.developerphil.adbidea.adb.command.PackagePathCommand;
+import com.developerphil.adbidea.adb.command.PullFileCommand;
 import com.developerphil.adbidea.adb.command.PutStringToDeviceCommand;
 import com.developerphil.adbidea.adb.command.RestartPackageCommand;
 import com.developerphil.adbidea.adb.command.RevokePermissionsAndRestartCommand;
@@ -164,7 +165,20 @@ public class AdbFacade {
         executeOnDevice(project, new CaptureScreenCommand(file));
     }
 
+    /**
+     * "bad result"
+     * @param project
+     * @param localFile
+     * @param videoName
+     * @param length
+     * @param showTouches
+     */
+    @Deprecated()
     public static void recordScreen(@Nullable Project project, File localFile, String videoName, int length, boolean showTouches) {
         executeOnDevice(project, new ScreenRecordCommand(localFile, videoName, length, showTouches));
+    }
+
+    public static void pullFile(@Nullable Project project, @NotNull String remotePath, @NotNull File localFile, boolean deleteRemoteFile) {
+        executeOnDevice(project, new PullFileCommand(remotePath, localFile, deleteRemoteFile));
     }
 }

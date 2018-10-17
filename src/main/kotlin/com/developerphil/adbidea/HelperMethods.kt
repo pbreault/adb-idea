@@ -27,6 +27,6 @@ fun openFileExplorer(path: String){
     if (OS.isWindows()) {
         Runtime.getRuntime().exec(arrayOf("cmd", "/C", "start $path"))
     }else if (OS.isMacOSX()) {
-        Runtime.getRuntime().exec("open $path")
+        Runtime.getRuntime().exec("open $path -a")
     }
 }

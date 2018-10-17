@@ -11,14 +11,11 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
+import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import kotlin.Unit;
-import kotlin.jvm.functions.Function2;
+import kotlin.jvm.functions.Function1;
 import org.jetbrains.annotations.NotNull;
 /**
  * @describe
@@ -26,16 +23,18 @@ import org.jetbrains.annotations.NotNull;
  * @date 2018-10-13 16:48:56
  */
 public class RecordOptionDialog extends JDialog {
-    private JPanel          contentPane;
-    private JButton         buttonOK;
-    private JButton         buttonCancel;
-    private JCheckBox       mShowCheckBox;
-    private JSlider         mSliderTime;
-    private JLabel mJLabel;
+    private JPanel                          contentPane;
+    private JButton                         buttonOK;
+    private JButton                         buttonCancel;
+    private JButton                         mStartButton;
+    private JTextPane                       mClickStartAndTheTextPane;
+    private JCheckBox                       mDeleteCheckBox;
     @NotNull
-    public  Function2<Boolean,Integer,Unit> okListener;
+    public  Function1<Boolean,Unit> okListener;
+    @NotNull
+    public  Function1<Unit,Unit> onStartListener;
 
-    public RecordOptionDialog(@NotNull Function2<Boolean,Integer,Unit> okListener) {
+    public RecordOptionDialog(@NotNull Function1<Boolean,Unit> okListener) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -43,23 +42,9 @@ public class RecordOptionDialog extends JDialog {
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) screensize.getWidth() / 2 - contentPane.getPreferredSize().width / 2;
         int y = (int) screensize.getHeight() / 2 - contentPane.getPreferredSize().height / 2;
-        setTitle("Adb set record option");
+        setTitle("Adb record option");
         setLocation(x, y);
 
-        mSliderTime.setMajorTickSpacing(10);
-
-        mSliderTime.setMinorTickSpacing(2);
-
-        mSliderTime.setPaintTicks(true);
-        mSliderTime.setPaintLabels(true);
-
-        mJLabel.setText("Selected length "+mSliderTime.getValue()+"s");
-        mSliderTime.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                mJLabel.setText("Selected length "+mSliderTime.getValue()+"s");
-            }
-        });
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
@@ -71,6 +56,8 @@ public class RecordOptionDialog extends JDialog {
                 onCancel();
             }
         });
+
+        mStartButton.addActionListener(e -> onStartListener.invoke(null));
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -89,7 +76,7 @@ public class RecordOptionDialog extends JDialog {
     }
 
     private void onOK() {
-        okListener.invoke(mShowCheckBox.isSelected(), mSliderTime.getValue()+1);
+        okListener.invoke(mDeleteCheckBox.isSelected());
         dispose();
     }
 
