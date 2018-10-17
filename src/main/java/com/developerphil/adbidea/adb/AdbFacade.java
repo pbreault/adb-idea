@@ -181,4 +181,11 @@ public class AdbFacade {
     public static void pullFile(@Nullable Project project, @NotNull String remotePath, @NotNull File localFile, boolean deleteRemoteFile) {
         executeOnDevice(project, new PullFileCommand(remotePath, localFile, deleteRemoteFile));
     }
+
+    public static void getDeviceModel(@Nullable Project project, @NotNull Function1<? super String, Unit> function) {
+        getSimpleInfo(project, "getprop ro.product.model", "get Device model ", s -> {
+            function.invoke(s.replace("\n", "").replace("\r", "").replace(" ", ""));
+            return null;
+        });
+    }
 }

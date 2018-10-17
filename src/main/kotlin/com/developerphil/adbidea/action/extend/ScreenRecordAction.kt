@@ -27,8 +27,8 @@ class ScreenRecordAction : AdbAction() {
     val remotePath:String by lazy { "/sdcard/$videoName" }
     var getFiled = false
     override fun actionPerformed(e: AnActionEvent?, project: Project?) {
-        AdbFacade.getSimpleInfo(project, "getprop ro.product.model", "get Device model ") { name ->
-            deviceName = name.replace("\n", "").replace("\r", "").replace(" ", "")
+        AdbFacade.getDeviceModel(project){model:String->
+            deviceName = model
         }
         val dialog = RecordOptionDialog { deleteRemoteFile ->
             saveDirChooserDescriptor.title = "Select $videoName save to..."
@@ -51,10 +51,6 @@ class ScreenRecordAction : AdbAction() {
         }
         dialog.pack()
         dialog.isVisible = true
-
-
-
-
     }
 
     companion object {
