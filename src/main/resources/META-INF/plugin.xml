@@ -152,6 +152,10 @@
         <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="shift ctrl A"/>
         <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt A"/>
       </action>
+      <action id="com.developerphil.adbidea.action.QuickListSupplementaryAction"
+          class="com.developerphil.adbidea.action.QuickListSupplementaryAction" text="ADB Supplementary Operations Popup..."
+          description="List supplementary the adb idea operations in a popup">
+      </action>
       <separator/>
 
       <action id="com.developerphil.adbidea.action.RevokePermissionsAction"
