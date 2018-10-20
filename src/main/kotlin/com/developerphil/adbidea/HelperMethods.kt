@@ -28,5 +28,7 @@ fun openFileExplorer(path: String){
         Runtime.getRuntime().exec(arrayOf("cmd", "/C", "start $path"))
     }else if (OS.isMacOSX()) {
         Runtime.getRuntime().exec("open $path -a")
+    }else if (OS.isLinux()){
+        Runtime.getRuntime().exec("nautilus $path")
     }
 }

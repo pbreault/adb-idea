@@ -161,8 +161,8 @@ public class AdbFacade {
         executeOnDevice(project, new CommonStringResultCommand(command, desc, callback));
     }
 
-    public static void captureScreen(@Nullable Project project, File file) {
-        executeOnDevice(project, new CaptureScreenCommand(file));
+    public static void captureScreen(@Nullable Project project, File localDir, String fileName) {
+        executeOnDevice(project, new CaptureScreenCommand(localDir,fileName));
     }
 
     /**

@@ -31,7 +31,8 @@ class ScreenCaptureAction : AdbAction() {
             .choose(project, selectedFile)
         if (choose.isNotEmpty()) {
             selectedFile = choose[0]
-            AdbFacade.captureScreen(project, File(selectedFile?.canonicalPath, "${deviceName}_${dateFormat.format(Date())}.png"))
+            val fileName = "${deviceName}_${dateFormat.format(Date())}.png"
+            AdbFacade.captureScreen(project, File(selectedFile?.canonicalPath),fileName)
         }
     }
 
