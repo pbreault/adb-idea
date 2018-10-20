@@ -27,7 +27,7 @@ public class RecordOptionDialog extends JDialog {
     private JButton                         buttonOK;
     private JButton                         buttonCancel;
     private JButton                         mStartButton;
-    private JTextPane                       mClickStartAndTheTextPane;
+    private JTextPane clickStartAndTheTextPane;
     private JCheckBox                       mDeleteCheckBox;
     @NotNull
     public  Function1<Boolean,Unit> okListener;

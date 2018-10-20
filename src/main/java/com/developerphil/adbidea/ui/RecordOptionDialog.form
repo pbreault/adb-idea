@@ -3,10 +3,11 @@
   <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="48" y="54" width="436" height="239"/>
+      <xy x="48" y="54" width="436" height="283"/>
     </constraints>
     <properties>
-      <preferredSize width="500" height="220"/>
+      <preferredSize width="500" height="240"/>
+      <requestFocusEnabled value="true"/>
     </properties>
     <border type="none"/>
     <children>
@@ -83,7 +84,7 @@
                   <text value="Start"/>
                 </properties>
               </component>
-              <component id="37cb5" class="javax.swing.JTextPane" binding="mClickStartAndTheTextPane" default-binding="true">
+              <component id="37cb5" class="javax.swing.JTextPane" binding="clickStartAndTheTextPane" default-binding="true">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>
@@ -92,7 +93,7 @@
                 </constraints>
                 <properties>
                   <editable value="false"/>
-                  <text value="Click start and the command line will pop up to start recording. Select the command line and press Ctrl+C to stop recording. The maximum length is 180s and the default is saved to /sdcard/model_time.mp4"/>
+                  <text value="Click start and the command line will pop up to start recording(If you are using MacOSx you need to paste commands already in the clipboard to the command line). Select the command line and press Ctrl+C to stop recording. The maximum length is 180s and the default is saved to /sdcard/model_time.mp4"/>
                 </properties>
               </component>
             </children>
