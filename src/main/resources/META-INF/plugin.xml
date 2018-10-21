@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/pbreault/adb-idea">
   <id>com.developerphil.adbidea</id>
   <name>ADB Idea</name>
-  <version>1.6.0</version>
+  <version>1.6.1</version>
   <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
   <description><![CDATA[
@@ -34,6 +34,10 @@
 
 
   <change-notes><![CDATA[
+        <b>1.6.1</b>
+          <ul>
+            <li>add linux and macOS support,The test passed in Ubuntu 18.10 and macOSx 10.13</li>
+          </ul>
         <b>1.6.0</b>
         <ul>
           <li>Add some simple function</li>

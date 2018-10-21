@@ -24,11 +24,9 @@ fun showErrorMsg(msg:String){
 
 
 fun openFileExplorer(path: String){
-    if (OS.isWindows()) {
-        Runtime.getRuntime().exec(arrayOf("cmd", "/C", "start $path"))
-    }else if (OS.isMacOSX()) {
-        ProcessBuilder("open",path).start()
-    }else if (OS.isLinux()){
-        Runtime.getRuntime().exec("nautilus $path")
+    when {
+        OS.isWindows() -> Runtime.getRuntime().exec(arrayOf("cmd", "/C", "start $path"))
+        OS.isMacOSX() -> ProcessBuilder("open",path).start()
+        OS.isLinux() -> Runtime.getRuntime().exec("nautilus $path")
     }
 }
