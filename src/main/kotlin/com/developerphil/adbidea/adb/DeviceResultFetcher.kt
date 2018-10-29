@@ -45,28 +45,16 @@ class DeviceResultFetcher constructor(private val project: Project, private val 
     private fun getFacet(facets: List<AndroidFacet>): AndroidFacet? {
         val facet: AndroidFacet?
         if (facets.size > 1) {
-            facet = ModuleChooserDialogHelper.showDialogForFacets(project, facets)
+            facet = ModuleChooserDialogHelper.showDialogForFacets(project, facets, false)
             if (facet == null) {
                 return null
             }
         } else {
             facet = facets[0]
         }
-
         return facet
     }
 
-    private fun getApplicationFacets(project: Project): List<AndroidFacet> {
-
-        val facets = Lists.newArrayList<AndroidFacet>()
-        for (facet in AndroidUtils.getApplicationFacets(project)) {
-            if (!isTestProject(facet)) {
-                facets.add(facet)
-            }
-        }
-
-        return facets
-    }
 
     private fun showDeviceChooserDialog(facet: AndroidFacet, packageName: String): DeviceResult? {
         val chooser = DeviceChooserDialog(facet)
@@ -90,10 +78,25 @@ class DeviceResultFetcher constructor(private val project: Project, private val 
         return DeviceResult(selectedDevices.asList(), facet, packageName)
     }
 
-    private fun isTestProject(facet: AndroidFacet): Boolean {
-        return facet.manifest != null
+
+    companion object {
+        fun getApplicationFacets(project: Project): List<AndroidFacet> {
+
+            val facets = Lists.newArrayList<AndroidFacet>()
+            for (facet in AndroidUtils.getApplicationFacets(project)) {
+                if (!isTestProject(facet)) {
+                    facets.add(facet)
+                }
+            }
+
+            return facets
+        }
+
+        fun isTestProject(facet: AndroidFacet): Boolean {
+            return facet.manifest != null
                 && facet.manifest!!.instrumentations != null
                 && !facet.manifest!!.instrumentations.isEmpty()
+        }
     }
 
 }

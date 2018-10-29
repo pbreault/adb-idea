@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/pbreault/adb-idea">
   <id>com.developerphil.adbidea</id>
   <name>ADB Idea</name>
-  <version>1.6.1</version>
+  <version>1.6.2</version>
   <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
   <description><![CDATA[
@@ -34,6 +34,10 @@
 
 
   <change-notes><![CDATA[
+        <b>1.6.2</b>
+          <ul>
+            <li>add set default module function, After setting the default module under the same project, all operations will use the default module, and no longer pop up the module selection dialog</li>
+          </ul>
         <b>1.6.1</b>
           <ul>
             <li>add linux and macOS support,The test passed in Ubuntu 18.10 and macOSx 10.13</li>
@@ -221,6 +225,12 @@
           class="com.developerphil.adbidea.action.RestartWithDebuggerAction"
           text="ADB Restart App With Debugger"
           description="Restarts the current application and attach the debugger">
+      </action>
+      <separator/>
+      <action id="com.developerphil.adbidea.action.extend.SetDefaultModuleAction"
+          class="com.developerphil.adbidea.action.extend.SetDefaultModuleAction"
+          text="ADB Set Default Operation Module "
+          description="Set Default operation module in this project">
       </action>
       <separator/>
       <action id="com.developerphil.adbidea.action.extend.ApplicationManagementPopupAction"
