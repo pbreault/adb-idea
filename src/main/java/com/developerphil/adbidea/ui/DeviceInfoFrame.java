@@ -116,8 +116,8 @@ public class DeviceInfoFrame extends JFrame {
             getInfo2Show("Android id:", "settings get secure android_id", "get Android id ");
             if (!Utils.isEmpty(androidVersion)) {
                 try {
-                    int verison = Integer.parseInt(androidVersion.substring(0, 1));
-                    if (verison >= 5) {
+                    int version = Integer.parseInt(androidVersion.substring(0, 1));
+                    if (version >= 5) {
                         //cannot work
                         //getInfo2Show("IMEI 1 :", "service call iphonesubinfo 1 | awk -F \"'\" '{print $2}' | sed '1 d' | tr -d '.' | awk '{print}' ORS=", "get IMEI 1 ");
                         Utils.append2TextPaneNewLine("Can not get IMEI", JBColor.red, mTextPane);

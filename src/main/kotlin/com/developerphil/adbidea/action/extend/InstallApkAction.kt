@@ -23,18 +23,13 @@ class InstallApkAction : AdbAction() {
         // Set 'chooseFolders' depend on OS, because macOS application represents a directory.
         apkChooserDescriptor = FileChooserDescriptor(true, OS.isMacOSX(), false, false, false, true)
         apkChooserDescriptor.title = "selected apk file to install,support multiple choose"
+        apkChooserDescriptor.withFileFilter {
+            it.extension == "apk"
+        }
         val apks = FileChooserDialogImpl(apkChooserDescriptor, project)
             .choose(project)
         if (apks.isNotEmpty()) {
-            val apkList = mutableListOf<File>()
-            apks.forEach {
-                if (it.name.endsWith(".apk")) {
-                    apkList.add(File(it.canonicalPath))
-                }
-            }
-            if (apkList.isNotEmpty()) {
-                AdbFacade.installApk(project,apkList)
-            }
+            AdbFacade.installApk(project, apks.map { File(it.canonicalPath) }.toList())
         }
     }
 }

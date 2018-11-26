@@ -34,9 +34,7 @@ repositories {
 sourceSets {
     main {
         resources {
-            exclude 'website/adb_operations_popup.png'
-            exclude 'website/find_actions.png'
-            exclude 'website/debug_howto.png'
+            exclude 'website/*.png'
         }
     }
 }
@@ -70,7 +68,7 @@ dependencies {
 
 }
 
-task(verifySetup) {
+task verifySetup() {
     doLast {
         def ideaJar = "$StudioCompilePath/lib/idea.jar"
         if (!file(ideaJar).exists()) {
