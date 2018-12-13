@@ -22,7 +22,7 @@ class Debugger(private val project: Project, private val device: IDevice, privat
         }
     }
 
-    private fun debuggerCanBeAttached() = AndroidDebugger.EP_NAME.extensions.size != 0 && device.getClient(packageName) != null
+    private fun debuggerCanBeAttached() = AndroidDebugger.EP_NAME.extensions.isNotEmpty() && device.getClient(packageName) != null
 
     private fun closeOldSessionAndRun(androidDebugger: AndroidDebugger<*>, client: Client) {
         terminateRunSessions(client)

@@ -17,7 +17,7 @@ The following commands are provided:
 
 * Clear App Data and Restart
 
-  Start at 1.6:
+  Since 1.6:
 
 * Application management
 
