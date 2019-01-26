@@ -425,7 +425,7 @@ public class MyDeviceChooser implements Disposable {
         case DEVICE_STATE_COLUMN_INDEX:
           return getDeviceState(device);
         case COMPATIBILITY_COLUMN_INDEX:
-          return new CanRunOnDeviceCompat(myFacet, myMinSdkVersion, myProjectTarget, myRequiredHardwareFeatures, device).get();
+          return new CanRunOnDeviceCompat(myFacet, device).get();
       }
       return null;
     }

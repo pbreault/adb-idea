@@ -115,10 +115,9 @@
         ]]>
     </change-notes>
 
-    <!-- Android Studio 3.0 -->
-    <!-- see http://tools.android.com/build/studio/idea-tags -->
+    <!-- Android Studio 3.3+ -->
     <!-- see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html -->
-    <idea-version since-build="173"/>
+    <idea-version since-build="182"/>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.android</depends>
