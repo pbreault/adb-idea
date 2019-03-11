@@ -10,7 +10,7 @@ Run/Debug
 Running from command line
 -------------------------
 <code>
-        ./gradlew buildPlugin runIdea
+        ./gradlew buildPlugin runIde
 </code>
 
 Create new menu item
