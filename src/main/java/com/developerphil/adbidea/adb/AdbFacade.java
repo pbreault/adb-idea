@@ -61,6 +61,14 @@ public class AdbFacade {
         executeOnDevice(project, new ClearDataAndRestartCommand());
     }
 
+    public static void toggleTalkBack(Project project) {
+        executeOnDevice(project, new ToggleTalkBackCommand());
+    }
+
+    public static void openDeepLink(Project project, String deepLink) {
+        executeOnDevice(project, new OpenDeepLinkCommand(deepLink));
+    }
+
     private static void executeOnDevice(final Project project, final Command runnable) {
 
         if (isGradleSyncInProgress(project)) {
