@@ -2,7 +2,7 @@
   <id>com.developerphil.adbidea</id>
   <name>ADB Idea</name>
   <version>1.6.3</version>
-  <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
+  <vendor url="https://github.com/longforus">Philippe Breault and Void Young</vendor>
 
   <description><![CDATA[
         Adds the following ADB commands to Android Studio and Intellij:<br />
@@ -28,15 +28,15 @@
         There are two basic ways to invoke a command:
         <ul>
             <li>Through the Tools->Android->ADB Idea menu</li>
-            <li>By searching for "ADB" in "Find Actions" (osx: cmd+shift+a, windows/linux: ctrl+shift+a)</li>
+            <li>By searching for "ADB" in "Find Actions" (osx: cmd+shift+a, windows/linux: ctrl+shift+a)          </li>
         </ul>
         ]]></description>
 
 
   <change-notes><![CDATA[
        <b>1.6.3</b>
-        <ul>
-          <li>BUGFIX: Show all connected devices on Android Studio 3.4+</li>
+         <ul>
+          <li>update to origin : BUGFIX: Show all connected devices on Android Studio 3.4+</li>
         </ul>
         <b>1.6.2</b>
           <ul>
