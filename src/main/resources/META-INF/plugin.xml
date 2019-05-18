@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/pbreault/adb-idea">
   <id>com.developerphil.adbidea</id>
   <name>ADB Idea</name>
-  <version>1.6.3</version>
+  <version>1.6.4</version>
   <vendor url="https://github.com/longforus">Philippe Breault and Void Young</vendor>
 
   <description><![CDATA[
@@ -34,7 +34,10 @@
 
 
   <change-notes><![CDATA[
-       <b>1.6.3</b>
+       <b>1.6.4</b>
+         <ul>
+          <li> BUGFIX: The result of multi-module selection is inconsistent with the actual selection </li>
+        </ul><b>1.6.3</b>
          <ul>
           <li>update to origin : BUGFIX: Show all connected devices on Android Studio 3.4+</li>
         </ul>

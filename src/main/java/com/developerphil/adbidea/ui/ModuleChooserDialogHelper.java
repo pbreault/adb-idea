@@ -5,7 +5,6 @@ import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleType;
 import com.intellij.openapi.project.Project;
-import java.util.Collections;
 import java.util.List;
 import org.jetbrains.android.facet.AndroidFacet;
 
@@ -45,8 +44,6 @@ public final class ModuleChooserDialogHelper {
             previousSelectedModule = Lists.newArrayList(DO_NOT_SELECT_THE_DEFAULT_MODULE);
         }
 
-        Collections.sort(modules, (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
-        Collections.sort(modulesName, String :: compareToIgnoreCase);
         if (isSetDefault) {
             modulesName.add(DO_NOT_SELECT_THE_DEFAULT_MODULE);
         }
