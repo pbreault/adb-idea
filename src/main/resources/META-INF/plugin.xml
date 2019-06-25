@@ -137,6 +137,12 @@
             </action>
             <separator/>
 
+            <action id="com.developerphil.adbidea.action.ConnectViaWifiAction"
+                    class="com.developerphil.adbidea.action.ConnectViaWifiAction"
+                    text="ADB Connect Via Wifi"
+                    description="Connecting device via share wifi connection">
+            </action>
+
             <action id="com.developerphil.adbidea.action.RevokePermissionsAction"
                     class="com.developerphil.adbidea.action.RevokePermissionsAction"
                     text="ADB Revoke Permissions"
