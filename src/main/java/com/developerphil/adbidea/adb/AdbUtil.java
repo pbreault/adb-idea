@@ -5,15 +5,24 @@ import com.android.ddmlib.IDevice;
 import com.android.ddmlib.ShellCommandUnresponsiveException;
 import com.android.ddmlib.TimeoutException;
 import com.android.tools.idea.gradle.project.sync.GradleSyncState;
+import com.android.tools.idea.sdk.AndroidSdks;
 import com.developerphil.adbidea.adb.command.receiver.GenericReceiver;
 import com.developerphil.adbidea.ui.NotificationHelper;
 import com.intellij.openapi.project.Project;
 import org.joor.Reflect;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 public class AdbUtil {
+
+    public static String getAdbPath() {
+        String sdkPath = AndroidSdks.getInstance().getAllAndroidSdks().get(0).getHomePath();
+        if (sdkPath != null)
+            return Paths.get(sdkPath, "platform-tools", "adb").toString();
+        else return "adb";
+    }
 
     public static boolean isAppInstalled(IDevice device, String packageName) throws TimeoutException, AdbCommandRejectedException, ShellCommandUnresponsiveException, IOException {
         GenericReceiver receiver = new GenericReceiver();

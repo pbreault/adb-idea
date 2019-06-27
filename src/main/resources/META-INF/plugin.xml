@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/pbreault/adb-idea">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>1.5.3</version>
+    <version>1.5.4</version>
     <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
     <description><![CDATA[
@@ -16,6 +16,7 @@
             <li>ADB Revoke Permissions</li>
             <li>ADB Start App With Debugger</li>
             <li>ADB Restart App With Debugger</li>
+             <li>ADB Connect Device via Wifi</li>
         </ul>
         <br />
         There are two basic ways to invoke a command:
@@ -27,6 +28,10 @@
 
 
     <change-notes><![CDATA[
+        <b>1.5.4</b>
+        <ul>
+          <li>FEATURE: Connecting device via common wifi connection</li>
+        </ul>
         <b>1.5.3</b>
         <ul>
           <li>BUGFIX: Show all connected devices on Android Studio 3.4+</li>
@@ -197,6 +202,19 @@
                     text="ADB Restart App With Debugger"
                     description="Restarts the current application and attach the debugger">
             </action>
+
+            <action id="com.developerphil.adbidea.action.ConnectViaWifiAction"
+                    class="com.developerphil.adbidea.action.ConnectViaWifiAction"
+                    text="ADB Connect Via Wifi"
+                    description="Connecting device via common wifi connection">
+            </action>
+
+            <action id="com.developerphil.adbidea.action.DisconnectDeviceAction"
+                    class="com.developerphil.adbidea.action.DisconnectDeviceAction"
+                    text="ADB Disconnect Device"
+                    description="Disconnecting Device from Wifi Connection with Debugger">
+            </action>
+
             <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
         </group>
     </actions>
