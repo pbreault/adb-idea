@@ -53,6 +53,10 @@ public class AdbFacade {
         executeOnDevice(project, new ConnectViaWifiCommand());
     }
 
+    public static void disconnectDevice(Project project) {
+        executeOnDevice(project, new DisconnectDeviceCommand());
+    }
+
     public static void restartDefaultActivityWithDebugger(Project project) {
         executeOnDevice(project, new CommandList(new KillCommand(), new StartDefaultActivityCommand(true)));
     }
