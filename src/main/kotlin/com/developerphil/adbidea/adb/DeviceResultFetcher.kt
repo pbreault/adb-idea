@@ -5,7 +5,6 @@ import com.android.tools.idea.gradle.project.model.AndroidModuleModel
 import com.developerphil.adbidea.ui.DeviceChooserDialog
 import com.developerphil.adbidea.ui.ModuleChooserDialogHelper
 import com.developerphil.adbidea.ui.NotificationHelper
-import com.google.common.collect.Lists
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import org.jetbrains.android.facet.AndroidFacet
@@ -15,8 +14,8 @@ import org.jetbrains.android.util.AndroidUtils
 class DeviceResultFetcher constructor(private val project: Project, private val useSameDevicesHelper: UseSameDevicesHelper, private val bridge: Bridge) {
 
     fun fetch(): DeviceResult? {
-        val facets = getApplicationFacets(project)
-        if (!facets.isEmpty()) {
+        val facets = AndroidUtils.getApplicationFacets(project)
+        if (facets.isNotEmpty()) {
             val facet = getFacet(facets) ?: return null
             val packageName = AndroidModuleModel.get(facet)?.applicationId ?: return null
 
@@ -56,18 +55,6 @@ class DeviceResultFetcher constructor(private val project: Project, private val 
         return facet
     }
 
-    private fun getApplicationFacets(project: Project): List<AndroidFacet> {
-
-        val facets = Lists.newArrayList<AndroidFacet>()
-        for (facet in AndroidUtils.getApplicationFacets(project)) {
-            if (!isTestProject(facet)) {
-                facets.add(facet)
-            }
-        }
-
-        return facets
-    }
-
     private fun showDeviceChooserDialog(facet: AndroidFacet, packageName: String): DeviceResult? {
         val chooser = DeviceChooserDialog(facet)
         chooser.show()
@@ -83,19 +70,12 @@ class DeviceResultFetcher constructor(private val project: Project, private val 
             useSameDevicesHelper.rememberDevices()
         }
 
-        if (selectedDevices.size == 0) {
+        if (selectedDevices.isEmpty()) {
             return null
         }
 
         return DeviceResult(selectedDevices.asList(), facet, packageName)
     }
-
-    private fun isTestProject(facet: AndroidFacet): Boolean {
-        return facet.manifest != null
-                && facet.manifest!!.instrumentations != null
-                && !facet.manifest!!.instrumentations.isEmpty()
-    }
-
 }
 
 

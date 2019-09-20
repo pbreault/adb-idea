@@ -95,9 +95,6 @@ public class MyDeviceChooser implements Disposable {
 
   private final AndroidFacet myFacet;
   private final Condition<IDevice> myFilter;
-  private final AndroidVersion myMinSdkVersion;
-  private final IAndroidTarget myProjectTarget;
-  private final EnumSet<IDevice.HardwareFeature> myRequiredHardwareFeatures;
 
   private int[] mySelectedRows;
   private boolean hadUserInteraction = false;
@@ -112,14 +109,6 @@ public class MyDeviceChooser implements Disposable {
 
     myFacet = facet;
     myFilter = filter;
-      myMinSdkVersion = AndroidModuleInfo.getInstance(facet).getRuntimeMinSdkVersion();
-    myProjectTarget = projectTarget;
-    if (new IsWatchFeatureRequiredCompat(facet).get()) {
-      myRequiredHardwareFeatures = EnumSet.of(IDevice.HardwareFeature.WATCH);
-    } else {
-      myRequiredHardwareFeatures = EnumSet.noneOf(IDevice.HardwareFeature.class);
-    }
-
     myDeviceTable = new JBTable();
     myPanel = ScrollPaneFactory.createScrollPane(myDeviceTable);
     myPanel.setPreferredSize(new Dimension(450, 220));
