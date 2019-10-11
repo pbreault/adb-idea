@@ -61,6 +61,10 @@ public class AdbFacade {
         executeOnDevice(project, new ClearDataAndRestartCommand());
     }
 
+    public static void unlockPhone(Project project) {
+        executeOnDevice(project, new UnlockPhoneCommand());
+    }
+
     private static void executeOnDevice(final Project project, final Command runnable) {
 
         if (isGradleSyncInProgress(project)) {
