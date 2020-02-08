@@ -9,6 +9,6 @@ class RestartWithDebuggerAction : AdbAction() {
     override fun actionPerformed(e: AnActionEvent, project: Project) = AdbFacade.restartDefaultActivityWithDebugger(project)
 
     override fun update(e: AnActionEvent) {
-        e.presentation.isEnabled = AdbUtil.isDebuggingAvailable()
+        e.presentation.isEnabled = AdbUtil.isDebuggingAvailable
     }
 }

@@ -23,7 +23,7 @@ class QuickListAction : QuickSwitchSchemeAction(), DumbAware {
         addAction("com.developerphil.adbidea.action.ClearDataAction", group)
         addAction("com.developerphil.adbidea.action.ClearDataAndRestartAction", group)
         addAction("com.developerphil.adbidea.action.RevokePermissionsAction", group)
-        if (AdbUtil.isDebuggingAvailable()) {
+        if (AdbUtil.isDebuggingAvailable) {
             group.addSeparator()
             addAction("com.developerphil.adbidea.action.StartWithDebuggerAction", group)
             addAction("com.developerphil.adbidea.action.RestartWithDebuggerAction", group)
