@@ -40,7 +40,7 @@ class StartDefaultActivityCommandTest {
             ))
             processNewLines(TRAILING_EMPTY_LINE)
             assertThat(isSuccess).isFalse()
-            assertThat(getMessage()).isEqualTo(
+            assertThat(message).isEqualTo(
                     "Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.cxategory.LAUNCHER] cmp=com.example.untitled/.MyActivity }\n" +
                             "Error type 3\n" +
                             "Error: Activity class {com.example.untitled/com.example.untitled.MyActivity} does not exist."
