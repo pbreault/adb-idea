@@ -201,6 +201,14 @@
                     text="ADB Restart App With Debugger"
                     description="Restarts the current application and attach the debugger">
             </action>
+
+            <separator/>
+            <action id="com.developerphil.adbidea.action.StartDevelopmentActivityAction"
+                    class="com.developerphil.adbidea.action.StartDevelopmentActivityAction"
+                    text="ADB Start Development Activity"
+                    description="Starts development activity of system setting">
+            </action>
+
             <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
         </group>
     </actions>
