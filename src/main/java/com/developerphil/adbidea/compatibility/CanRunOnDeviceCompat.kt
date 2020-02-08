@@ -3,8 +3,8 @@ package com.developerphil.adbidea.compatibility
 import com.android.ddmlib.IDevice
 import com.android.tools.idea.run.*
 import org.jetbrains.android.facet.AndroidFacet
-import org.joor.on
-import org.joor.asType
+import com.developerphil.adbidea.on
+import com.developerphil.adbidea.asType
 
 class CanRunOnDeviceCompat(private val myFacet: AndroidFacet, device: IDevice) : BackwardCompatibleGetter<LaunchCompatibility>() {
 

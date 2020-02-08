@@ -56,6 +56,7 @@ group 'com.developerphil.intellij.plugin.adbidea'
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
+    compile "org.jooq:joor-java-8:0.9.7"
     compileOnly fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
     compileOnly fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
     compile 'com.google.dagger:dagger:2.6'
