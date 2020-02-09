@@ -9,13 +9,13 @@ class BackwardCompatibleGetterTest {
     @Test
     fun onlyCallCurrentImplementationWhenItIsValid() {
         var value = false
-        object : BackwardCompatibleGetter<Boolean?>() {
-            override fun getCurrentImplementation(): Boolean? {
+        object : BackwardCompatibleGetter<Boolean>() {
+            override fun getCurrentImplementation(): Boolean {
                 value = true
                 return true
             }
 
-            override fun getPreviousImplementation(): Boolean? {
+            override fun getPreviousImplementation(): Boolean {
                 fail("should not be called")
                 return true
             }
@@ -34,26 +34,26 @@ class BackwardCompatibleGetterTest {
 
     @Test(expected = RuntimeException::class)
     fun throwExceptionsWhenTheyAreNotRelatedToBackwardCompatibility() {
-        object : BackwardCompatibleGetter<Boolean?>() {
-            override fun getCurrentImplementation(): Boolean? {
+        object : BackwardCompatibleGetter<Boolean>() {
+            override fun getCurrentImplementation(): Boolean {
                 throw RuntimeException("exception!")
             }
 
-            override fun getPreviousImplementation(): Boolean? {
+            override fun getPreviousImplementation(): Boolean {
                 fail("should not be called")
-                return true
+                return false
             }
         }.get()
     }
 
     private fun expectPreviousImplementationIsCalledFor(throwable: Throwable) {
         var value = false
-        object : BackwardCompatibleGetter<Boolean?>() {
-            override fun getCurrentImplementation(): Boolean? {
+        object : BackwardCompatibleGetter<Boolean>() {
+            override fun getCurrentImplementation(): Boolean {
                 throw throwable
             }
 
-            override fun getPreviousImplementation(): Boolean? {
+            override fun getPreviousImplementation(): Boolean {
                 value = true
                 return true
             }
