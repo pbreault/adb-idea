@@ -18,12 +18,10 @@ package com.developerphil.adbidea.ui;
 
 import com.android.ddmlib.AndroidDebugBridge;
 import com.android.ddmlib.IDevice;
-import com.android.sdklib.AndroidVersion;
 import com.android.sdklib.IAndroidTarget;
-import com.android.tools.idea.model.AndroidModuleInfo;
+import com.android.tools.idea.run.ConnectedAndroidDevice;
 import com.android.tools.idea.run.LaunchCompatibility;
-import com.developerphil.adbidea.compatibility.CanRunOnDeviceCompat;
-import com.developerphil.adbidea.compatibility.IsWatchFeatureRequiredCompat;
+import com.android.tools.idea.run.LaunchCompatibilityCheckerImpl;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ModalityState;
@@ -414,7 +412,7 @@ public class MyDeviceChooser implements Disposable {
         case DEVICE_STATE_COLUMN_INDEX:
           return getDeviceState(device);
         case COMPATIBILITY_COLUMN_INDEX:
-          return new CanRunOnDeviceCompat(myFacet, device).get();
+          return LaunchCompatibilityCheckerImpl.create(myFacet, null,null).validate(new ConnectedAndroidDevice(device, null));
       }
       return null;
     }
