@@ -11,6 +11,7 @@ The following commands are provided:
 * Restart App
 * Clear App Data
 * Clear App Data and Restart
+* start Aapplication Development Setting page
 
 Usage
 =====

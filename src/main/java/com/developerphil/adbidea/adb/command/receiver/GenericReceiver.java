@@ -11,9 +11,9 @@ import java.util.regex.Pattern;
 public class GenericReceiver extends MultiLineReceiver {
 
     private static final String SUCCESS_OUTPUT = "Success"; //$NON-NLS-1$
-    private static final Pattern FAILURE_PATTERN = Pattern.compile("Failure\\s+\\[(.*)\\]"); //$NON-NLS-1$
+    private static final Pattern FAILURE_PATTERN = Pattern.compile("(Failure|Error)[:]?\\s+(.*)");
 
-    private String mErrorMessage = null;
+    private boolean isSuccess = false;
 
     private List<String> adbOutputLines = new ArrayList<String>();
 
@@ -23,18 +23,12 @@ public class GenericReceiver extends MultiLineReceiver {
     @Override
     public void processNewLines(String[] lines) {
         this.adbOutputLines.addAll(Arrays.asList(lines));
-
         for (String line : lines) {
             if (!line.isEmpty()) {
                 if (line.startsWith(SUCCESS_OUTPUT)) {
-                    mErrorMessage = null;
+                    isSuccess = true;
                 } else {
-                    Matcher m = FAILURE_PATTERN.matcher(line);
-                    if (m.matches()) {
-                        mErrorMessage = m.group(1);
-                    } else {
-                        mErrorMessage = "Unknown failure";
-                    }
+                    isSuccess = !FAILURE_PATTERN.matcher(line).matches();
                 }
             }
         }
@@ -49,11 +43,12 @@ public class GenericReceiver extends MultiLineReceiver {
         return adbOutputLines;
     }
 
-    public boolean isSuccess() {
-        return mErrorMessage == null;
+    public String getAdbOutputString() {
+        return String.join("\n", adbOutputLines);
     }
 
-    public String getErrorMessage() {
-        return mErrorMessage;
+    public boolean isSuccess() {
+        return isSuccess;
     }
+
 }
