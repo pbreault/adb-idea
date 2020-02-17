@@ -3,7 +3,6 @@ package com.developerphil.adbidea.adb
 import com.android.ddmlib.IDevice
 import com.intellij.openapi.project.Project
 import org.jetbrains.android.sdk.AndroidSdkUtils
-import javax.inject.Inject
 
 interface Bridge {
     fun isReady(): Boolean
@@ -11,7 +10,7 @@ interface Bridge {
 }
 
 
-class BridgeImpl @Inject constructor(project: Project) : Bridge {
+class BridgeImpl(project: Project) : Bridge {
 
     val androidBridge = AndroidSdkUtils.getDebugBridge(project)
 

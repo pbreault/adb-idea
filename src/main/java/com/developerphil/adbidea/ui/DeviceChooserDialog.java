@@ -24,16 +24,14 @@ public class DeviceChooserDialog extends DialogWrapper {
     private JPanel myPanel;
     private JPanel myDeviceChooserWrapper;
     private JCheckBox useSameDeviceSCheckBox;
-
-    @Inject
-    PluginPreferences pluginPreferences;
+    private PluginPreferences pluginPreferences;
 
     public DeviceChooserDialog(@NotNull final AndroidFacet facet) {
         super(facet.getModule().getProject(), true);
         setTitle(AndroidBundle.message("choose.device.dialog.title"));
 
         myProject = facet.getModule().getProject();
-        myProject.getComponent(ObjectGraph.class).inject(this);
+        pluginPreferences = myProject.getComponent(ObjectGraph.class).getPluginPreferences();
 
         getOKAction().setEnabled(false);
 

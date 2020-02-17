@@ -8,7 +8,6 @@ buildscript {
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "net.ltgt.gradle:gradle-apt-plugin:0.9"
     }
 }
 
@@ -23,7 +22,6 @@ targetCompatibility = 1.8
 
 apply plugin: 'java'
 apply plugin: 'kotlin'
-apply plugin: 'kotlin-kapt'
 
 
 repositories {
@@ -59,8 +57,6 @@ dependencies {
     compile "org.jooq:joor-java-8:0.9.7"
     compileOnly fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
     compileOnly fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
-    compile 'com.google.dagger:dagger:2.6'
-    kapt "com.google.dagger:dagger-compiler:2.6"
 
     testCompile 'junit:junit:4.12'
     testCompile fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
