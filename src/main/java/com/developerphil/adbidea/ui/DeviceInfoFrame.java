@@ -61,22 +61,22 @@ public class DeviceInfoFrame extends JFrame {
             }
         });
         //how to switch thread?
-        AdbFacade.getSimpleInfo(mProject, "getprop ro.product.brand", "get Device brand ", s -> {
-            Utils.append2TextPaneNewLine("Device brand:", JBColor.BLUE, mTextPane);
-            Utils.append2TextPane(s, mTextPane);
+        AdbFacade.INSTANCE.getSimpleInfo(mProject, "getprop ro.product.brand", "get Device brand ", s -> {
+            Utils.Companion.append2TextPaneNewLine("Device brand:", JBColor.BLUE, mTextPane);
+            Utils.Companion.append2TextPane(s, mTextPane);
             return null;
         });
-        AdbFacade.getSimpleInfo(mProject, "getprop ro.product.model", "get Device model ", s1 -> {
-            Utils.append2TextPaneNewLine("Device model:", JBColor.BLUE, mTextPane);
-            Utils.append2TextPane(s1, mTextPane);
+        AdbFacade.INSTANCE.getSimpleInfo(mProject, "getprop ro.product.model", "get Device model ", s1 -> {
+            Utils.Companion.append2TextPaneNewLine("Device model:", JBColor.BLUE, mTextPane);
+            Utils.Companion.append2TextPane(s1, mTextPane);
             return null;
         });
-        AdbFacade.getSimpleInfo(mProject, "getprop ro.product.name", "get Device name ", s2 -> {
-            Utils.append2TextPaneNewLine("Device name:", JBColor.BLUE, mTextPane);
-            Utils.append2TextPaneNewLine(s2, mTextPane);
+        AdbFacade.INSTANCE.getSimpleInfo(mProject, "getprop ro.product.name", "get Device name ", s2 -> {
+            Utils.Companion.append2TextPaneNewLine("Device name:", JBColor.BLUE, mTextPane);
+            Utils.Companion.append2TextPaneNewLine(s2, mTextPane);
             return null;
         });
-        AdbFacade.getSimpleInfo(mProject, "getprop ro.build.version.release", "get Android Version ", s1 -> {
+        AdbFacade.INSTANCE.getSimpleInfo(mProject, "getprop ro.build.version.release", "get Android Version ", s1 -> {
             androidVersion = s1.trim();
             return null;
         });
@@ -101,42 +101,42 @@ public class DeviceInfoFrame extends JFrame {
         });
         mSystemButton.addActionListener(e -> {
             getInfo2Show("Android id:", "settings get secure android_id", "get Android id ");
-            AdbFacade.getSimpleInfo(mProject, "getprop ro.build.version.sdk", "get Android sdk ", sdk -> {
-                Utils.append2TextPaneNewLine("Android SDK:", JBColor.BLUE, mTextPane);
-                Utils.append2TextPane(sdk, mTextPane);
+            AdbFacade.INSTANCE.getSimpleInfo(mProject, "getprop ro.build.version.sdk", "get Android sdk ", sdk -> {
+                Utils.Companion.append2TextPaneNewLine("Android SDK:", JBColor.BLUE, mTextPane);
+                Utils.Companion.append2TextPane(sdk, mTextPane);
                 return null;
             });
-            if (!Utils.isEmpty(androidVersion)) {
-                Utils.append2TextPaneNewLine("Android Version:", JBColor.BLUE, mTextPane);
-                Utils.append2TextPaneNewLine(androidVersion, mTextPane);
+            if (!Utils.Companion.isEmpty(androidVersion)) {
+                Utils.Companion.append2TextPaneNewLine("Android Version:", JBColor.BLUE, mTextPane);
+                Utils.Companion.append2TextPaneNewLine(androidVersion, mTextPane);
             }
 
         });
         mNetworkButton.addActionListener(e -> {
             getInfo2Show("Android id:", "settings get secure android_id", "get Android id ");
-            if (!Utils.isEmpty(androidVersion)) {
+            if (!Utils.Companion.isEmpty(androidVersion)) {
                 try {
                     int version = Integer.parseInt(androidVersion.substring(0, 1));
                     if (version >= 5) {
                         //cannot work
                         //getInfo2Show("IMEI 1 :", "service call iphonesubinfo 1 | awk -F \"'\" '{print $2}' | sed '1 d' | tr -d '.' | awk '{print}' ORS=", "get IMEI 1 ");
-                        Utils.append2TextPaneNewLine("Can not get IMEI", JBColor.red, mTextPane);
+                        Utils.Companion.append2TextPaneNewLine("Can not get IMEI", JBColor.red, mTextPane);
                     } else {
                         getInfo2Show("IMEI 1 :", "dumpsys iphonesubinfo", "get IMEI 1 ");
                     }
                 } catch (NumberFormatException e1) {
                     e1.printStackTrace();
-                    Utils.append2TextPaneNewLine("Can not get IMEI", JBColor.red, mTextPane);
+                    Utils.Companion.append2TextPaneNewLine("Can not get IMEI", JBColor.red, mTextPane);
                 }
             }
-            AdbFacade.getSimpleInfo(mProject, "ifconfig | grep Mask", "get IP Address ", s -> {
-                Utils.append2TextPaneNewLine("ifconfig :", JBColor.BLUE, mTextPane);
-                Utils.append2TextPaneNewLine(s, mTextPane);
+            AdbFacade.INSTANCE.getSimpleInfo(mProject, "ifconfig | grep Mask", "get IP Address ", s -> {
+                Utils.Companion.append2TextPaneNewLine("ifconfig :", JBColor.BLUE, mTextPane);
+                Utils.Companion.append2TextPaneNewLine(s, mTextPane);
                 return null;
             });
-            AdbFacade.getSimpleInfo(mProject, "ifconfig wlan0", "get IP Address ", s1 -> {
-                Utils.append2TextPaneNewLine("wlan0 :", JBColor.BLUE, mTextPane);
-                Utils.append2TextPaneNewLine(s1, mTextPane);
+            AdbFacade.INSTANCE.getSimpleInfo(mProject, "ifconfig wlan0", "get IP Address ", s1 -> {
+                Utils.Companion.append2TextPaneNewLine("wlan0 :", JBColor.BLUE, mTextPane);
+                Utils.Companion.append2TextPaneNewLine(s1, mTextPane);
                 return null;
             });
             getInfo2Show("Mac Address:", "cat /sys/class/net/wlan0/address", "get Mac Address ");
@@ -146,9 +146,9 @@ public class DeviceInfoFrame extends JFrame {
     }
 
     public void getInfo2Show(String item, String command, String desc) {
-        AdbFacade.getSimpleInfo(mProject, command, desc, s -> {
-            Utils.append2TextPaneNewLine(item, JBColor.BLUE, mTextPane);
-            Utils.append2TextPaneNewLine(s, mTextPane);
+        AdbFacade.INSTANCE.getSimpleInfo(mProject, command, desc, s -> {
+            Utils.Companion.append2TextPaneNewLine(item, JBColor.BLUE, mTextPane);
+            Utils.Companion.append2TextPaneNewLine(s, mTextPane);
             return null;
         });
     }

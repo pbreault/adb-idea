@@ -57,11 +57,11 @@ dependencies {
     compileOnly fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
     compileOnly fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
 
-    testCompile 'junit:junit:4.12'
-    testCompile fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
-    testCompile fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
-    testCompile "org.mockito:mockito-core:1.+"
-    testCompile "com.google.truth:truth:1.0.1"
+    testImplementation 'junit:junit:4.12'
+    testImplementation fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
+    testImplementation fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
+    testImplementation "org.mockito:mockito-core:1.+"
+    testImplementation "com.google.truth:truth:1.0.1"
 
 
 }

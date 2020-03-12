@@ -4,7 +4,7 @@ import com.android.ddmlib.IDevice
 import com.developerphil.adbidea.adb.AdbUtil.isAppInstalled
 import com.developerphil.adbidea.adb.command.receiver.PrintReceiver
 import com.developerphil.adbidea.ui.NotificationHelper
-import com.developerphil.adbidea.ui.NotificationHelper.*
+import com.developerphil.adbidea.ui.NotificationHelper.NOOP_LISTENER
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
 import org.jetbrains.android.facet.AndroidFacet
@@ -23,7 +23,7 @@ class PackageDetailCommand(private val mPackageName: String,private val callback
             if (isAppInstalled(device, mPackageName)) {
                 val receiver = PrintReceiver()
                 device.executeShellCommand("dumpsys package $mPackageName", receiver, 15L, TimeUnit.SECONDS)
-                info(String.format("<b>%s</b> get package detail on %s", mPackageName, device.name))
+                NotificationHelper.info(String.format("<b>%s</b> get package detail on %s", mPackageName, device.name))
                 val string = receiver.toString()
                 callback.invoke(string)
                 val notification = NotificationHelper.INFO.createNotification("ADB IDEA", string, NotificationType.INFORMATION, NOOP_LISTENER)

@@ -14,8 +14,8 @@ import java.util.concurrent.TimeUnit
  * Description :
  */
 
-class InstallApkCommand(val apks: MutableList<File>) : Command {
-    override fun run(project: Project, device: IDevice, facet: AndroidFacet, pn: String?): Boolean {
+class InstallApkCommand(val apks: List<File>) : Command {
+    override fun run(project: Project, device: IDevice, facet: AndroidFacet, packageName: String): Boolean {
         try {
             device.installPackages(apks, true, listOf(), 15, TimeUnit.SECONDS)
             info(String.format("Install %d apk file to %s", apks.size, device.name))
@@ -25,4 +25,6 @@ class InstallApkCommand(val apks: MutableList<File>) : Command {
         }
         return false
     }
+
+
 }

@@ -38,7 +38,6 @@ class Debugger(private val project: Project, private val device: IDevice, privat
             if (handler is AndroidProcessHandler) {
                 val client = handler.getClient(selectedClient.device)
                 if (client != null && client.clientData.pid == pid) {
-                    handler.setNoKill()
                     handler.detachProcess()
                     handler.notifyTextAvailable("Disconnecting run session: a new debug session will be established.\n", ProcessOutputTypes.STDOUT)
                     break

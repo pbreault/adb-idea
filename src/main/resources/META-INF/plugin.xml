@@ -153,126 +153,87 @@
     <!-- see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html -->
     <idea-version since-build="182"/>
 
-  <depends>com.intellij.modules.platform</depends>
-  <depends>org.jetbrains.android</depends>
+    <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.android</depends>
 
-  <actions>
-    <group id="AdbIdea" text="_ADB Idea" description="ADB Idea" popup="true">
-      <action id="com.developerphil.adbidea.action.AdbIdeaQuickList"
-          class="com.developerphil.adbidea.action.QuickListAction" text="ADB Operations Popup..."
-          description="List all the adb idea operations in a popup">
-        <keyboard-shortcut keymap="Mac OS X" first-keystroke="shift ctrl A"/>
-        <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="shift ctrl A"/>
-        <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt A"/>
-      </action>
-      <action id="com.developerphil.adbidea.action.QuickListSupplementaryAction"
-          class="com.developerphil.adbidea.action.QuickListSupplementaryAction" text="ADB Supplementary Operations Popup..."
-          description="List supplementary the adb idea operations in a popup">
-      </action>
-      <separator/>
+    <actions>
+        <group id="AdbIdea" text="_ADB Idea" description="ADB Idea" popup="true">
+            <action id="com.developerphil.adbidea.action.AdbIdeaQuickList"
+                    class="com.developerphil.adbidea.action.QuickListAction" text="ADB Operations Popup..."
+                    description="List all the adb idea operations in a popup">
+                <keyboard-shortcut keymap="Mac OS X" first-keystroke="shift ctrl A"/>
+                <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="shift ctrl A"/>
+                <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt A"/>
+            </action>
+            <separator/>
 
-      <action id="com.developerphil.adbidea.action.RevokePermissionsAction"
-          class="com.developerphil.adbidea.action.RevokePermissionsAction"
-          text="ADB Revoke Permissions"
-          description="Revoking the runtime permissions of the current application">
-      </action>
+            <action id="com.developerphil.adbidea.action.RevokePermissionsAction"
+                    class="com.developerphil.adbidea.action.RevokePermissionsAction"
+                    text="ADB Revoke Permissions"
+                    description="Revoking the runtime permissions of the current application">
+            </action>
 
-      <action id="com.developerphil.adbidea.action.RevokePermissionsAndRestartAction"
-          class="com.developerphil.adbidea.action.RevokePermissionsAndRestartAction"
-          text="ADB Revoke Permissions and Restart"
-          description="Revoking the runtime permissions of the current application and restarts it">
-      </action>
+            <action id="com.developerphil.adbidea.action.RevokePermissionsAndRestartAction"
+                    class="com.developerphil.adbidea.action.RevokePermissionsAndRestartAction"
+                    text="ADB Revoke Permissions and Restart"
+                    description="Revoking the runtime permissions of the current application and restarts it">
+            </action>
 
-      <action id="com.developerphil.adbidea.action.GrantPermissionsAction"
-          class="com.developerphil.adbidea.action.GrantPermissionsAction"
-          text="ADB Grant Permissions"
-          description="Granting the runtime permissions of the current application">
-      </action>
+            <action id="com.developerphil.adbidea.action.GrantPermissionsAction"
+                    class="com.developerphil.adbidea.action.GrantPermissionsAction"
+                    text="ADB Grant Permissions"
+                    description="Granting the runtime permissions of the current application">
+            </action>
 
-      <action id="com.developerphil.adbidea.action.UninstallAction"
-          class="com.developerphil.adbidea.action.UninstallAction"
-          text="ADB Uninstall App"
-          description="Uninstalls the current application">
-      </action>
+            <action id="com.developerphil.adbidea.action.UninstallAction"
+                    class="com.developerphil.adbidea.action.UninstallAction"
+                    text="ADB Uninstall App"
+                    description="Uninstalls the current application">
+            </action>
 
-      <action id="com.developerphil.adbidea.action.KillAction"
-          class="com.developerphil.adbidea.action.KillAction"
-          text="ADB Kill App"
-          description="Kills the current application">
-      </action>
-      <action id="com.developerphil.adbidea.action.StartAction"
-          class="com.developerphil.adbidea.action.StartAction"
-          text="ADB Start App"
-          description="Starts the current application">
-      </action>
-      <action id="com.developerphil.adbidea.action.RestartAction"
-          class="com.developerphil.adbidea.action.RestartAction"
-          text="ADB Restart App"
-          description="Restarts the current application">
-      </action>
-      <action id="com.developerphil.adbidea.action.ClearDataAction"
-          class="com.developerphil.adbidea.action.ClearDataAction"
-          text="ADB Clear App Data"
-          description="Clears the private storage of the app">
-      </action>
-      <action id="com.developerphil.adbidea.action.ClearDataAndRestartAction"
-          class="com.developerphil.adbidea.action.ClearDataAndRestartAction"
-          text="ADB Clear App Data and Restart"
-          description="Clears the private storage of the app and restarts it">
-      </action>
-      <action id="com.developerphil.adbidea.action.StartWithDebuggerAction"
-          class="com.developerphil.adbidea.action.StartWithDebuggerAction"
-          text="ADB Start App With Debugger"
-          description="Starts the current application and attach the debugger">
-      </action>
+            <action id="com.developerphil.adbidea.action.KillAction"
+                    class="com.developerphil.adbidea.action.KillAction"
+                    text="ADB Kill App"
+                    description="Kills the current application">
+            </action>
+            <action id="com.developerphil.adbidea.action.StartAction"
+                    class="com.developerphil.adbidea.action.StartAction"
+                    text="ADB Start App"
+                    description="Starts the current application">
+            </action>
+            <action id="com.developerphil.adbidea.action.RestartAction"
+                    class="com.developerphil.adbidea.action.RestartAction"
+                    text="ADB Restart App"
+                    description="Restarts the current application">
+            </action>
+            <action id="com.developerphil.adbidea.action.ClearDataAction"
+                    class="com.developerphil.adbidea.action.ClearDataAction"
+                    text="ADB Clear App Data"
+                    description="Clears the private storage of the app">
+            </action>
+            <action id="com.developerphil.adbidea.action.ClearDataAndRestartAction"
+                    class="com.developerphil.adbidea.action.ClearDataAndRestartAction"
+                    text="ADB Clear App Data and Restart"
+                    description="Clears the private storage of the app and restarts it">
+            </action>
+            <action id="com.developerphil.adbidea.action.StartWithDebuggerAction"
+                    class="com.developerphil.adbidea.action.StartWithDebuggerAction"
+                    text="ADB Start App With Debugger"
+                    description="Starts the current application and attach the debugger">
+            </action>
 
-      <action id="com.developerphil.adbidea.action.RestartWithDebuggerAction"
-          class="com.developerphil.adbidea.action.RestartWithDebuggerAction"
-          text="ADB Restart App With Debugger"
-          description="Restarts the current application and attach the debugger">
-      </action>
-      <separator/>
-      <action id="com.developerphil.adbidea.action.extend.SetDefaultModuleAction"
-          class="com.developerphil.adbidea.action.extend.SetDefaultModuleAction"
-          text="ADB Set Default Operation Module "
-          description="Set Default operation module in this project">
-      </action>
-      <separator/>
-      <action id="com.developerphil.adbidea.action.extend.ApplicationManagementPopupAction"
-          class="com.developerphil.adbidea.action.extend.ApplicationManagementPopupAction" text="ADB Application management..."
-          description="List all the adb idea application management operations in a popup">
-      </action>
-      <action id="com.developerphil.adbidea.action.extend.InteractingAction"
-          class="com.developerphil.adbidea.action.extend.InteractingAction" text="ADB Application Interacting..."
-          description="Interacting with applications, e.g. start activity ,send broadcast">
-      </action>
-      <action id="com.developerphil.adbidea.action.extend.ShowDeviceInfoAction"
-          class="com.developerphil.adbidea.action.extend.ShowDeviceInfoAction" text="ADB Device information..."
-          description="Show device information , e.g. model ,battery Service state">
-      </action>
-      <action id="com.developerphil.adbidea.action.extend.InstallApkAction"
-          class="com.developerphil.adbidea.action.extend.InstallApkAction" text="ADB Install Apk file"
-          description="Install Apk file to phone">
-      </action>
-      <action id="com.developerphil.adbidea.action.extend.PutStringAction"
-          class="com.developerphil.adbidea.action.extend.PutStringAction" text="ADB Put simple string to device"
-          description="Input simple string to device">
-      </action>
-      <action id="com.developerphil.adbidea.action.extend.ScreenRecordAction"
-          class="com.developerphil.adbidea.action.extend.ScreenRecordAction" text="ADB Record device screen"
-          description="Record device screen via adb">
-      </action>
-      <action id="com.developerphil.adbidea.action.extend.ScreenCaptureAction"
-          class="com.developerphil.adbidea.action.extend.ScreenCaptureAction" text="ADB Capture device screen"
-          description="Capture device screen via adb">
-      </action>
-      <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
-    </group>
-  </actions>
+            <action id="com.developerphil.adbidea.action.RestartWithDebuggerAction"
+                    class="com.developerphil.adbidea.action.RestartWithDebuggerAction"
+                    text="ADB Restart App With Debugger"
+                    description="Restarts the current application and attach the debugger">
+            </action>
+            <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
+        </group>
+    </actions>
 
-  <project-components>
-    <component>
-      <implementation-class>com.developerphil.adbidea.ObjectGraph</implementation-class>
-    </component>
-  </project-components>
+    <project-components>
+        <component>
+            <implementation-class>com.developerphil.adbidea.ObjectGraph</implementation-class>
+        </component>
+    </project-components>
 </idea-plugin>

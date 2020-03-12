@@ -3,7 +3,7 @@ package com.developerphil.adbidea.adb.command
 import com.android.ddmlib.IDevice
 import com.developerphil.adbidea.adb.command.receiver.PrintReceiver
 import com.developerphil.adbidea.ui.NotificationHelper
-import com.developerphil.adbidea.ui.NotificationHelper.*
+import com.developerphil.adbidea.ui.NotificationHelper.NOOP_LISTENER
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
 import org.jetbrains.android.facet.AndroidFacet
@@ -22,7 +22,7 @@ class MonkeyTestCommand(private val mPackageName: String, private val count: Int
             }
             sb.append("-v $count")
             device.executeShellCommand(sb.toString(), receiver, 15L, TimeUnit.SECONDS)
-            info(String.format(" start monkey test on %s", device.name))
+            NotificationHelper.info(String.format(" start monkey test on %s", device.name))
             val string = receiver.toString()
             callback.invoke(string)
             val notification = NotificationHelper.INFO.createNotification("ADB IDEA", string, NotificationType.INFORMATION, NOOP_LISTENER)

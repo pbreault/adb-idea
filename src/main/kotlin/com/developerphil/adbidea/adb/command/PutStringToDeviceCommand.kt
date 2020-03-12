@@ -12,12 +12,12 @@ import java.util.concurrent.TimeUnit
  * Description :
  */
 class PutStringToDeviceCommand(val str:String):Command{
-    override fun run(project: Project?, device: IDevice?, facet: AndroidFacet?, packageName: String?): Boolean {
+    override fun run(project: Project, device: IDevice, facet: AndroidFacet, packageName: String): Boolean {
         try {
             val receiver = PrintReceiver()
             device?.executeShellCommand("input text $str", receiver, 15L, TimeUnit.SECONDS)
             if (!receiver.toString().isNullOrEmpty()) {
-                NotificationHelper.error("Put String to device :\n " + receiver.toString())
+                NotificationHelper.error("Put String to device :\n $receiver")
             }
             return true
         } catch (e1: Exception) {
