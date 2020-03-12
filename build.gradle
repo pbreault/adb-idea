@@ -1,6 +1,6 @@
 buildscript {
 
-    ext.kotlin_version = '1.2.50'
+    ext.kotlin_version = '1.3.41'
 
     repositories {
         mavenCentral()
@@ -8,7 +8,6 @@ buildscript {
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "net.ltgt.gradle:gradle-apt-plugin:0.9"
     }
 }
 
@@ -53,22 +52,21 @@ intellij {
 group 'com.developerphil.intellij.plugin.adbidea'
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
-    implementation "org.jetbrains.kotlin:kotlin-runtime:${kotlin_version}"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
+    compile "org.jooq:joor-java-8:0.9.7"
     compileOnly fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
     compileOnly fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
-    implementation 'com.google.dagger:dagger:2.6'
-    kapt "com.google.dagger:dagger-compiler:2.6"
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
-    testImplementation fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
-    testImplementation "org.mockito:mockito-core:1.+"
-    testImplementation "com.google.truth:truth:0.30"
+    testCompile 'junit:junit:4.12'
+    testCompile fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
+    testCompile fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
+    testCompile "org.mockito:mockito-core:1.+"
+    testCompile "com.google.truth:truth:1.0.1"
+
 
 }
 
-task verifySetup() {
+task(verifySetup) {
     doLast {
         def ideaJar = "$StudioCompilePath/lib/idea.jar"
         if (!file(ideaJar).exists()) {
