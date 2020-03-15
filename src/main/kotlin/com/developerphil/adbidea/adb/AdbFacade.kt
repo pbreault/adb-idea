@@ -97,7 +97,7 @@ object AdbFacade {
 
         if (result != null) {
             for (device in result.devices) {
-                EXECUTOR.submit({ runnable.run(project, device, result.facet, result.packageName) } as Runnable)
+                EXECUTOR.submit { runnable.run(project, device, result.facet, result.packageName) }
             }
         } else {
             NotificationHelper.error("No Device found")
