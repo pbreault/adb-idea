@@ -14,8 +14,8 @@ import javax.swing.JOptionPane
 class PutStringAction : AdbAction() {
 
 
-    override fun actionPerformed(e: AnActionEvent?, project: Project?) {
-        var result = JOptionPane.showInputDialog("Input simple string(ASCII) put to device")
+    override fun actionPerformed(e: AnActionEvent, project: Project) {
+        var result = JOptionPane.showInputDialog("Input simple string(ASCII) put to device,need open USB debugging(Security settings)")
         if (!result.isNullOrEmpty()) {
             result = result.replace(" ","")
             AdbFacade.putStringToDevice(project,result)

@@ -13,7 +13,7 @@ import com.intellij.openapi.project.Project
 class InteractingAction : AdbAction() {
 
 
-    override fun actionPerformed(e: AnActionEvent?, project: Project?) {
+    override fun actionPerformed(e: AnActionEvent, project: Project) {
         val form = InteractingFrame(project)
         form.pack()
         form.isVisible = true

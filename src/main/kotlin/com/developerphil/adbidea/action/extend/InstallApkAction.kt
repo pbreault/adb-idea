@@ -15,11 +15,7 @@ import java.io.File
  * Description :
  */
 class InstallApkAction : AdbAction() {
-
-
-    private lateinit var apkChooserDescriptor: FileChooserDescriptor
-
-    override fun actionPerformed(e: AnActionEvent?, project: Project?) {
+    override fun actionPerformed(e: AnActionEvent, project: Project) {
         // Set 'chooseFolders' depend on OS, because macOS application represents a directory.
         apkChooserDescriptor = FileChooserDescriptor(true, OS.isMacOSX(), false, false, false, true)
         apkChooserDescriptor.title = "selected apk file to install,support multiple choose"
@@ -32,4 +28,8 @@ class InstallApkAction : AdbAction() {
             AdbFacade.installApk(project, apks.map { File(it.canonicalPath) }.toList())
         }
     }
+
+
+    private lateinit var apkChooserDescriptor: FileChooserDescriptor
+
 }

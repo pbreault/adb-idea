@@ -3,7 +3,7 @@ package com.developerphil.adbidea.adb.command
 import com.android.ddmlib.IDevice
 import com.developerphil.adbidea.adb.command.receiver.PrintReceiver
 import com.developerphil.adbidea.ui.NotificationHelper
-import com.developerphil.adbidea.ui.NotificationHelper.*
+import com.developerphil.adbidea.ui.NotificationHelper.NOOP_LISTENER
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
 import org.jetbrains.android.facet.AndroidFacet
@@ -21,7 +21,7 @@ class CommonStringResultCommand(private val commandStr:String,private val operat
             val receiver = PrintReceiver()
             device.executeShellCommand(commandStr, receiver, 15L, TimeUnit.SECONDS)
             if (callback==null) {
-                info("$operationDesc on ${device.name}\n")
+                NotificationHelper.info("$operationDesc on ${device.name}\n")
                 val string = receiver.toString()
                 val notification = NotificationHelper.INFO.createNotification("ADB IDEA", string, NotificationType.INFORMATION, NOOP_LISTENER)
                 notification.notify(project)

@@ -1,10 +1,10 @@
 package com.developerphil.adbidea.action.extend
 
 import com.developerphil.adbidea.action.AdbAction
-import com.developerphil.adbidea.adb.DeviceResultFetcher
 import com.developerphil.adbidea.ui.ModuleChooserDialogHelper
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.Project
+import org.jetbrains.android.util.AndroidUtils
 
 /**
  * @describe
@@ -13,10 +13,11 @@ import com.intellij.openapi.project.Project
  */
 class SetDefaultModuleAction : AdbAction() {
 
-    override fun actionPerformed(e: AnActionEvent?, project: Project?) {
+    override fun actionPerformed(e: AnActionEvent, project: Project) {
         project?.let {
-            val facets = DeviceResultFetcher.getApplicationFacets(it)
+            val facets = AndroidUtils.getApplicationFacets(project)
             ModuleChooserDialogHelper.showDialogForFacets(project, facets, true)
         }
     }
+
 }

@@ -23,7 +23,7 @@ class ScreenCaptureAction : AdbAction() {
     }
 
 
-    override fun actionPerformed(e: AnActionEvent?, project: Project?) {
+    override fun actionPerformed(e: AnActionEvent, project: Project) {
         AdbFacade.getDeviceModel(project){model:String->
             deviceName = model
         }

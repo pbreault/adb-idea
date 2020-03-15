@@ -12,7 +12,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.util.stream.Collectors;
-import javax.inject.Inject;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -31,7 +30,6 @@ public class DeviceChooserDialog extends DialogWrapper {
     private JPanel myDeviceChooserWrapper;
     private JCheckBox useSameDeviceSCheckBox;
 
-    @Inject
     PluginPreferences pluginPreferences;
 
     public DeviceChooserDialog(@NotNull final AndroidFacet facet) {
@@ -39,11 +37,11 @@ public class DeviceChooserDialog extends DialogWrapper {
         setTitle(AndroidBundle.message("choose.device.dialog.title"));
 
         myProject = facet.getModule().getProject();
-        myProject.getComponent(ObjectGraph.class).inject(this);
+        pluginPreferences = myProject.getComponent(ObjectGraph.class).getPluginPreferences();
 
         getOKAction().setEnabled(false);
 
-        myDeviceChooser = new MyDeviceChooser(true, getOKAction(), facet, facet.getConfiguration().getAndroidTarget(), null);
+        myDeviceChooser = new MyDeviceChooser(true, getOKAction(), facet, null);
         Disposer.register(myDisposable, myDeviceChooser);
         myDeviceChooser.addListener(this :: updateOkButton);
 

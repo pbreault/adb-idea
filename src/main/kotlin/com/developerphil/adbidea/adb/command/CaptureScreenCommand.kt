@@ -7,10 +7,8 @@ import com.developerphil.adbidea.ui.NotificationHelper
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
-import javafx.application.Application
 import org.jetbrains.android.facet.AndroidFacet
 import java.io.File
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
@@ -18,7 +16,7 @@ import java.util.concurrent.TimeUnit
  * Description :
  */
 class CaptureScreenCommand(val localDir: File, val fileName: String) : Command {
-    override fun run(project: Project, device: IDevice, facet: AndroidFacet?, packageName: String?): Boolean {
+    override fun run(project: Project, device: IDevice, facet: AndroidFacet, packageName: String): Boolean {
         try {
             val remotePath = "/sdcard/$fileName"
             val receiver = PrintReceiver()

@@ -10,13 +10,12 @@ import com.intellij.openapi.project.Project
  * Description :
  */
 class ApplicationManagementPopupAction:AdbAction(){
-
-
-    override fun actionPerformed(e: AnActionEvent?, project: Project?) {
+    override fun actionPerformed(e: AnActionEvent, project: Project) {
         val form = ApplicationManagementFrame(project)
         form.pack()
         form.isVisible = true
     }
+
 
 
 }

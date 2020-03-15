@@ -65,7 +65,7 @@ public class InteractingFrame extends JFrame {
         mGoButton.addActionListener(e -> {
             Object selectedItem = mCbComponent.getSelectedItem();
             String name = selectedItem != null ? selectedItem.toString() : "";
-            if (!mSendBroadcastRadioButton.isSelected() && Utils.isEmpty(name)) {
+            if (!mSendBroadcastRadioButton.isSelected() && Utils.Companion.isEmpty(name)) {
                 HelperMethodsKt.showErrorMsg("Component name cannot be empty");
                 return;
             }
@@ -75,7 +75,7 @@ public class InteractingFrame extends JFrame {
             String category = selectedItem != null ? selectedItem.toString() : "";
             List<BoundItemBean> boundData = mModel.getData();
             int type = mStartActivityRadioButton.isSelected() ? 0 : (mStartServiceRadioButton.isSelected() ? 1 : 2);
-            AdbFacade.interacting(mProject, type, action, category, name, boundData);
+            AdbFacade.INSTANCE.interacting(mProject, type, action, category, name, boundData);
         });
 
         setContentPane(mPanel);

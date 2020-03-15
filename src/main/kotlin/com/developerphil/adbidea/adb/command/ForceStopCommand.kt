@@ -4,7 +4,7 @@ import com.android.ddmlib.IDevice
 import com.developerphil.adbidea.adb.AdbUtil.isAppInstalled
 import com.developerphil.adbidea.adb.command.receiver.PrintReceiver
 import com.developerphil.adbidea.ui.NotificationHelper
-import com.developerphil.adbidea.ui.NotificationHelper.*
+import com.developerphil.adbidea.ui.NotificationHelper.NOOP_LISTENER
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
 import org.jetbrains.android.facet.AndroidFacet
@@ -22,7 +22,7 @@ class ForceStopCommand(private val mPackageName: String) : Command {
             if (isAppInstalled(device, mPackageName)) {
                 val receiver = PrintReceiver()
                 device.executeShellCommand("am force-stop $mPackageName", receiver, 15L, TimeUnit.SECONDS)
-                info(String.format("ForceStop <b>%s</b> on %s", mPackageName, device.name))
+                NotificationHelper.info(String.format("ForceStop <b>%s</b> on %s", mPackageName, device.name))
                 val string = receiver.toString()
                 val notification = NotificationHelper.INFO.createNotification("ADB IDEA", string, NotificationType.INFORMATION, NOOP_LISTENER)
                 notification.notify(project)
