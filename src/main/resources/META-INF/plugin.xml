@@ -202,6 +202,32 @@
                     description="Restarts the current application and attach the debugger">
             </action>
             <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
+            <separator/>
+
+            <action id="com.developerphil.adbidea.action.EnableWifiAction"
+                    class="com.developerphil.adbidea.action.EnableWifiAction"
+                    text="Enable Wi-Fi"
+                    description="Enable Wi-Fi on device or emulator">
+            </action>
+
+            <action id="com.developerphil.adbidea.action.DisableWifiAction"
+                    class="com.developerphil.adbidea.action.DisableWifiAction"
+                    text="Disable Wi-Fi"
+                    description="Disable Wi-Fi on device or emulator">
+            </action>
+
+            <action id="com.developerphil.adbidea.action.EnableMobileAction"
+                    class="com.developerphil.adbidea.action.EnableMobileAction"
+                    text="Enable Mobile Data"
+                    description="Enable mobile data on device or emulator">
+            </action>
+
+            <action id="com.developerphil.adbidea.action.DisableMobileAction"
+                    class="com.developerphil.adbidea.action.DisableMobileAction"
+                    text="Disable Mobile Data"
+                    description="Disable mobile data on device or emulator">
+            </action>
+
         </group>
     </actions>
 

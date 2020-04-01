@@ -2,6 +2,8 @@ package com.developerphil.adbidea.adb
 
 import com.developerphil.adbidea.ObjectGraph
 import com.developerphil.adbidea.adb.command.*
+import com.developerphil.adbidea.adb.command.SvcCommand.MOBILE
+import com.developerphil.adbidea.adb.command.SvcCommand.WIFI
 import com.developerphil.adbidea.ui.NotificationHelper
 import com.google.common.util.concurrent.ThreadFactoryBuilder
 import com.intellij.openapi.project.Project
@@ -21,6 +23,10 @@ object AdbFacade {
     fun restartDefaultActivityWithDebugger(project: Project) = executeOnDevice(project, CommandList(KillCommand(), StartDefaultActivityCommand(true)))
     fun clearData(project: Project) = executeOnDevice(project, ClearDataCommand())
     fun clearDataAndRestart(project: Project) = executeOnDevice(project, ClearDataAndRestartCommand())
+    fun enableWifi(project: Project) = executeOnDevice(project, ToggleSvcCommand(WIFI, true))
+    fun disableWifi(project: Project) = executeOnDevice(project, ToggleSvcCommand(WIFI, false))
+    fun enableMobile(project: Project) = executeOnDevice(project, ToggleSvcCommand(MOBILE, true))
+    fun disableMobile(project: Project) = executeOnDevice(project, ToggleSvcCommand(MOBILE, false))
 
     private fun executeOnDevice(project: Project, runnable: Command) {
         if (AdbUtil.isGradleSyncInProgress(project)) {
