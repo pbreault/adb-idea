@@ -21,6 +21,7 @@ object AdbFacade {
     fun restartDefaultActivityWithDebugger(project: Project) = executeOnDevice(project, CommandList(KillCommand(), StartDefaultActivityCommand(true)))
     fun clearData(project: Project) = executeOnDevice(project, ClearDataCommand())
     fun clearDataAndRestart(project: Project) = executeOnDevice(project, ClearDataAndRestartCommand())
+    fun clearDataAndRestartWithDebugger(project: Project) = executeOnDevice(project, ClearDataAndRestartWithDebuggerCommand())
 
     private fun executeOnDevice(project: Project, runnable: Command) {
         if (AdbUtil.isGradleSyncInProgress(project)) {
