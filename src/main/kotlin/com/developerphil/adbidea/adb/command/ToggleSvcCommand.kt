@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 
 enum class SvcCommand(val parameter: String, val description: String) {
     WIFI("wifi", "Wi-Fi"),
-    MOBILE("mobile", "Mobile data")
+    MOBILE("data", "Mobile data")
 }
 
 class ToggleSvcCommand(
