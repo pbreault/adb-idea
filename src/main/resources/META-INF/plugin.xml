@@ -208,6 +208,32 @@
                     description="Clears the private storage of the app and restarts it, and attach the debugger">
             </action>
             <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
+            <separator/>
+
+            <action id="com.developerphil.adbidea.action.EnableWifiAction"
+                    class="com.developerphil.adbidea.action.EnableWifiAction"
+                    text="ADB Enable Wi-Fi"
+                    description="Enable Wi-Fi on device or emulator">
+            </action>
+
+            <action id="com.developerphil.adbidea.action.DisableWifiAction"
+                    class="com.developerphil.adbidea.action.DisableWifiAction"
+                    text="ADB Disable Wi-Fi"
+                    description="Disable Wi-Fi on device or emulator">
+            </action>
+
+            <action id="com.developerphil.adbidea.action.EnableMobileAction"
+                    class="com.developerphil.adbidea.action.EnableMobileAction"
+                    text="ADB Enable Mobile Data"
+                    description="Enable mobile data on device or emulator">
+            </action>
+
+            <action id="com.developerphil.adbidea.action.DisableMobileAction"
+                    class="com.developerphil.adbidea.action.DisableMobileAction"
+                    text="ADB Disable Mobile Data"
+                    description="Disable mobile data on device or emulator">
+            </action>
+
         </group>
     </actions>
 
