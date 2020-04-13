@@ -26,7 +26,7 @@ class Debugger(private val project: Project, private val device: IDevice, privat
 
     private fun closeOldSessionAndRun(androidDebugger: AndroidDebugger<*>, client: Client) {
         terminateRunSessions(client)
-        androidDebugger.attachToClient(project, client)
+        androidDebugger.attachToClient(project, client, null)
     }
 
     // Disconnect any active run sessions to the same client

@@ -13,6 +13,9 @@ import javax.swing.JCheckBox
 import javax.swing.JComponent
 import javax.swing.JPanel
 
+/**
+ * https://android.googlesource.com/platform/tools/adt/idea/+/refs/heads/mirror-goog-studio-master-dev/android/src/com/android/tools/idea/run/DeviceChooserDialog.java
+ */
 class DeviceChooserDialog(facet: AndroidFacet) : DialogWrapper(facet.module.project, true) {
 
     lateinit var myPanel: JPanel
@@ -31,7 +34,7 @@ class DeviceChooserDialog(facet: AndroidFacet) : DialogWrapper(facet.module.proj
         myProject = facet.module.project
         pluginPreferences = myProject.getComponent(ObjectGraph::class.java).pluginPreferences
         okAction.isEnabled = false
-        myDeviceChooser = MyDeviceChooser(true, okAction, facet, facet.configuration.androidTarget!!, null)
+        myDeviceChooser = MyDeviceChooser(true, okAction, facet, null)
         Disposer.register(myDisposable, myDeviceChooser)
         myDeviceChooser.addListener(object : DeviceChooserListener {
             override fun selectedDevicesChanged() {

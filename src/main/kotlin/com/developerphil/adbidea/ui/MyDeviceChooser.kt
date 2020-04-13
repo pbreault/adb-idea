@@ -53,11 +53,12 @@ import javax.swing.table.AbstractTableModel
 
 /**
  * @author Eugene.Kudelevsky
+ *
+ * https://android.googlesource.com/platform/tools/adt/idea/+/refs/heads/mirror-goog-studio-master-dev/android/src/com/android/tools/idea/run/DeviceChooser.java
  */
 class MyDeviceChooser(multipleSelection: Boolean,
                       okAction: Action,
                       private val myFacet: AndroidFacet,
-                      projectTarget: IAndroidTarget,
                       private val myFilter: Condition<IDevice>?) : Disposable {
     private val myListeners = ContainerUtil.createLockFreeCopyOnWriteList<DeviceChooserListener>()
     private val myRefreshingAlarm: Alarm
