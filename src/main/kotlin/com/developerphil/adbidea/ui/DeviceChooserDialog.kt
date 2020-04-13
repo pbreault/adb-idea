@@ -2,7 +2,7 @@ package com.developerphil.adbidea.ui
 
 import com.android.ddmlib.IDevice
 import com.developerphil.adbidea.ObjectGraph
-import com.developerphil.adbidea.PluginPreferences
+import com.developerphil.adbidea.preference.ProjectPreferences
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.util.Disposer
@@ -24,7 +24,7 @@ class DeviceChooserDialog(facet: AndroidFacet) : DialogWrapper(facet.module.proj
 
     private val myProject: Project
     private val myDeviceChooser: MyDeviceChooser
-    private val pluginPreferences: PluginPreferences
+    private val projectPreferences: ProjectPreferences
 
     val selectedDevices: Array<IDevice>
         get() = myDeviceChooser.selectedDevices
@@ -32,7 +32,7 @@ class DeviceChooserDialog(facet: AndroidFacet) : DialogWrapper(facet.module.proj
     init {
         title = AndroidBundle.message("choose.device.dialog.title")
         myProject = facet.module.project
-        pluginPreferences = myProject.getComponent(ObjectGraph::class.java).pluginPreferences
+        projectPreferences = myProject.getComponent(ObjectGraph::class.java).projectPreferences
         okAction.isEnabled = false
         myDeviceChooser = MyDeviceChooser(true, okAction, facet, null)
         Disposer.register(myDisposable, myDeviceChooser)
@@ -42,13 +42,13 @@ class DeviceChooserDialog(facet: AndroidFacet) : DialogWrapper(facet.module.proj
             }
         })
         myDeviceChooserWrapper.add(myDeviceChooser.panel)
-        myDeviceChooser.init(pluginPreferences.getSelectedDeviceSerials())
+        myDeviceChooser.init(projectPreferences.getSelectedDeviceSerials())
         init()
         updateOkButton()
     }
 
     private fun persistSelectedSerialsToPreferences() {
-        pluginPreferences.saveSelectedDeviceSerials(myDeviceChooser.selectedDevices.map { it.serialNumber }.toList())
+        projectPreferences.saveSelectedDeviceSerials(myDeviceChooser.selectedDevices.map { it.serialNumber }.toList())
     }
 
     private fun updateOkButton() {

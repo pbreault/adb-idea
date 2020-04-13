@@ -242,4 +242,10 @@
             <implementation-class>com.developerphil.adbidea.ObjectGraph</implementation-class>
         </component>
     </project-components>
+
+    <application-components>
+        <component>
+            <implementation-class>com.developerphil.adbidea.Application</implementation-class>
+        </component>
+    </application-components>
 </idea-plugin>

@@ -1,9 +1,11 @@
 package com.developerphil.adbidea
 
-import com.developerphil.adbidea.accessor.preference.ProjectPreferenceAccessor
+import com.developerphil.adbidea.preference.accessor.PreferenceAccessorImpl
 import com.developerphil.adbidea.adb.BridgeImpl
 import com.developerphil.adbidea.adb.DeviceResultFetcher
 import com.developerphil.adbidea.adb.UseSameDevicesHelper
+import com.developerphil.adbidea.preference.ProjectPreferences
+import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.components.ProjectComponent
 import com.intellij.openapi.project.Project
 
@@ -12,10 +14,10 @@ import com.intellij.openapi.project.Project
 class ObjectGraph(private val project: Project) : ProjectComponent {
 
     val deviceResultFetcher by lazy { DeviceResultFetcher(project, useSameDevicesHelper, bridge) }
-    val pluginPreferences: PluginPreferences by lazy { PluginPreferencesImpl(preferenceAccessor) }
+    val projectPreferences: ProjectPreferences by lazy { ProjectPreferences(projectPreferenceAccessor) }
 
-    private val useSameDevicesHelper by lazy { UseSameDevicesHelper(pluginPreferences, bridge) }
-    private val preferenceAccessor by lazy { ProjectPreferenceAccessor(project) }
+    private val useSameDevicesHelper by lazy { UseSameDevicesHelper(projectPreferences, bridge) }
+    private val projectPreferenceAccessor by lazy { PreferenceAccessorImpl(PropertiesComponent.getInstance(project)) }
     private val bridge by lazy { BridgeImpl(project) }
 
 
