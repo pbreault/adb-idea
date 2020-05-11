@@ -3,14 +3,14 @@ Run/Debug
 
 * Open project in intellij
 * Open _edit configurations_ to create a new run/debug configuration
-* Choose a new gradle configuration and name it `build and run` that runs <code>./gradlew buildPlugin runIdea</code>
+* Choose a new gradle configuration and name it `build and run` that runs <code>./gradlew buildPlugin runIde</code>
 ![Create debug configuration](website/debug_howto.png)
 * hit debug button as usual
 
 Running from command line
 -------------------------
 <code>
-        ./gradlew buildPlugin runIdea
+        ./gradlew buildPlugin runIde
 </code>
 
 Create new menu item
