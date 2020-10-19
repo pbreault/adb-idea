@@ -1,12 +1,11 @@
 package com.developerphil.adbidea.adb.command.receiver
 
 import com.android.ddmlib.MultiLineReceiver
-import java.util.*
 import java.util.regex.Pattern
 
 class GenericReceiver : MultiLineReceiver() {
 
-    val adbOutputLines: MutableList<String> = ArrayList()
+    val adbOutputLines= arrayListOf<String>()
     private var errorMessage: String? = null
 
     override fun processNewLines(lines: Array<String>) {

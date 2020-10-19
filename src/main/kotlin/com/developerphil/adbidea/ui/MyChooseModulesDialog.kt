@@ -17,6 +17,6 @@ class MyChooseModulesDialog(project: Project, items: List<String>, title: String
     }
 
     override fun getItemIcon(s: String): Icon? {
-        return if (s == ModuleChooserDialogHelper.DO_NOT_SELECT_THE_DEFAULT_MODULE) AllIcons.Actions.Clear else mIcon
+        return if (s == ModuleChooserDialogHelper.DO_NOT_SELECT_THE_DEFAULT_MODULE) AllIcons.Actions.Close else mIcon
     }
 }

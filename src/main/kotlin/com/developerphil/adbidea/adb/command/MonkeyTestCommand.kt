@@ -31,7 +31,6 @@ class MonkeyTestCommand(private val mPackageName: String, private val count: Int
         } catch (e1: Exception) {
             error("Start monkey test... " + e1.message)
         }
-        return false
     }
 
 }

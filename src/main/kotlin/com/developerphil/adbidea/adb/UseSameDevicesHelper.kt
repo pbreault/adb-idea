@@ -1,15 +1,14 @@
 package com.developerphil.adbidea.adb
 
 import com.android.ddmlib.IDevice
-import com.developerphil.adbidea.PluginPreferences
-import javax.inject.Inject
+import com.developerphil.adbidea.preference.ProjectPreferences
 
-class UseSameDevicesHelper @Inject constructor(private val pluginPreferences: PluginPreferences, private val bridge: Bridge) {
+class UseSameDevicesHelper constructor(private val projectPreferences: ProjectPreferences, private val bridge: Bridge) {
 
     var previouslyConnectedDevices: List<IDevice>? = null
 
     fun getRememberedDevices(): List<IDevice> {
-        val selectedDeviceSerials = pluginPreferences.getSelectedDeviceSerials()
+        val selectedDeviceSerials = projectPreferences.getSelectedDeviceSerials()
         val currentlyConnectedDevices = bridge.connectedDevices()
 
         if (currentlyConnectedDevices == previouslyConnectedDevices) {

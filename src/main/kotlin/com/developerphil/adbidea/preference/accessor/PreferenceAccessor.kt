@@ -1,4 +1,4 @@
-package com.developerphil.adbidea.accessor.preference
+package com.developerphil.adbidea.preference.accessor
 
 interface PreferenceAccessor {
     fun saveString(key: String, value: String)

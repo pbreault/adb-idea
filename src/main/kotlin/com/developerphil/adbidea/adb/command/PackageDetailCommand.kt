@@ -36,7 +36,6 @@ class PackageDetailCommand(private val mPackageName: String,private val callback
             error("Get package detail... " + e1.message)
         }
 
-        return false
     }
 
 }

@@ -21,7 +21,6 @@ class ActivityServiceCommand(private val mPackageName: String,private val callba
         try {
             if (mPackageName.isNotEmpty()&&!isAppInstalled(device, mPackageName)) {
                 error(String.format("<b>%s</b> is not installed on %s", mPackageName, device.name))
-                return false
             }
             val receiver = PrintReceiver()
             device.executeShellCommand("dumpsys activity services $mPackageName", receiver, 15L, TimeUnit.SECONDS)
@@ -34,8 +33,6 @@ class ActivityServiceCommand(private val mPackageName: String,private val callba
         } catch (e1: Exception) {
             error("get activity service... " + e1.message)
         }
-
-        return false
     }
 
 }

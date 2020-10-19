@@ -12,55 +12,30 @@ import java.util.concurrent.Executors
 object AdbFacade {
     private val EXECUTOR = Executors.newCachedThreadPool(ThreadFactoryBuilder().setNameFormat("AdbIdea-%d").build())
 
-
-
+    fun uninstall(project: Project) = executeOnDevice(project, UninstallCommand())
     fun uninstall(project: Project, packageName: String) {
         executeOnDevice(project, UninstallCommand(packageName))
     }
 
-    fun uninstall(project: Project) {
-        executeOnDevice(project, UninstallCommand())
-    }
+    fun kill(project: Project) = executeOnDevice(project, KillCommand())
+    fun grantPermissions(project: Project) = executeOnDevice(project, GrantPermissionsCommand())
+    fun revokePermissions(project: Project) = executeOnDevice(project, RevokePermissionsCommand())
+    fun revokePermissionsAndRestart(project: Project) = executeOnDevice(project, RevokePermissionsAndRestartCommand())
+    fun startDefaultActivity(project: Project) = executeOnDevice(project, StartDefaultActivityCommand(false))
+    fun startDefaultActivityWithDebugger(project: Project) = executeOnDevice(project, StartDefaultActivityCommand(true))
+    fun restartDefaultActivity(project: Project) = executeOnDevice(project, RestartPackageCommand())
+    fun restartDefaultActivityWithDebugger(project: Project) = executeOnDevice(project, CommandList(KillCommand(), StartDefaultActivityCommand(true)))
+    fun clearData(project: Project) = executeOnDevice(project, ClearDataCommand())
+    fun clearDataAndRestart(project: Project) = executeOnDevice(project, ClearDataAndRestartCommand())
+
+
+
 
     fun installApk(project: Project, apks: List<File>) {
         executeOnDevice(project, InstallApkCommand(apks))
     }
 
-    fun kill(project: Project) {
-        executeOnDevice(project, KillCommand())
-    }
 
-    fun grantPermissions(project: Project) {
-        executeOnDevice(project, GrantPermissionsCommand())
-    }
-
-    fun revokePermissions(project: Project) {
-        executeOnDevice(project, RevokePermissionsCommand())
-    }
-
-    fun revokePermissionsAndRestart(project: Project) {
-        executeOnDevice(project, RevokePermissionsAndRestartCommand())
-    }
-
-    fun startDefaultActivity(project: Project) {
-        executeOnDevice(project, StartDefaultActivityCommand(false))
-    }
-
-    fun startDefaultActivityWithDebugger(project: Project) {
-        executeOnDevice(project, StartDefaultActivityCommand(true))
-    }
-
-    fun restartDefaultActivity(project: Project) {
-        executeOnDevice(project, RestartPackageCommand())
-    }
-
-    fun restartDefaultActivityWithDebugger(project: Project) {
-        executeOnDevice(project, CommandList(KillCommand(), StartDefaultActivityCommand(true)))
-    }
-
-    fun clearData(project: Project) {
-        executeOnDevice(project, ClearDataCommand())
-    }
 
     fun getPackageDetail(project: Project, packageName: String, callback: Function1<String, Unit>) {
         executeOnDevice(project, PackageDetailCommand(packageName, callback))
@@ -78,26 +53,34 @@ object AdbFacade {
         executeOnDevice(project, ActivityServiceCommand(packageName, callback))
     }
 
-    fun clearDataAndRestart(project: Project) {
-        executeOnDevice(project, ClearDataAndRestartCommand())
-    }
+
 
     fun getAllApplicationList(project: Project, parameter: String, callback: Function1<List<String>, Unit>) {
         executeOnDevice(project, GetApplicationListCommand(parameter, callback))
     }
 
-    private fun executeOnDevice(project: Project?, runnable: Command) {
 
-        if (AdbUtil.isGradleSyncInProgress(project!!)) {
+   fun clearDataAndRestartWithDebugger(project: Project) = executeOnDevice(project, ClearDataAndRestartWithDebuggerCommand())
+    fun enableWifi(project: Project) = executeOnDevice(project, ToggleSvcCommand(SvcCommand.WIFI, true))
+    fun disableWifi(project: Project) = executeOnDevice(project, ToggleSvcCommand(SvcCommand.WIFI, false))
+    fun enableMobile(project: Project) = executeOnDevice(project, ToggleSvcCommand(SvcCommand.MOBILE, true))
+    fun disableMobile(project: Project) = executeOnDevice(project, ToggleSvcCommand(SvcCommand.MOBILE, false))
+
+
+
+    private fun executeOnDevice(project: Project, runnable: Command) {
+        if (AdbUtil.isGradleSyncInProgress(project)) {
             NotificationHelper.error("Gradle sync is in progress")
             return
         }
 
-        val result = project!!.getComponent(ObjectGraph::class.java).deviceResultFetcher.fetch()
+        val result = project.getComponent(ObjectGraph::class.java)
+                .deviceResultFetcher
+                .fetch()
 
         if (result != null) {
             for (device in result.devices) {
-                EXECUTOR.submit({ runnable.run(project, device, result.facet, result.packageName) } as Runnable)
+                EXECUTOR.submit { runnable.run(project, device, result.facet, result.packageName) }
             }
         } else {
             NotificationHelper.error("No Device found")
@@ -117,7 +100,7 @@ object AdbFacade {
     }
 
     fun putStringToDevice(project: Project?, str: String) {
-        executeOnDevice(project, PutStringToDeviceCommand(str))
+        executeOnDevice(project!!, PutStringToDeviceCommand(str))
     }
 
     fun interacting(project: Project, type: Int, action: String, category: String, name: String, boundData: MutableList<BoundItemBean>) {
@@ -125,11 +108,11 @@ object AdbFacade {
     }
 
     fun getSimpleInfo(project: Project?, command: String, desc: String, callback: Function1<String, Unit>) {
-        executeOnDevice(project, CommonStringResultCommand(command, desc, callback))
+        executeOnDevice(project!!, CommonStringResultCommand(command, desc, callback))
     }
 
     fun captureScreen(project: Project?, localDir: File, fileName: String) {
-        executeOnDevice(project, CaptureScreenCommand(localDir, fileName))
+        executeOnDevice(project!!, CaptureScreenCommand(localDir, fileName))
     }
 
     /**
@@ -142,11 +125,11 @@ object AdbFacade {
      */
     @Deprecated("")
     fun recordScreen(project: Project?, localFile: File, videoName: String, length: Int, showTouches: Boolean) {
-        executeOnDevice(project, ScreenRecordCommand(localFile, videoName, length, showTouches))
+        executeOnDevice(project!!, ScreenRecordCommand(localFile, videoName, length, showTouches))
     }
 
     fun pullFile(project: Project?, remotePath: String, localFile: File, deleteRemoteFile: Boolean) {
-        executeOnDevice(project, PullFileCommand(remotePath, localFile, deleteRemoteFile))
+        executeOnDevice(project!!, PullFileCommand(remotePath, localFile, deleteRemoteFile))
     }
 
     fun getDeviceModel(project: Project?, function: Function1<String, Unit>) {

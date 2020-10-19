@@ -33,8 +33,6 @@ class ForceStopCommand(private val mPackageName: String) : Command {
         } catch (e1: Exception) {
             error("Force Stop... " + e1.message)
         }
-
-        return false
     }
 
 }

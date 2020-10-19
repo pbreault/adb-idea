@@ -1,15 +1,17 @@
 package com.developerphil.adbidea
 
 import com.android.ddmlib.IDevice
+import com.developerphil.adbidea.preference.accessor.InMemoryPreferenceAccessor
 import com.developerphil.adbidea.adb.Bridge
 import com.developerphil.adbidea.adb.FakeDevice
 import com.developerphil.adbidea.adb.UseSameDevicesHelper
+import com.developerphil.adbidea.preference.ProjectPreferences
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
 class UseSameDevicesHelperTest {
 
-    val pluginPrefs = FakePrefs()
+    val pluginPrefs = ProjectPreferences(InMemoryPreferenceAccessor())
     val bridge = FakeBridge()
     val helper: UseSameDevicesHelper = UseSameDevicesHelper(pluginPrefs, bridge)
 
@@ -85,18 +87,5 @@ class UseSameDevicesHelperTest {
         }
     }
 
-    class FakePrefs : PluginPreferences {
-        var serials = emptyList<String>()
-        override fun saveSelectedDeviceSerials(serials: List<String>) {
-        }
-
-        override fun getSelectedDeviceSerials(): List<String> {
-            return serials
-        }
-
-        fun willReturn(vararg ids: String) {
-            serials = ids.asList()
-        }
-    }
-
+    private fun ProjectPreferences.willReturn(vararg ids: String) = saveSelectedDeviceSerials(ids.asList())
 }

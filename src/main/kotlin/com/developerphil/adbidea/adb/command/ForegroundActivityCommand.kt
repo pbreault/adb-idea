@@ -29,7 +29,6 @@ class ForegroundActivityCommand(private val callback:(String)->Unit) : Command {
         } catch (e1: Exception) {
             error("Get foreground Activity... " + e1.message)
         }
-        return false
     }
 
 }

@@ -35,8 +35,6 @@ class PackagePathCommand(private val mPackageName: String,private val callback:(
         } catch (e1: Exception) {
             error("Get package path... " + e1.message)
         }
-
-        return false
     }
 
 }

@@ -33,8 +33,14 @@ class ScreenRecordAction : AdbAction() {
         }
         val dialog = RecordOptionDialog { deleteRemoteFile ->
             saveDirChooserDescriptor.title = "Select $videoName save to..."
-            val choose = FileChooserDialogImpl(saveDirChooserDescriptor, project)
-                .choose(project, selectedFile)
+            val chooserDialogImpl = FileChooserDialogImpl(saveDirChooserDescriptor, project)
+            val choose = if (selectedFile != null) {
+                chooserDialogImpl
+                    .choose(project, selectedFile!!)
+            } else {
+                chooserDialogImpl
+                    .choose(project)
+            }
             if (choose.isNotEmpty()) {
                 selectedFile = choose[0]
                 AdbFacade.pullFile(project, remotePath, File(selectedFile?.canonicalPath, videoName), deleteRemoteFile)

@@ -239,7 +239,7 @@ public class ApplicationManagementFrame extends JFrame {
                 Utils.Companion.append2TextPane("Monkey test of " + name + " :\n", JBColor.BLUE,tp);
             }
             String countStr = JOptionPane.showInputDialog("Enter test count(only integers):");
-            if (countStr.isEmpty()) {
+            if (countStr==null||countStr.isEmpty()) {
                 HelperMethodsKt.showErrorMsg("count can not empty");
                 return;
             }

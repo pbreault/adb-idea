@@ -32,8 +32,6 @@ class CommonStringResultCommand(private val commandStr:String,private val operat
         } catch (e1: Exception) {
             error("$operationDesc... " + e1.message)
         }
-
-        return false
     }
 
 }
