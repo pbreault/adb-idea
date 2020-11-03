@@ -2,7 +2,7 @@
   <id>com.developerphil.adbidea</id>
   <name>ADB Idea +</name>
   <version>1.6.6</version>
-  <vendor url="https://github.com/longforus">Philippe Breault and Void Young</vendor>
+  <vendor url="https://github.com/longforus">Philippe Breault &amp; Void Young</vendor>
 
   <description><![CDATA[
         Adds the following ADB commands to Android Studio and Intellij:<br />
@@ -271,6 +271,12 @@
               description="Disable mobile data on device or emulator">
           </action>
             <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
+          <separator/>
+          <action id="com.developerphil.adbidea.action.extend.SetDefaultModuleAction"
+              class="com.developerphil.adbidea.action.extend.SetDefaultModuleAction"
+              text="ADB Set Default Operation Module "
+              description="Set Default operation module in this project">
+          </action>
           <separator/>
           <action id="com.developerphil.adbidea.action.extend.ApplicationManagementPopupAction"
               class="com.developerphil.adbidea.action.extend.ApplicationManagementPopupAction" text="ADB Application management..."
