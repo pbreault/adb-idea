@@ -3,6 +3,7 @@ buildscript {
     ext.kotlin_version = '1.3.61'
 
     repositories {
+        maven {url 'https://maven.aliyun.com/repository/public'}
         mavenCentral()
         jcenter()
     }
@@ -26,6 +27,7 @@ apply plugin: 'kotlin-kapt'
 
 
 repositories {
+    maven {url 'https://maven.aliyun.com/repository/public'}
     mavenCentral()
     jcenter()
 }
