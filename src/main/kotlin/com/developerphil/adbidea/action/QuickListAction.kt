@@ -28,6 +28,8 @@ class QuickListAction : QuickSwitchSchemeAction(), DumbAware {
             addAction("com.developerphil.adbidea.action.StartWithDebuggerAction", group)
             addAction("com.developerphil.adbidea.action.RestartWithDebuggerAction", group)
         }
+        group.addSeparator()
+        addAction("com.developerphil.adbidea.action.QuickListSupplementaryAction", group)
     }
 
 

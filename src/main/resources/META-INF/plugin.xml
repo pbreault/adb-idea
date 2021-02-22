@@ -1,10 +1,10 @@
 <idea-plugin url="https://github.com/pbreault/adb-idea">
-    <id>com.developerphil.adbidea</id>
-    <name>ADB Idea</name>
-    <version>1.6.2</version>
-    <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
+  <id>com.developerphil.adbidea</id>
+  <name>ADB Idea +</name>
+  <version>1.6.6</version>
+  <vendor url="https://github.com/longforus">Philippe Breault &amp; Void Young</vendor>
 
-    <description><![CDATA[
+  <description><![CDATA[
         Adds the following ADB commands to Android Studio and Intellij:<br />
         <ul>
             <li>ADB Uninstall App</li>
@@ -18,39 +18,58 @@
             <li>ADB Grant/Revoke Permissions</li>
             <li>ADB Enable/Disable Wi-Fi</li>
             <li>ADB Enable/Disable Mobile Data</li>
+            <li>ADB Application management</li>
+            <li>ADB Application Interacting</li>
+            <li>ADB Device information</li>
+            <li>ADB Install Apk file</li>
+            <li>ADB Put simple string to device</li>
+            <li>ADB Record device screen</li>
+            <li>ADB Capture device screen</li>
         </ul>
         <br />
         There are two basic ways to invoke a command:
         <ul>
             <li>Through the Tools->Android->ADB Idea menu</li>
-            <li>By searching for "ADB" in "Find Actions" (osx: cmd+shift+a, windows/linux: ctrl+shift+a)</li>
+            <li>By searching for "ADB" in "Find Actions" (osx: cmd+shift+a, windows/linux: ctrl+shift+a)          </li>
         </ul>
         ]]></description>
 
 
-    <change-notes><![CDATA[
-        <b>1.6.2</b>
-        <ul>
-            <li>BUGFIX: Notifications don't show up on Studio 4.0</li>
-            <li>BUGFIX: Debugger sometime fails to attach on Studio 4.0</li>
-        </ul>
-        <b>1.6.1</b>
-        <ul>
+  <change-notes><![CDATA[
+       <b>1.6.6</b>
+         <ul>
+          <li>Update to origin repertory:</li>
+          <li>BUGFIX: Notifications don't show up on Studio 4.0</li>
+          <li>BUGFIX: Debugger sometime fails to attach on Studio 4.0</li><b>1.6.4</b>
           <li>BUGFIX: Can't attach a debugger on Android Studio 3.6</li>
-        </ul>
-        <b>1.6.0</b>
-        <ul>
           <li>FEATURE: Enable/Disable Wi-Fi</li>
           <li>FEATURE: Enable/Disable Mobile Data</li>
           <li>BUGFIX: Compatibility with Android Studio 4.1-alpha07+</li>
+          <li> BUGFIX: The result of multi-module selection is inconsistent with the actual selection </li>
         </ul>
-        <b>1.5.4</b>
-        <ul>
-          <li>BUGFIX: Compatibility with Android Studio 3.6-alpha12+</li>
+        <b>1.6.3</b>
+         <ul>
+          <li>update to origin : BUGFIX: Show all connected devices on Android Studio 3.4+</li>
         </ul>
-        <b>1.5.3</b>
+        <b>1.6.2</b>
+          <ul>
+            <li>add set default module function, After setting the default module under the same project, all operations will use the default module, and no longer pop up the module selection dialog</li>
+          </ul>
+        <b>1.6.1</b>
+          <ul>
+            <li>add linux and macOS support,The test passed in Ubuntu 18.10 and macOSx 10.13</li>
+          </ul>
+        <b>1.6.0</b>
         <ul>
-          <li>BUGFIX: Show all connected devices on Android Studio 3.4+</li>
+          <li>Add some simple function</li>
+            <ul>
+            <li>ADB Application management</li>
+            <li>ADB Application Interacting</li>
+            <li>ADB Device information</li>
+            <li>ADB Install Apk file</li>
+            <li>ADB Put simple string to device</li>
+            <li>ADB Record device screen</li>
+            <li>ADB Capture device screen</li>
         </ul>
         <b>1.5.2</b>
         <ul>
@@ -156,6 +175,10 @@
                 <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="shift ctrl A"/>
                 <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt A"/>
             </action>
+          <action id="com.developerphil.adbidea.action.QuickListSupplementaryAction"
+              class="com.developerphil.adbidea.action.QuickListSupplementaryAction" text="ADB Supplementary Operations Popup..."
+              description="List supplementary the adb idea operations in a popup">
+          </action>
             <separator/>
 
             <action id="com.developerphil.adbidea.action.RevokePermissionsAction"
@@ -224,33 +247,65 @@
                     text="ADB Clear App Data and Restart App With Debugger"
                     description="Clears the private storage of the app and restarts it, and attach the debugger">
             </action>
+          <action id="com.developerphil.adbidea.action.EnableWifiAction"
+              class="com.developerphil.adbidea.action.EnableWifiAction"
+              text="ADB Enable Wi-Fi"
+              description="Enable Wi-Fi on device or emulator">
+          </action>
+
+          <action id="com.developerphil.adbidea.action.DisableWifiAction"
+              class="com.developerphil.adbidea.action.DisableWifiAction"
+              text="ADB Disable Wi-Fi"
+              description="Disable Wi-Fi on device or emulator">
+          </action>
+
+          <action id="com.developerphil.adbidea.action.EnableMobileAction"
+              class="com.developerphil.adbidea.action.EnableMobileAction"
+              text="ADB Enable Mobile Data"
+              description="Enable mobile data on device or emulator">
+          </action>
+
+          <action id="com.developerphil.adbidea.action.DisableMobileAction"
+              class="com.developerphil.adbidea.action.DisableMobileAction"
+              text="ADB Disable Mobile Data"
+              description="Disable mobile data on device or emulator">
+          </action>
             <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
-            <separator/>
-
-            <action id="com.developerphil.adbidea.action.EnableWifiAction"
-                    class="com.developerphil.adbidea.action.EnableWifiAction"
-                    text="ADB Enable Wi-Fi"
-                    description="Enable Wi-Fi on device or emulator">
-            </action>
-
-            <action id="com.developerphil.adbidea.action.DisableWifiAction"
-                    class="com.developerphil.adbidea.action.DisableWifiAction"
-                    text="ADB Disable Wi-Fi"
-                    description="Disable Wi-Fi on device or emulator">
-            </action>
-
-            <action id="com.developerphil.adbidea.action.EnableMobileAction"
-                    class="com.developerphil.adbidea.action.EnableMobileAction"
-                    text="ADB Enable Mobile Data"
-                    description="Enable mobile data on device or emulator">
-            </action>
-
-            <action id="com.developerphil.adbidea.action.DisableMobileAction"
-                    class="com.developerphil.adbidea.action.DisableMobileAction"
-                    text="ADB Disable Mobile Data"
-                    description="Disable mobile data on device or emulator">
-            </action>
-
+          <separator/>
+          <action id="com.developerphil.adbidea.action.extend.SetDefaultModuleAction"
+              class="com.developerphil.adbidea.action.extend.SetDefaultModuleAction"
+              text="ADB Set Default Operation Module "
+              description="Set Default operation module in this project">
+          </action>
+          <separator/>
+          <action id="com.developerphil.adbidea.action.extend.ApplicationManagementPopupAction"
+              class="com.developerphil.adbidea.action.extend.ApplicationManagementPopupAction" text="ADB Application management..."
+              description="List all the adb idea application management operations in a popup">
+          </action>
+          <action id="com.developerphil.adbidea.action.extend.InteractingAction"
+              class="com.developerphil.adbidea.action.extend.InteractingAction" text="ADB Application Interacting..."
+              description="Interacting with applications, e.g. start activity ,send broadcast">
+          </action>
+          <action id="com.developerphil.adbidea.action.extend.ShowDeviceInfoAction"
+              class="com.developerphil.adbidea.action.extend.ShowDeviceInfoAction" text="ADB Device information..."
+              description="Show device information , e.g. model ,battery Service state">
+          </action>
+          <action id="com.developerphil.adbidea.action.extend.InstallApkAction"
+              class="com.developerphil.adbidea.action.extend.InstallApkAction" text="ADB Install Apk file"
+              description="Install Apk file to phone">
+          </action>
+          <action id="com.developerphil.adbidea.action.extend.PutStringAction"
+              class="com.developerphil.adbidea.action.extend.PutStringAction" text="ADB Put simple string to device"
+              description="Input simple string to device">
+          </action>
+          <action id="com.developerphil.adbidea.action.extend.ScreenRecordAction"
+              class="com.developerphil.adbidea.action.extend.ScreenRecordAction" text="ADB Record device screen"
+              description="Record device screen via adb">
+          </action>
+          <action id="com.developerphil.adbidea.action.extend.ScreenCaptureAction"
+              class="com.developerphil.adbidea.action.extend.ScreenCaptureAction" text="ADB Capture device screen"
+              description="Capture device screen via adb">
+          </action>
         </group>
     </actions>
 

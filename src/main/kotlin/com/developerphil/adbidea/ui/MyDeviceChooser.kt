@@ -18,7 +18,6 @@ package com.developerphil.adbidea.ui
 import com.android.ddmlib.AndroidDebugBridge
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.IDevice.HardwareFeature
-import com.android.sdklib.IAndroidTarget
 import com.android.tools.idea.run.ConnectedAndroidDevice
 import com.android.tools.idea.run.LaunchCompatibility
 import com.android.tools.idea.run.LaunchCompatibilityCheckerImpl

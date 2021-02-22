@@ -30,12 +30,10 @@ class DeviceResultFetcher constructor(private val project: Project, private val 
             }
 
             val devices = bridge.connectedDevices()
-            if (devices.size == 1) {
-                return DeviceResult(devices, facet, packageName)
-            } else if (devices.size > 1) {
-                return showDeviceChooserDialog(facet, packageName)
-            } else {
-                return null
+            return when {
+                devices.size == 1 -> DeviceResult(devices, facet, packageName)
+                devices.size > 1 -> showDeviceChooserDialog(facet, packageName)
+                else -> null
             }
         }
         return null
@@ -44,16 +42,16 @@ class DeviceResultFetcher constructor(private val project: Project, private val 
     private fun getFacet(facets: List<AndroidFacet>): AndroidFacet? {
         val facet: AndroidFacet?
         if (facets.size > 1) {
-            facet = ModuleChooserDialogHelper.showDialogForFacets(project, facets)
+            facet = ModuleChooserDialogHelper.showDialogForFacets(project, facets, false)
             if (facet == null) {
                 return null
             }
         } else {
             facet = facets[0]
         }
-
         return facet
     }
+
 
     private fun showDeviceChooserDialog(facet: AndroidFacet, packageName: String): DeviceResult? {
         val chooser = DeviceChooserDialog(facet)
@@ -76,6 +74,8 @@ class DeviceResultFetcher constructor(private val project: Project, private val 
 
         return DeviceResult(selectedDevices.asList(), facet, packageName)
     }
+
+
 }
 
 

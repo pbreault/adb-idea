@@ -6,11 +6,37 @@ A plugin for Android Studio and Intellij IDEA that speeds up your day to day and
 The following commands are provided:
 
 * Uninstall App
+
 * Kill App
+
 * Start App
+
 * Restart App
+
 * Clear App Data
+
 * Clear App Data and Restart
+
+  Since 1.6:
+
+* Application management
+
+* Application Interacting
+
+* Show Device information
+
+* Install apk files on your computer to your device
+
+* Put simple string on your computer to your device
+
+* Record device screen save to computer
+
+* Capture device screen save to computer
+
+
+  [1.6 English Guide](./1.6EnglishGuide.md)
+
+  [1.6 中文指引](./1.6ChineseGuide.md)
 
 Usage
 =====
@@ -46,17 +72,19 @@ Download and install *ADB Idea* directly from Intellij / Android Studio:
 Alternatively, you can [download the plugin](http://plugins.jetbrains.com/plugin/7380?pr=idea) from the jetbrains plugin site and install it manually in:
 `Preferences/Settings->Plugins->Install plugin from disk`
 
+[Click here](https://github.com/longforus/adb-idea/releases) to download the enhanced version and manually install it using the above method.
+
 License
 =======
 
     Copyright 2017 Philippe Breault
-
+    
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
-
+    
        http://www.apache.org/licenses/LICENSE-2.0
-
+    
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.

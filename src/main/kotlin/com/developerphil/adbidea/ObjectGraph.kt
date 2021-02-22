@@ -1,10 +1,10 @@
 package com.developerphil.adbidea
 
-import com.developerphil.adbidea.preference.accessor.PreferenceAccessorImpl
 import com.developerphil.adbidea.adb.BridgeImpl
 import com.developerphil.adbidea.adb.DeviceResultFetcher
 import com.developerphil.adbidea.adb.UseSameDevicesHelper
 import com.developerphil.adbidea.preference.ProjectPreferences
+import com.developerphil.adbidea.preference.accessor.PreferenceAccessorImpl
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.components.ProjectComponent
 import com.intellij.openapi.project.Project

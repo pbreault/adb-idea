@@ -1,7 +1,7 @@
 package com.developerphil.adbidea
 
-import com.developerphil.adbidea.preference.accessor.PreferenceAccessorImpl
 import com.developerphil.adbidea.preference.ApplicationPreferences
+import com.developerphil.adbidea.preference.accessor.PreferenceAccessorImpl
 import com.developerphil.adbidea.ui.NotificationHelper
 import com.intellij.ide.plugins.PluginManager
 import com.intellij.ide.util.PropertiesComponent
