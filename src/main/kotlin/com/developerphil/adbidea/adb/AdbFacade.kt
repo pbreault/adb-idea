@@ -28,6 +28,7 @@ object AdbFacade {
     fun disableWifi(project: Project) = executeOnDevice(project, ToggleSvcCommand(WIFI, false))
     fun enableMobile(project: Project) = executeOnDevice(project, ToggleSvcCommand(MOBILE, true))
     fun disableMobile(project: Project) = executeOnDevice(project, ToggleSvcCommand(MOBILE, false))
+    fun switchLayoutBounds(project: Project) = executeOnDevice(project, SwitchLayoutBoundsCommand())
 
     private fun executeOnDevice(project: Project, runnable: Command) {
         if (AdbUtil.isGradleSyncInProgress(project)) {
