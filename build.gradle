@@ -1,68 +1,45 @@
-buildscript {
-
-    ext.kotlin_version = '1.3.72'
-
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.5.21"
+    id "org.jetbrains.intellij" version "1.1.4"
 }
 
-plugins {
-    id "org.jetbrains.intellij" version "0.4.16"
+repositories {
+    mavenCentral()
 }
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-
-
-
-apply plugin: 'java'
-apply plugin: 'kotlin'
-
-
-repositories {
-    mavenCentral()
-    jcenter()
-}
-
-sourceSets {
-    main {
-        resources {
-            exclude 'website/adb_operations_popup.png'
-            exclude 'website/find_actions.png'
-            exclude 'website/debug_howto.png'
-        }
-    }
-}
 
 if (!hasProperty('StudioCompilePath')) {
     throw new GradleException("No StudioCompilePath value was set, please create gradle.properties file")
 }
 
 intellij {
-    pluginName 'adb_idea'
-    updateSinceUntilBuild false
+    pluginName = 'adb_idea'
+    updateSinceUntilBuild = false
+    localPath = project.hasProperty("StudioRunPath") ? StudioRunPath : StudioCompilePath
+    instrumentCode {
+        compilerVersion = "212.4746.92"
+    }
+    instrumentTestCode {
+        compilerVersion = "212.4746.92"
+    }
 
-    intellij.localPath = project.hasProperty("StudioRunPath") ? StudioRunPath : StudioCompilePath
 }
 
 group 'com.developerphil.intellij.plugin.adbidea'
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
-    compile "org.jooq:joor-java-8:0.9.7"
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.21'
+    implementation 'org.jooq:joor-java-8:0.9.14'
     compileOnly fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
     compileOnly fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
 
-    testCompile 'junit:junit:4.12'
-    testCompile fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
-    testCompile fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
-    testCompile "org.mockito:mockito-core:1.+"
-    testCompile "com.google.truth:truth:1.0.1"
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
+    testImplementation fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
+    testImplementation "org.mockito:mockito-core:1.+"
+    testImplementation 'com.google.truth:truth:1.1.3'
 
 
 }
@@ -78,3 +55,4 @@ task(verifySetup) {
 
 
 compileJava.dependsOn verifySetup
+buildSearchableOptions.enabled = false
