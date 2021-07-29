@@ -18,9 +18,9 @@ package com.developerphil.adbidea.ui
 import com.android.ddmlib.AndroidDebugBridge
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.IDevice.HardwareFeature
-import com.android.sdklib.IAndroidTarget
 import com.android.tools.idea.run.ConnectedAndroidDevice
 import com.android.tools.idea.run.LaunchCompatibility
+import com.android.tools.idea.run.LaunchCompatibility.State
 import com.android.tools.idea.run.LaunchCompatibilityCheckerImpl
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
@@ -33,7 +33,6 @@ import com.intellij.ui.ScrollPaneFactory
 import com.intellij.ui.SimpleTextAttributes
 import com.intellij.ui.table.JBTable
 import com.intellij.util.Alarm
-import com.intellij.util.ThreeState
 import com.intellij.util.containers.ContainerUtil
 import gnu.trove.TIntArrayList
 import org.jetbrains.android.dom.manifest.UsesFeature
@@ -273,7 +272,7 @@ class MyDeviceChooser(multipleSelection: Boolean,
                 DEVICE_NAME_COLUMN_INDEX -> return generateDeviceName(device)
                 SERIAL_COLUMN_INDEX -> return device.serialNumber
                 DEVICE_STATE_COLUMN_INDEX -> return getDeviceState(device)
-                COMPATIBILITY_COLUMN_INDEX -> return LaunchCompatibilityCheckerImpl.create(myFacet, null, null).validate(ConnectedAndroidDevice(device, null))
+                COMPATIBILITY_COLUMN_INDEX -> return LaunchCompatibilityCheckerImpl.create(myFacet, null, null)!!.validate(ConnectedAndroidDevice(device, null))
             }
             return null
         }
@@ -299,24 +298,28 @@ class MyDeviceChooser(multipleSelection: Boolean,
 
     private class LaunchCompatibilityRenderer : ColoredTableCellRenderer() {
         override fun customizeCellRenderer(table: JTable, value: Any?, selected: Boolean, hasFocus: Boolean, row: Int, column: Int) {
-            if (value !is LaunchCompatibility) {
-                return
-            }
-            val compatibility = value
-            val compatible = compatibility.isCompatible
-            if (compatible == ThreeState.YES) {
-                append("Yes")
-            } else {
-                if (compatible == ThreeState.NO) {
-                    append("No", SimpleTextAttributes.ERROR_ATTRIBUTES)
+            try {
+                if (value !is LaunchCompatibility) {
+                    return
+                }
+                val compatible = value.state
+                if (compatible == State.OK) {
+                    append("Yes")
                 } else {
-                    append("Maybe")
+                    if (compatible == State.ERROR) {
+                        append("No", SimpleTextAttributes.ERROR_ATTRIBUTES)
+                    } else {
+                        append("Maybe")
+                    }
+                    val reason = value.reason
+                    if (reason != null) {
+                        append(", ")
+                        append(reason)
+                    }
                 }
-                val reason = compatibility.reason
-                if (reason != null) {
-                    append(", ")
-                    append(reason)
-                }
+            } catch (e: Error) {
+                // Expected on Intellij 2021.2.
+                // Should be removed once the android plugin is upgraded to 7.0
             }
         }
     }
