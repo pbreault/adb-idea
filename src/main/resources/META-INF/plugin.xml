@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/pbreault/adb-idea">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>1.6.2</version>
+    <version>1.6.3</version>
     <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
     <description><![CDATA[
@@ -29,6 +29,10 @@
 
 
     <change-notes><![CDATA[
+        <b>1.6.3</b>
+        <ul>
+            <li>BUGFIX: Compatibility with Android Studio 7.0</li>
+        </ul>
         <b>1.6.2</b>
         <ul>
             <li>BUGFIX: Notifications don't show up on Studio 4.0</li>
@@ -140,9 +144,9 @@
         ]]>
     </change-notes>
 
-    <!-- Android Studio 4.0+ -->
+    <!-- Android Studio 7.0+ -->
     <!-- see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html -->
-    <idea-version since-build="193"/>
+    <idea-version since-build="203.7717"/>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.android</depends>
