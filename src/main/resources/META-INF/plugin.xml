@@ -251,6 +251,13 @@
                     description="Disable mobile data on device or emulator">
             </action>
 
+            <separator/>
+            <action id="com.developerphil.adbidea.action.NavigateToResumedActivityAction"
+                    class="com.developerphil.adbidea.action.NavigateToResumedActivityAction"
+                    text="ADB Navigate To Resumed Activity"
+                    description="Find and navigate to resumed activity">
+            </action>
+
         </group>
     </actions>
 
