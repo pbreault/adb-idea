@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/pbreault/adb-idea">
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
-    <version>1.6.4</version>
+    <version>1.6.3</version>
     <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
 
     <description><![CDATA[
@@ -29,10 +29,6 @@
 
 
     <change-notes><![CDATA[
-        <b>1.6.4</b>
-        <ul>
-            <li>BUGFIX: Fix multiple device support on Android Studio 7.2</li>
-        </ul>
         <b>1.6.3</b>
         <ul>
             <li>BUGFIX: Compatibility with Android Studio 7.0</li>
@@ -150,7 +146,7 @@
 
     <!-- Android Studio 7.0+ -->
     <!-- see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html -->
-    <idea-version since-build="212.5457"/>
+    <idea-version since-build="203.7717"/>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.android</depends>
