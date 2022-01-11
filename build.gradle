@@ -54,6 +54,7 @@ intellij {
     intellij.localPath = project.hasProperty("StudioRunPath") ? StudioRunPath : StudioCompilePath
 }
 
+
 group 'com.developerphil.intellij.plugin.adbidea'
 
 dependencies {

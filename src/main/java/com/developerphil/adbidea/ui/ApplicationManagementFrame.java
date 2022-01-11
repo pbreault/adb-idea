@@ -2,7 +2,10 @@ package com.developerphil.adbidea.ui;
 
 import com.developerphil.adbidea.HelperMethodsKt;
 import com.developerphil.adbidea.adb.AdbFacade;
+import com.intellij.openapi.fileChooser.FileChooserDescriptor;
+import com.intellij.openapi.fileChooser.ex.FileChooserDialogImpl;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.JBColor;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -14,6 +17,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +38,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,42 +49,38 @@ import org.jetbrains.annotations.Nullable;
 
 public class ApplicationManagementFrame extends JFrame {
     private MyApplistModel mModel;
-    private List<String> mList;
-    private JRadioButton mAllStatusRadioButton;
-    private JRadioButton mDisabledRadioButton;
-    private JRadioButton mEnabledRadioButton;
-    private JRadioButton mAllTypeRadioButton;
-    private JRadioButton mSystemRadioButton;
-    private JRadioButton mThirdPartyRadioButton;
-    private JCheckBox mShowApkFileCheckBox;
-    private JCheckBox mShowInstallersCheckBox;
-    private JCheckBox mContainsUninstalledCheckBox;
-    private JButton mQueryButton;
-    private JTextField  tv_keyword;
-    private JList       mJList;
-    private JButton     mUninstallButton;
-    private JButton     mClearAppCacheDataButton;
-    private JButton     mRunningServicesButton;
-    private JButton     mViewDetailButton;
-    private JButton     mViewPathButton;
-    private JPanel      mPanel;
-    private JScrollPane sp;
-    private JTextPane   tp;
-    private JScrollPane sp_tp;
-    private JButton     mForceStopButton;
-    private JButton     mForegroundActivityButton;
-    private JButton     mMonkeyTestButton;
+    private List<String>   mList;
+    private JRadioButton   mAllStatusRadioButton;
+    private JRadioButton   mDisabledRadioButton;
+    private JRadioButton   mEnabledRadioButton;
+    private JRadioButton   mAllTypeRadioButton;
+    private JRadioButton   mSystemRadioButton;
+    private JRadioButton   mThirdPartyRadioButton;
+    private JCheckBox      mShowApkFileCheckBox;
+    private JCheckBox      mShowInstallersCheckBox;
+    private JCheckBox      mContainsUninstalledCheckBox;
+    private JButton        mQueryButton;
+    private JTextField     tv_keyword;
+    private JList          mJList;
+    private JButton        mRunningServicesButton;
+    private JPanel         mPanel;
+    private JScrollPane    sp;
+    private JTextPane      tp;
+    private JScrollPane    sp_tp;
+    private JButton        mForegroundActivityButton;
+    private JButton        mMonkeyTestButton;
 
-    private static final String PARAMETER_DISABLED = "-d ";
-    private static final String PARAMETER_ENABLED = "-e ";
-    private static final String PARAMETER_SYSTEM = "-s ";
-    private static final String PARAMETER_THIRD_PARTY = "-3 ";
-    private static final String PARAMETER_INSTALLER = "-i ";
-    private static final String PARAMETER_UNINSTALLED = "-u ";
+    private static final String PARAMETER_DISABLED       = "-d ";
+    private static final String PARAMETER_ENABLED        = "-e ";
+    private static final String PARAMETER_SYSTEM         = "-s ";
+    private static final String PARAMETER_THIRD_PARTY    = "-3 ";
+    private static final String PARAMETER_INSTALLER      = "-i ";
+    private static final String PARAMETER_UNINSTALLED    = "-u ";
     private static final String PARAMETER_RELEVANCE_FILE = "-f ";
 
-    private Project mProject;
-    private final JPopupMenu mPopupMenu;
+    private Project    mProject;
+    private JPopupMenu mPopupMenu;
+    private JPopupMenu mListPopupMenu;
 
     public ApplicationManagementFrame(@Nullable Project project) {
         setResizable(true);
@@ -103,11 +104,97 @@ public class ApplicationManagementFrame extends JFrame {
                 }
             }
         });
+        mListPopupMenu = new JPopupMenu();
+        JMenuItem pullApk = mListPopupMenu.add(new JMenuItem("pull apk file to ..."));
+        pullApk.addActionListener(e -> {
+            List<String> selectedValuesList = mJList.getSelectedValuesList();
+            if (!selectedValuesList.isEmpty()) {
+                FileChooserDescriptor descriptor = new FileChooserDescriptor(false, true, false, false, false, false);
+                descriptor.setTitle("Select apk file save to ... ");
+                VirtualFile[] choose = new FileChooserDialogImpl(descriptor, project).choose(project);
+                if (choose.length > 0 && choose[0] != null) {
+                    VirtualFile selectedFile = choose[0];
+                    for (String sv : selectedValuesList) {
+                        String name = getRealPackageName(sv);
+                        AdbFacade.INSTANCE.getPackagePath(mProject, name, s -> {
+                            String realPath = s.replace("package:", "").replace("\n","").replace("\r","");
+                            NotificationHelper.INSTANCE.info(String.format("<b>%s</b>  package path = %s", name, realPath));
+                            String fileName = name + ".apk";
+                            NotificationHelper.INSTANCE.info(String.format("start pull %s to %s", fileName, selectedFile.getCanonicalPath()));
+                            SwingUtilities.invokeLater(() -> {
+                                File file = new File(selectedFile.getCanonicalPath(), fileName);
+                                AdbFacade.INSTANCE.pullFile(project, realPath, file, false);
+                                NotificationHelper.INSTANCE.info(String.format("pull %s success ", fileName));
+                            });
+                            return null;
+                        });
+                    }
+
+                }
+
+            }
+        });
+        JMenuItem jiUninstall = mListPopupMenu.add(new JMenuItem("uninstall"));
+        jiUninstall.addActionListener(e -> {
+            int[] selectedIndices = mJList.getSelectedIndices();
+            String[] selected = new String[selectedIndices.length];
+            for (int i = 0; i < selectedIndices.length; i++) {
+                String packageName = mList.get(selectedIndices[i]);
+                AdbFacade.INSTANCE.uninstall(mProject, getRealPackageName(packageName));
+                selected[i] = packageName;
+            }
+            for (String s : selected) {
+                mModel.delete(s);
+            }
+        });
+        JMenuItem jiClear = mListPopupMenu.add(new JMenuItem("clear data and cache"));
+        jiClear.addActionListener(e -> {
+            List<String> selectedValuesList = mJList.getSelectedValuesList();
+            for (String packageName : selectedValuesList) {
+                AdbFacade.INSTANCE.clearData(mProject, getRealPackageName(packageName));
+            }
+        });
+        JMenuItem jiDetail = mListPopupMenu.add(new JMenuItem("view detail"));
+        jiDetail.addActionListener(e -> {
+            List<String> selectedValuesList = mJList.getSelectedValuesList();
+            for (String packageName : selectedValuesList) {
+                String name = getRealPackageName(packageName);
+                Utils.Companion.append2TextPane("View " + name + " detail : \n", JBColor.BLUE, tp);
+                AdbFacade.INSTANCE.getPackageDetail(mProject, name, s -> {
+                    Utils.Companion.append2TextPane(s, tp);
+                    return null;
+                });
+            }
+        });
+        JMenuItem jiPath = mListPopupMenu.add(new JMenuItem("view apk path"));
+        jiPath.addActionListener(e -> {
+            List<String> selectedValuesList = mJList.getSelectedValuesList();
+            for (String packageName : selectedValuesList) {
+                String name = getRealPackageName(packageName);
+                Utils.Companion.append2TextPane("View " + name + " apk Path : \n", JBColor.BLUE, tp);
+                AdbFacade.INSTANCE.getPackagePath(mProject, name, s -> {
+                    Utils.Companion.append2TextPane(s, tp);
+                    return null;
+                });
+            }
+        });
+        JMenuItem jiStop = mListPopupMenu.add(new JMenuItem("force stop"));
+        jiStop.addActionListener(e -> {
+            List<String> selectedValuesList = mJList.getSelectedValuesList();
+            for (String packageName : selectedValuesList) {
+                String name = getRealPackageName(packageName);
+                Utils.Companion.append2TextPane("Force-stop : " + name + "\n", JBColor.BLUE, tp);
+                AdbFacade.INSTANCE.forceStop(mProject, name);
+            }
+        });
+
+
         mJList.addMouseListener(new MouseInputAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
-                    mJList.clearSelection();
+                    //mJList.clearSelection();
+                    mListPopupMenu.show(mJList, e.getX(), e.getY());
                 }
             }
         });
@@ -144,47 +231,9 @@ public class ApplicationManagementFrame extends JFrame {
                 return null;
             });
         });
-        mUninstallButton.addActionListener(e -> {
-            int[] selectedIndices = mJList.getSelectedIndices();
-            String[] selected = new String[selectedIndices.length];
-            for (int i = 0; i < selectedIndices.length; i++) {
-                String packageName = mList.get(selectedIndices[i]);
-                AdbFacade.INSTANCE.uninstall(mProject, getRealPackageName(packageName));
-                selected[i] = packageName;
-            }
-            for (String s : selected) {
-                mModel.delete(s);
-            }
-        });
 
-        mClearAppCacheDataButton.addActionListener(e -> {
-            List<String> selectedValuesList = mJList.getSelectedValuesList();
-            for (String packageName : selectedValuesList) {
-                AdbFacade.INSTANCE.clearData(mProject, getRealPackageName(packageName));
-            }
-        });
-        mViewDetailButton.addActionListener(e -> {
-            List<String> selectedValuesList = mJList.getSelectedValuesList();
-            for (String packageName : selectedValuesList) {
-                String name = getRealPackageName(packageName);
-                Utils.Companion.append2TextPane("View " + name + " detail : \n", JBColor.BLUE, tp);
-                AdbFacade.INSTANCE.getPackageDetail(mProject, name, s -> {
-                    Utils.Companion.append2TextPane(s, tp);
-                    return null;
-                });
-            }
-        });
-        mViewPathButton.addActionListener(e -> {
-            List<String> selectedValuesList = mJList.getSelectedValuesList();
-            for (String packageName : selectedValuesList) {
-                String name = getRealPackageName(packageName);
-                Utils.Companion.append2TextPane("View " + name + " apk Path : \n", JBColor.BLUE, tp);
-                AdbFacade.INSTANCE.getPackagePath(mProject, name, s -> {
-                    Utils.Companion.append2TextPane(s, tp);
-                    return null;
-                });
-            }
-        });
+
+
         mRunningServicesButton.addActionListener(e -> {
             List<String> selectedValuesList = mJList.getSelectedValuesList();
             if (selectedValuesList.isEmpty()) {
@@ -212,19 +261,12 @@ public class ApplicationManagementFrame extends JFrame {
                 });
             }
         });
-        mForceStopButton.addActionListener(e -> {
-            List<String> selectedValuesList = mJList.getSelectedValuesList();
-            for (String packageName : selectedValuesList) {
-                String name = getRealPackageName(packageName);
-                Utils.Companion.append2TextPane("Force-stop : " + name + "\n", JBColor.BLUE, tp);
-                AdbFacade.INSTANCE.forceStop(mProject, name);
-            }
-        });
+
         mForegroundActivityButton.addActionListener(e -> {
             Utils.Companion.append2TextPane("Foreground Activity : \n", JBColor.BLUE, tp);
             AdbFacade.INSTANCE.showForegroundActivity(mProject, s -> {
                 if (Utils.Companion.isEmpty(s)) {
-                    Utils.Companion.append2TextPaneNewLine("get foreground Activity failure",JBColor.RED, tp);
+                    Utils.Companion.append2TextPaneNewLine("get foreground Activity failure", JBColor.RED, tp);
                 } else {
                     Utils.Companion.append2TextPaneNewLine(s, tp);
                 }
@@ -236,10 +278,10 @@ public class ApplicationManagementFrame extends JFrame {
             String name = "";
             if (!selectedValuesList.isEmpty()) {
                 name = getRealPackageName(selectedValuesList.get(0));
-                Utils.Companion.append2TextPane("Monkey test of " + name + " :\n", JBColor.BLUE,tp);
+                Utils.Companion.append2TextPane("Monkey test of " + name + " :\n", JBColor.BLUE, tp);
             }
             String countStr = JOptionPane.showInputDialog("Enter test count(only integers):");
-            if (countStr==null||countStr.isEmpty()) {
+            if (countStr == null || countStr.isEmpty()) {
                 HelperMethodsKt.showErrorMsg("count can not empty");
                 return;
             }
@@ -251,16 +293,14 @@ public class ApplicationManagementFrame extends JFrame {
                 return;
             }
             if (count > 0) {
-                AdbFacade.INSTANCE.monkeyTest(mProject, name,count, s -> {
+                AdbFacade.INSTANCE.monkeyTest(mProject, name, count, s -> {
                     Utils.Companion.append2TextPane(s, tp);
                     return null;
                 });
             }
-
         });
         setContentPane($$$getRootComponent$$$());
     }
-
 
     private String getRealPackageName(String packageName) {
         if (mShowApkFileCheckBox.isSelected() && mShowInstallersCheckBox.isSelected()) {
@@ -358,24 +398,6 @@ public class ApplicationManagementFrame extends JFrame {
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new FormLayout("fill:170px:grow,fill:d:grow,fill:153px:grow,fill:d:grow,fill:d:grow,fill:d:grow", "center:30px:grow,center:max(d;4px):noGrow"));
         mPanel.add(panel3, cc.xyw(1, 5, 4));
-        mUninstallButton = new JButton();
-        mUninstallButton.setText("Uninstall");
-        panel3.add(mUninstallButton, cc.xy(1, 1));
-        mClearAppCacheDataButton = new JButton();
-        mClearAppCacheDataButton.setText("Clear app  cache  data");
-        panel3.add(mClearAppCacheDataButton, cc.xy(2, 1));
-        mRunningServicesButton = new JButton();
-        mRunningServicesButton.setText("Running Services");
-        panel3.add(mRunningServicesButton, cc.xy(3, 1));
-        mViewDetailButton = new JButton();
-        mViewDetailButton.setText("View Detail");
-        panel3.add(mViewDetailButton, cc.xy(4, 1));
-        mViewPathButton = new JButton();
-        mViewPathButton.setText("View Path");
-        panel3.add(mViewPathButton, cc.xy(5, 1));
-        mForceStopButton = new JButton();
-        mForceStopButton.setText("Force stop");
-        panel3.add(mForceStopButton, cc.xy(6, 1));
         mForegroundActivityButton = new JButton();
         mForegroundActivityButton.setText("Foreground Activity");
         panel3.add(mForegroundActivityButton, cc.xy(1, 2));

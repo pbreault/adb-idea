@@ -1,5 +1,6 @@
 package com.developerphil.adbidea.adb
 
+import com.android.ddmlib.AndroidDebugBridge
 import com.android.ddmlib.IDevice
 import com.intellij.openapi.project.Project
 import org.jetbrains.android.sdk.AndroidSdkUtils
@@ -10,17 +11,14 @@ interface Bridge {
 }
 
 
-class BridgeImpl(project: Project) : Bridge {
+class BridgeImpl(private val project: Project) : Bridge {
 
-    val androidBridge = AndroidSdkUtils.getDebugBridge(project)
+    private val androidBridge: AndroidDebugBridge?
+        get() = AndroidSdkUtils.getDebugBridge(project)
 
-    override fun isReady(): Boolean {
-        if (androidBridge == null) {
-            return false
-        }
-
-        return androidBridge.isConnected && androidBridge.hasInitialDeviceList()
-    }
+    override fun isReady() = androidBridge?.let {
+        it.isConnected && it.hasInitialDeviceList()
+    } ?: false
 
     override fun connectedDevices(): List<IDevice> {
         return androidBridge?.devices?.asList() ?: emptyList()

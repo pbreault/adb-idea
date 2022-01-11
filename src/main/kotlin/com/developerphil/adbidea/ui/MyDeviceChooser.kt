@@ -272,7 +272,7 @@ class MyDeviceChooser(multipleSelection: Boolean,
                 DEVICE_NAME_COLUMN_INDEX -> return generateDeviceName(device)
                 SERIAL_COLUMN_INDEX -> return device.serialNumber
                 DEVICE_STATE_COLUMN_INDEX -> return getDeviceState(device)
-                COMPATIBILITY_COLUMN_INDEX -> return LaunchCompatibilityCheckerImpl.create(myFacet, null, null).validate(ConnectedAndroidDevice(device, null))
+                COMPATIBILITY_COLUMN_INDEX -> return LaunchCompatibilityCheckerImpl.create(myFacet, null, null)?.validate(ConnectedAndroidDevice(device, null))
             }
             return null
         }
@@ -298,24 +298,28 @@ class MyDeviceChooser(multipleSelection: Boolean,
 
     private class LaunchCompatibilityRenderer : ColoredTableCellRenderer() {
         override fun customizeCellRenderer(table: JTable, value: Any?, selected: Boolean, hasFocus: Boolean, row: Int, column: Int) {
-            if (value !is LaunchCompatibility) {
-                return
-            }
-            val compatibility = value
-            val compatible = compatibility.isCompatible
-            if (compatible == ThreeState.YES) {
-                append("Yes")
-            } else {
-                if (compatible == ThreeState.NO) {
-                    append("No", SimpleTextAttributes.ERROR_ATTRIBUTES)
+            try {
+                if (value !is LaunchCompatibility) {
+                    return
+                }
+                val compatible = value.state
+                if (compatible == LaunchCompatibility.State.OK) {
+                    append("Yes")
                 } else {
-                    append("Maybe")
+                    if (compatible == LaunchCompatibility.State.ERROR) {
+                        append("No", SimpleTextAttributes.ERROR_ATTRIBUTES)
+                    } else {
+                        append("Maybe")
+                    }
+                    val reason = value.reason
+                    if (reason != null) {
+                        append(", ")
+                        append(reason)
+                    }
                 }
-                val reason = compatibility.reason
-                if (reason != null) {
-                    append(", ")
-                    append(reason)
-                }
+            } catch (e: Error) {
+                // Expected on Intellij 2021.2.
+                // Should be removed once the android plugin is upgraded to 7.0
             }
         }
     }

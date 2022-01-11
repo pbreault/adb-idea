@@ -101,7 +101,6 @@
         <rowspec value="center:max(d;4px):noGrow"/>
         <colspec value="fill:170px:grow"/>
         <colspec value="fill:d:grow"/>
-        <colspec value="fill:153px:grow"/>
         <colspec value="fill:d:grow"/>
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -110,26 +109,24 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="def34" class="javax.swing.JButton" binding="mUninstallButton" default-binding="true">
+          <component id="da7f6" class="javax.swing.JButton" binding="mForegroundActivityButton" default-binding="true">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="80" height="35"/>
+                <preferred-size width="139" height="43"/>
               </grid>
               <forms/>
             </constraints>
             <properties>
-              <text value="Uninstall"/>
+              <text value="Foreground Activity"/>
             </properties>
           </component>
-          <component id="227e7" class="javax.swing.JButton" binding="mClearAppCacheDataButton" default-binding="true">
+          <component id="48205" class="javax.swing.JButton" binding="mMonkeyTestButton" default-binding="true">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="43"/>
-              </grid>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
               <forms/>
             </constraints>
             <properties>
-              <text value="Clear app  cache  data"/>
+              <text value="Monkey Test"/>
             </properties>
           </component>
           <component id="eca5a" class="javax.swing.JButton" binding="mRunningServicesButton" default-binding="true">
@@ -141,59 +138,6 @@
             </constraints>
             <properties>
               <text value="Running Services"/>
-            </properties>
-          </component>
-          <component id="da7f6" class="javax.swing.JButton" binding="mForegroundActivityButton" default-binding="true">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="139" height="43"/>
-              </grid>
-              <forms/>
-            </constraints>
-            <properties>
-              <text value="Foreground Activity"/>
-            </properties>
-          </component>
-          <component id="48205" class="javax.swing.JButton" binding="mMonkeyTestButton" default-binding="true">
-            <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <forms/>
-            </constraints>
-            <properties>
-              <text value="Monkey Test"/>
-            </properties>
-          </component>
-          <component id="eab49" class="javax.swing.JButton" binding="mForceStopButton" default-binding="true">
-            <constraints>
-              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="89" height="43"/>
-              </grid>
-              <forms/>
-            </constraints>
-            <properties>
-              <text value="Force stop"/>
-            </properties>
-          </component>
-          <component id="7d003" class="javax.swing.JButton" binding="mViewPathButton" default-binding="true">
-            <constraints>
-              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="86" height="43"/>
-              </grid>
-              <forms/>
-            </constraints>
-            <properties>
-              <text value="View Path"/>
-            </properties>
-          </component>
-          <component id="8dab1" class="javax.swing.JButton" binding="mViewDetailButton" default-binding="true">
-            <constraints>
-              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="92" height="43"/>
-              </grid>
-              <forms/>
-            </constraints>
-            <properties>
-              <text value="View Detail"/>
             </properties>
           </component>
         </children>
