@@ -40,6 +40,8 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -69,6 +71,8 @@ public class ApplicationManagementFrame extends JFrame {
     private JScrollPane    sp_tp;
     private JButton        mForegroundActivityButton;
     private JButton        mMonkeyTestButton;
+    private JTextField     tv_search;
+    private JButton        btn_search;
 
     private static final String PARAMETER_DISABLED       = "-d ";
     private static final String PARAMETER_ENABLED        = "-e ";
@@ -78,9 +82,9 @@ public class ApplicationManagementFrame extends JFrame {
     private static final String PARAMETER_UNINSTALLED    = "-u ";
     private static final String PARAMETER_RELEVANCE_FILE = "-f ";
 
-    private Project    mProject;
-    private JPopupMenu mPopupMenu;
-    private JPopupMenu mListPopupMenu;
+    private final Project    mProject;
+    private final JPopupMenu mPopupMenu;
+    private final JPopupMenu mListPopupMenu;
 
     public ApplicationManagementFrame(@Nullable Project project) {
         setResizable(true);
@@ -117,7 +121,7 @@ public class ApplicationManagementFrame extends JFrame {
                     for (String sv : selectedValuesList) {
                         String name = getRealPackageName(sv);
                         AdbFacade.INSTANCE.getPackagePath(mProject, name, s -> {
-                            String realPath = s.replace("package:", "").replace("\n","").replace("\r","");
+                            String realPath = s.replace("package:", "").replace("\n", "").replace("\r", "");
                             NotificationHelper.INSTANCE.info(String.format("<b>%s</b>  package path = %s", name, realPath));
                             String fileName = name + ".apk";
                             NotificationHelper.INSTANCE.info(String.format("start pull %s to %s", fileName, selectedFile.getCanonicalPath()));
@@ -129,9 +133,7 @@ public class ApplicationManagementFrame extends JFrame {
                             return null;
                         });
                     }
-
                 }
-
             }
         });
         JMenuItem jiUninstall = mListPopupMenu.add(new JMenuItem("uninstall"));
@@ -188,7 +190,6 @@ public class ApplicationManagementFrame extends JFrame {
             }
         });
 
-
         mJList.addMouseListener(new MouseInputAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -231,8 +232,6 @@ public class ApplicationManagementFrame extends JFrame {
                 return null;
             });
         });
-
-
 
         mRunningServicesButton.addActionListener(e -> {
             List<String> selectedValuesList = mJList.getSelectedValuesList();
@@ -299,6 +298,18 @@ public class ApplicationManagementFrame extends JFrame {
                 });
             }
         });
+        btn_search.addActionListener(e -> {
+            Document document = tv_search.getDocument();
+            try {
+                String text = document.getText(0, document.getLength());
+                if (!Utils.Companion.isEmpty(text)) {
+                    Utils.Companion.searchAndSelection(text, tp);
+                }
+            } catch (BadLocationException badLocationException) {
+                badLocationException.printStackTrace();
+            }
+        });
+
         setContentPane($$$getRootComponent$$$());
     }
 
