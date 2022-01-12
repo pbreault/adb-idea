@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
  * @date 2018-10-13 16:48:56
  */
 
-class CommonStringResultCommand(private val commandStr:String,private val operationDesc:String,private val callback:((String)->Unit)? = null) : Command {
+class CommonStringResultCommand(private val commandStr:String,private val operationDesc:String,private val callback:((String,IDevice)->Unit)? = null) : Command {
 
     override fun run(project: Project, device: IDevice, facet: AndroidFacet, packageName: String): Boolean {
         try {
@@ -26,7 +26,7 @@ class CommonStringResultCommand(private val commandStr:String,private val operat
                 val notification = NotificationHelper.INFO.createNotification("ADB IDEA", string, NotificationType.INFORMATION, NOOP_LISTENER)
                 notification.notify(project)
             } else {
-                callback.invoke(receiver.toString())
+                callback.invoke(receiver.toString(),device)
             }
             return true
         } catch (e1: Exception) {

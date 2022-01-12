@@ -1,5 +1,6 @@
 package com.developerphil.adbidea.ui;
 
+import com.android.ddmlib.IDevice;
 import com.developerphil.adbidea.adb.AdbFacade;
 import com.intellij.openapi.project.Project;
 import com.intellij.ui.JBColor;
@@ -14,6 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,6 +39,7 @@ public class DeviceInfoFrame extends JFrame {
     private JButton          mMoreButton;
 
     private String androidVersion = "";
+    private IDevice mDevice;
 
     public DeviceInfoFrame(@Nullable Project project) {
         setResizable(true);
@@ -60,26 +63,34 @@ public class DeviceInfoFrame extends JFrame {
                 }
             }
         });
-        //how to switch thread?
-        AdbFacade.INSTANCE.getSimpleInfo(mProject, "getprop ro.product.brand", "get Device brand ", s -> {
+
+        AdbFacade.INSTANCE.getSimpleInfo(mProject, "getprop ro.product.brand", "get Device brand ", (s,d) -> {
+            mDevice = d;
+            setTitle("Adb Device information on  " + mDevice.getSerialNumber());
             Utils.Companion.append2TextPaneNewLine("Device brand:", JBColor.BLUE, mTextPane);
             Utils.Companion.append2TextPane(s, mTextPane);
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    AdbFacade.INSTANCE.getSimpleInfo(mProject, "getprop ro.product.model", "get Device model ", mDevice, (s, d) -> {
+                        Utils.Companion.append2TextPaneNewLine("Device model:", JBColor.BLUE, mTextPane);
+                        Utils.Companion.append2TextPane(s, mTextPane);
+                        return null;
+                    });
+                    AdbFacade.INSTANCE.getSimpleInfo(mProject, "getprop ro.product.name", "get Device name ", mDevice, (s, d) -> {
+                        Utils.Companion.append2TextPaneNewLine("Device name:", JBColor.BLUE, mTextPane);
+                        Utils.Companion.append2TextPaneNewLine(s, mTextPane);
+                        return null;
+                    });
+                    AdbFacade.INSTANCE.getSimpleInfo(mProject, "getprop ro.build.version.release", "get Android Version ", mDevice, (s, d) -> {
+                        androidVersion = s.trim();
+                        return null;
+                    });
+                }
+            });
             return null;
         });
-        AdbFacade.INSTANCE.getSimpleInfo(mProject, "getprop ro.product.model", "get Device model ", s1 -> {
-            Utils.Companion.append2TextPaneNewLine("Device model:", JBColor.BLUE, mTextPane);
-            Utils.Companion.append2TextPane(s1, mTextPane);
-            return null;
-        });
-        AdbFacade.INSTANCE.getSimpleInfo(mProject, "getprop ro.product.name", "get Device name ", s2 -> {
-            Utils.Companion.append2TextPaneNewLine("Device name:", JBColor.BLUE, mTextPane);
-            Utils.Companion.append2TextPaneNewLine(s2, mTextPane);
-            return null;
-        });
-        AdbFacade.INSTANCE.getSimpleInfo(mProject, "getprop ro.build.version.release", "get Android Version ", s1 -> {
-            androidVersion = s1.trim();
-            return null;
-        });
+
         mDisplaysInfoButton.addActionListener(e -> getInfo2Show("Displays Info:", "dumpsys window displays", "get Displays Info "));
         mCPUInfoButton.addActionListener(e -> {
             getInfo2Show("CPU Info:", "cat /proc/cpuinfo", "get CPU Info ");
@@ -101,9 +112,9 @@ public class DeviceInfoFrame extends JFrame {
         });
         mSystemButton.addActionListener(e -> {
             getInfo2Show("Android id:", "settings get secure android_id", "get Android id ");
-            AdbFacade.INSTANCE.getSimpleInfo(mProject, "getprop ro.build.version.sdk", "get Android sdk ", sdk -> {
+            AdbFacade.INSTANCE.getSimpleInfo(mProject, "getprop ro.build.version.sdk", "get Android sdk ", mDevice,(s,d) -> {
                 Utils.Companion.append2TextPaneNewLine("Android SDK:", JBColor.BLUE, mTextPane);
-                Utils.Companion.append2TextPane(sdk, mTextPane);
+                Utils.Companion.append2TextPane(s, mTextPane);
                 return null;
             });
             if (!Utils.Companion.isEmpty(androidVersion)) {
@@ -129,14 +140,14 @@ public class DeviceInfoFrame extends JFrame {
                     Utils.Companion.append2TextPaneNewLine("Can not get IMEI", JBColor.red, mTextPane);
                 }
             }
-            AdbFacade.INSTANCE.getSimpleInfo(mProject, "ifconfig | grep Mask", "get IP Address ", s -> {
+            AdbFacade.INSTANCE.getSimpleInfo(mProject, "ifconfig | grep Mask", "get IP Address ", mDevice,(s,d) -> {
                 Utils.Companion.append2TextPaneNewLine("ifconfig :", JBColor.BLUE, mTextPane);
                 Utils.Companion.append2TextPaneNewLine(s, mTextPane);
                 return null;
             });
-            AdbFacade.INSTANCE.getSimpleInfo(mProject, "ifconfig wlan0", "get IP Address ", s1 -> {
+            AdbFacade.INSTANCE.getSimpleInfo(mProject, "ifconfig wlan0", "get IP Address ", mDevice,(s,d) -> {
                 Utils.Companion.append2TextPaneNewLine("wlan0 :", JBColor.BLUE, mTextPane);
-                Utils.Companion.append2TextPaneNewLine(s1, mTextPane);
+                Utils.Companion.append2TextPaneNewLine(s, mTextPane);
                 return null;
             });
             getInfo2Show("Mac Address:", "cat /sys/class/net/wlan0/address", "get Mac Address ");
@@ -146,7 +157,7 @@ public class DeviceInfoFrame extends JFrame {
     }
 
     public void getInfo2Show(String item, String command, String desc) {
-        AdbFacade.INSTANCE.getSimpleInfo(mProject, command, desc, s -> {
+        AdbFacade.INSTANCE.getSimpleInfo(mProject, command, desc, mDevice,(s,d) -> {
             Utils.Companion.append2TextPaneNewLine(item, JBColor.BLUE, mTextPane);
             Utils.Companion.append2TextPaneNewLine(s, mTextPane);
             return null;

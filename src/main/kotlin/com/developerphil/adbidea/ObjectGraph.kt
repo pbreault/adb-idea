@@ -28,4 +28,8 @@ class ObjectGraph(private val project: Project) : ProjectComponent {
     override fun initComponent() = Unit
     override fun disposeComponent() = Unit
     override fun getComponentName(): String = "InjectionObjectGraph"
+
+    fun clearSelectedDevice(){
+        useSameDevicesHelper.clearSelectedDevice()
+    }
 }

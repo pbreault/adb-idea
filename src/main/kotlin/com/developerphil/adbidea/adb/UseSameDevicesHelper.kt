@@ -24,4 +24,7 @@ class UseSameDevicesHelper constructor(private val projectPreferences: ProjectPr
     fun rememberDevices() {
         previouslyConnectedDevices = bridge.connectedDevices()
     }
+    fun clearSelectedDevice() {
+        previouslyConnectedDevices = null
+    }
 }

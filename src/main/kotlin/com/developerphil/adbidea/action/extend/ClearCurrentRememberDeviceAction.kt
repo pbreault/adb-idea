@@ -2,21 +2,21 @@ package com.developerphil.adbidea.action.extend
 
 import com.developerphil.adbidea.ObjectGraph
 import com.developerphil.adbidea.action.AdbAction
-import com.developerphil.adbidea.ui.ModuleChooserDialogHelper
+import com.developerphil.adbidea.ui.NotificationHelper
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.Project
-import org.jetbrains.android.util.AndroidUtils
 
 /**
  * @describe
  * @author  longforus
  * @date 10/29/2018  4:21 PM
  */
-class SetDefaultModuleAction : AdbAction() {
+class ClearCurrentRememberDeviceAction : AdbAction() {
 
     override fun actionPerformed(e: AnActionEvent, project: Project) {
-            val facets = AndroidUtils.getApplicationFacets(project)
-            ModuleChooserDialogHelper.showDialogForFacets(project, facets, true)
+        project.getComponent(ObjectGraph::class.java)
+            .clearSelectedDevice()
+        NotificationHelper.info("clear success")
     }
 
 }

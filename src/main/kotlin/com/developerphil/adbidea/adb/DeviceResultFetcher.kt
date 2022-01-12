@@ -13,7 +13,7 @@ import org.jetbrains.android.util.AndroidUtils
 
 class DeviceResultFetcher constructor(private val project: Project, private val useSameDevicesHelper: UseSameDevicesHelper, private val bridge: Bridge) {
 
-    fun fetch(): DeviceResult? {
+    fun fetch(dev: IDevice? = null): DeviceResult? {
         val facets = AndroidUtils.getApplicationFacets(project)
         if (facets.isNotEmpty()) {
             val facet = getFacet(facets) ?: return null
@@ -22,6 +22,10 @@ class DeviceResultFetcher constructor(private val project: Project, private val 
             if (!bridge.isReady()) {
                 NotificationHelper.error("No platform configured")
                 return null
+            }
+
+            if (dev != null) {
+                return DeviceResult(listOf(dev), facet, packageName)
             }
 
             val rememberedDevices = useSameDevicesHelper.getRememberedDevices()

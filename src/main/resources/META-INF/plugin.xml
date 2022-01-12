@@ -1,4 +1,4 @@
-<idea-plugin url="https://github.com/pbreault/adb-idea">
+<idea-plugin url="https://github.com/longforus/adb-idea-plus">
   <id>com.developerphil.adbidea</id>
   <name>ADB Idea +</name>
   <version>1.6.7</version>
@@ -285,6 +285,11 @@
               class="com.developerphil.adbidea.action.extend.SetDefaultModuleAction"
               text="ADB Set Default Operation Module "
               description="Set Default operation module in this project">
+          </action>
+          <action id="com.developerphil.adbidea.action.extend.ClearCurrentRememberDeviceAction"
+              class="com.developerphil.adbidea.action.extend.ClearCurrentRememberDeviceAction"
+              text="ADB Clear Current Remembered Device "
+              description="Clear Current Remembered Device in this session">
           </action>
           <separator/>
           <action id="com.developerphil.adbidea.action.extend.ApplicationManagementPopupAction"

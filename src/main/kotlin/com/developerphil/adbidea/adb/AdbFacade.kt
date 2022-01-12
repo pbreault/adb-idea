@@ -1,16 +1,18 @@
 package com.developerphil.adbidea.adb
 
+import com.android.ddmlib.IDevice
 import com.developerphil.adbidea.ObjectGraph
 import com.developerphil.adbidea.adb.command.*
 import com.developerphil.adbidea.bean.BoundItemBean
 import com.developerphil.adbidea.ui.NotificationHelper
 import com.google.common.util.concurrent.ThreadFactoryBuilder
 import com.intellij.openapi.project.Project
+import org.eclipse.xtext.xbase.lib.Functions
 import java.io.File
 import java.util.concurrent.Executors
 
 object AdbFacade {
-    private val EXECUTOR = Executors.newCachedThreadPool(ThreadFactoryBuilder().setNameFormat("AdbIdea-%d").build())
+    internal val EXECUTOR = Executors.newCachedThreadPool(ThreadFactoryBuilder().setNameFormat("AdbIdea-%d").build())
 
     fun uninstall(project: Project) = executeOnDevice(project, UninstallCommand())
     fun uninstall(project: Project, packageName: String) {
@@ -68,15 +70,16 @@ object AdbFacade {
 
 
 
-    private fun executeOnDevice(project: Project, runnable: Command) {
+    private fun executeOnDevice(project: Project, runnable: Command,dev: IDevice? = null) {
         if (AdbUtil.isGradleSyncInProgress(project)) {
             NotificationHelper.error("Gradle sync is in progress")
             return
         }
 
+
         val result = project.getComponent(ObjectGraph::class.java)
                 .deviceResultFetcher
-                .fetch()
+                .fetch(dev)
 
         if (result != null) {
             for (device in result.devices) {
@@ -107,8 +110,9 @@ object AdbFacade {
         executeOnDevice(project, getInteractingCommand(type, action, category, name, boundData))
     }
 
-    fun getSimpleInfo(project: Project?, command: String, desc: String, callback: Function1<String, Unit>) {
-        executeOnDevice(project!!, CommonStringResultCommand(command, desc, callback))
+    @JvmOverloads
+    fun getSimpleInfo(project: Project?, command: String, desc: String,dev: IDevice? = null, callback: Function2<String,IDevice, Unit>) {
+        executeOnDevice(project!!, CommonStringResultCommand(command, desc, callback),dev)
     }
 
     fun captureScreen(project: Project?, localDir: File, fileName: String) {
@@ -133,9 +137,8 @@ object AdbFacade {
     }
 
     fun getDeviceModel(project: Project?, function: Function1<String, Unit>) {
-        getSimpleInfo(project, "getprop ro.product.model", "get Device model ") { s ->
+        getSimpleInfo(project, "getprop ro.product.model", "get Device model ") { s,d ->
             function.invoke(s.replace("\n", "").replace("\r", "").replace(" ", ""))
-            null
         }
     }
 }
