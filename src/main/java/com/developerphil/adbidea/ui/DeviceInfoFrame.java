@@ -1,6 +1,7 @@
 package com.developerphil.adbidea.ui;
 
 import com.android.ddmlib.IDevice;
+import com.developerphil.adbidea.SearchHelper;
 import com.developerphil.adbidea.adb.AdbFacade;
 import com.intellij.openapi.project.Project;
 import com.intellij.ui.JBColor;
@@ -14,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
@@ -36,10 +38,16 @@ public class DeviceInfoFrame extends JFrame {
     private JButton          mBatteryInfoButton;
     private JButton          mSystemButton;
     private JButton          mNetworkButton;
-    private JButton          mMoreButton;
+    private JButton    mMoreButton;
+    private JTextField tf_search;
+    private JButton    btn_search;
 
     private String androidVersion = "";
     private IDevice mDevice;
+
+
+    private SearchHelper mSearchHelper;
+
 
     public DeviceInfoFrame(@Nullable Project project) {
         setResizable(true);
@@ -152,6 +160,9 @@ public class DeviceInfoFrame extends JFrame {
             });
             getInfo2Show("Mac Address:", "cat /sys/class/net/wlan0/address", "get Mac Address ");
         });
+
+        mSearchHelper = new SearchHelper(tf_search,mTextPane);
+        btn_search.addActionListener(e -> mSearchHelper.doSearch());
 
         setContentPane(mPanel);
     }

@@ -1,6 +1,7 @@
 package com.developerphil.adbidea.ui;
 
 import com.developerphil.adbidea.HelperMethodsKt;
+import com.developerphil.adbidea.SearchHelper;
 import com.developerphil.adbidea.adb.AdbFacade;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.ex.FileChooserDialogImpl;
@@ -40,8 +41,6 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -50,29 +49,32 @@ import org.jetbrains.annotations.Nullable;
  */
 
 public class ApplicationManagementFrame extends JFrame {
-    private MyApplistModel mModel;
-    private List<String>   mList;
-    private JRadioButton   mAllStatusRadioButton;
-    private JRadioButton   mDisabledRadioButton;
-    private JRadioButton   mEnabledRadioButton;
-    private JRadioButton   mAllTypeRadioButton;
-    private JRadioButton   mSystemRadioButton;
-    private JRadioButton   mThirdPartyRadioButton;
-    private JCheckBox      mShowApkFileCheckBox;
-    private JCheckBox      mShowInstallersCheckBox;
-    private JCheckBox      mContainsUninstalledCheckBox;
-    private JButton        mQueryButton;
-    private JTextField     tv_keyword;
-    private JList          mJList;
-    private JButton        mRunningServicesButton;
-    private JPanel         mPanel;
-    private JScrollPane    sp;
-    private JTextPane      tp;
-    private JScrollPane    sp_tp;
-    private JButton        mForegroundActivityButton;
-    private JButton        mMonkeyTestButton;
-    private JTextField     tv_search;
-    private JButton        btn_search;
+    private       MyApplistModel mModel;
+    private       List<String>   mList;
+    private       JRadioButton   mAllStatusRadioButton;
+    private       JRadioButton   mDisabledRadioButton;
+    private       JRadioButton   mEnabledRadioButton;
+    private       JRadioButton   mAllTypeRadioButton;
+    private       JRadioButton   mSystemRadioButton;
+    private       JRadioButton   mThirdPartyRadioButton;
+    private       JCheckBox      mShowApkFileCheckBox;
+    private       JCheckBox      mShowInstallersCheckBox;
+    private       JCheckBox      mContainsUninstalledCheckBox;
+    private       JButton        mQueryButton;
+    private       JTextField     tv_keyword;
+    private       JList          mJList;
+    private       JButton        mRunningServicesButton;
+    private       JPanel         mPanel;
+    private       JScrollPane    sp;
+    private       JTextPane      tp;
+    private       JScrollPane    sp_tp;
+    private       JButton        mForegroundActivityButton;
+    private       JButton        mMonkeyTestButton;
+    private       JTextField     tv_search;
+    private       JButton        btn_search;
+    private final Project        mProject;
+    private final JPopupMenu     mPopupMenu;
+    private final JPopupMenu     mListPopupMenu;
 
     private static final String PARAMETER_DISABLED       = "-d ";
     private static final String PARAMETER_ENABLED        = "-e ";
@@ -82,9 +84,9 @@ public class ApplicationManagementFrame extends JFrame {
     private static final String PARAMETER_UNINSTALLED    = "-u ";
     private static final String PARAMETER_RELEVANCE_FILE = "-f ";
 
-    private final Project    mProject;
-    private final JPopupMenu mPopupMenu;
-    private final JPopupMenu mListPopupMenu;
+
+    private SearchHelper mSearchHelper;
+
 
     public ApplicationManagementFrame(@Nullable Project project) {
         setResizable(true);
@@ -298,20 +300,15 @@ public class ApplicationManagementFrame extends JFrame {
                 });
             }
         });
+        mSearchHelper = new SearchHelper(tv_search,tp);
         btn_search.addActionListener(e -> {
-            Document document = tv_search.getDocument();
-            try {
-                String text = document.getText(0, document.getLength());
-                if (!Utils.Companion.isEmpty(text)) {
-                    Utils.Companion.searchAndSelection(text, tp);
-                }
-            } catch (BadLocationException badLocationException) {
-                badLocationException.printStackTrace();
-            }
+            mSearchHelper.doSearch();
         });
 
         setContentPane($$$getRootComponent$$$());
     }
+
+
 
     private String getRealPackageName(String packageName) {
         if (mShowApkFileCheckBox.isSelected() && mShowInstallersCheckBox.isSelected()) {
