@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/longforus/adb-idea-plus">
   <id>com.developerphil.adbidea</id>
   <name>ADB Idea +</name>
-  <version>1.6.7</version>
+  <version>1.6.8</version>
   <vendor url="https://github.com/longforus">Philippe Breault &amp; Void Young</vendor>
 
   <description><![CDATA[
@@ -36,6 +36,11 @@
 
 
   <change-notes><![CDATA[
+        <b>1.6.8</b>
+         <ul>
+          <li>FEATURE: Add simple search function in DeviceInfo and App Management. Add clear current remembered device function.
+          <li>BUGFIX: DeviceInfoFrame need repeat select device bug</li>
+        </ul>
         <b>1.6.7</b>
          <ul>
           <li>FEATURE: Application Management panel now can pull apk file to pc, by right click application item</li>
@@ -281,17 +286,6 @@
           </action>
             <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
           <separator/>
-          <action id="com.developerphil.adbidea.action.extend.SetDefaultModuleAction"
-              class="com.developerphil.adbidea.action.extend.SetDefaultModuleAction"
-              text="ADB Set Default Operation Module "
-              description="Set Default operation module in this project">
-          </action>
-          <action id="com.developerphil.adbidea.action.extend.ClearCurrentRememberDeviceAction"
-              class="com.developerphil.adbidea.action.extend.ClearCurrentRememberDeviceAction"
-              text="ADB Clear Current Remembered Device "
-              description="Clear Current Remembered Device in this session">
-          </action>
-          <separator/>
           <action id="com.developerphil.adbidea.action.extend.ApplicationManagementPopupAction"
               class="com.developerphil.adbidea.action.extend.ApplicationManagementPopupAction" text="ADB Application management..."
               description="List all the adb idea application management operations in a popup">
@@ -319,6 +313,17 @@
           <action id="com.developerphil.adbidea.action.extend.ScreenCaptureAction"
               class="com.developerphil.adbidea.action.extend.ScreenCaptureAction" text="ADB Capture device screen"
               description="Capture device screen via adb">
+          </action>
+          <separator/>
+          <action id="com.developerphil.adbidea.action.extend.SetDefaultModuleAction"
+              class="com.developerphil.adbidea.action.extend.SetDefaultModuleAction"
+              text="ADB Set Default Operation Module "
+              description="Set Default operation module in this project">
+          </action>
+          <action id="com.developerphil.adbidea.action.extend.ClearCurrentRememberDeviceAction"
+              class="com.developerphil.adbidea.action.extend.ClearCurrentRememberDeviceAction"
+              text="ADB Clear Current Remembered Device "
+              description="Clear Current Remembered Device in this session">
           </action>
         </group>
     </actions>
