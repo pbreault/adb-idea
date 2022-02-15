@@ -258,6 +258,12 @@
                     description="Disable mobile data on device or emulator">
             </action>
 
+            <action id="com.developerphil.adbidea.action.ToggleDontKeepActivityCommandAction"
+                    class="com.developerphil.adbidea.action.ToggleDontKeepActivityCommandAction"
+                    text="ADB Toggle Don't Keep Activity"
+                    description="Toggle Don't Keep Activity developer setting on device or emulator">
+            </action>
+
         </group>
     </actions>
 
