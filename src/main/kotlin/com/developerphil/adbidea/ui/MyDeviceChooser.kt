@@ -360,6 +360,7 @@ class MyDeviceChooser(
             return EnumSet.noneOf(HardwareFeature::class.java)
         }
 
+        @OptIn(ExperimentalStdlibApi::class)
         private fun getDeviceState(device: IDevice): String {
             val state = device.state
             return if (state != null) StringUtil.capitalize(state.name.lowercase(Locale.getDefault())) else ""
