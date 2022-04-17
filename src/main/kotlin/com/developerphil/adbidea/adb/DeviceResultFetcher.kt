@@ -2,6 +2,7 @@ package com.developerphil.adbidea.adb
 
 import com.android.ddmlib.IDevice
 import com.android.tools.idea.gradle.project.model.AndroidModuleModel
+import com.android.tools.idea.util.androidFacet
 import com.developerphil.adbidea.ui.DeviceChooserDialog
 import com.developerphil.adbidea.ui.ModuleChooserDialogHelper
 import com.developerphil.adbidea.ui.NotificationHelper
@@ -11,7 +12,11 @@ import org.jetbrains.android.facet.AndroidFacet
 import org.jetbrains.android.util.AndroidUtils
 
 
-class DeviceResultFetcher constructor(private val project: Project, private val useSameDevicesHelper: UseSameDevicesHelper, private val bridge: Bridge) {
+class DeviceResultFetcher constructor(
+    private val project: Project,
+    private val useSameDevicesHelper: UseSameDevicesHelper,
+    private val bridge: Bridge
+) {
 
     fun fetch(): DeviceResult? {
         val facets = AndroidUtils.getApplicationFacets(project)
@@ -41,7 +46,8 @@ class DeviceResultFetcher constructor(private val project: Project, private val 
         return null
     }
 
-    private fun getFacet(facets: List<AndroidFacet>): AndroidFacet? {
+    private fun getFacet(_facets: List<AndroidFacet>): AndroidFacet? {
+        val facets = _facets.mapNotNull { it.holderModule.androidFacet }.distinct()
         val facet: AndroidFacet?
         if (facets.size > 1) {
             facet = ModuleChooserDialogHelper.showDialogForFacets(project, facets)

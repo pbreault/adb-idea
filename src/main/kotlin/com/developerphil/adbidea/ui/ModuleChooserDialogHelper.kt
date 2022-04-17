@@ -4,7 +4,13 @@ import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.ui.configuration.ChooseModulesDialog
+import com.intellij.ui.table.JBTable
+import com.intellij.util.ui.UIUtil
 import org.jetbrains.android.facet.AndroidFacet
+import java.awt.Component
+import java.awt.Dimension
+import java.awt.geom.Dimension2D
+import javax.swing.JTable
 
 object ModuleChooserDialogHelper {
 
@@ -21,14 +27,29 @@ object ModuleChooserDialogHelper {
     private fun showDialog(project: Project, modules: List<Module>, previousSelectedModule: Module?): Module? {
         with(ChooseModulesDialog(project, modules, "Choose Module", "")) {
             setSingleSelectionMode()
-            previousSelectedModule?.let { selectElements(listOf(it)) }
-            show()
-            return if (chosenElements.isEmpty()) {
-                null
-            } else {
-                chosenElements[0]
+            getSizeForTableContainer(preferredFocusedComponent)?.let {
+                setSize(it.width, it.height)
             }
+            previousSelectedModule?.let { selectElements(listOf(it)) }
+            return showAndGetResult().firstOrNull()
         }
+    }
+
+    // Fix an issue where the modules dialog is not wide enough to display the whole module name.
+    // This code is lifted from com.intellij.openapi.ui.impl.DialogWrapperPeerImpl.MyDialog.getSizeForTableContainer
+    private fun getSizeForTableContainer(component: Component?): Dimension? {
+        if (component == null) return null
+        val tables = UIUtil.uiTraverser(component).filter(JTable::class.java)
+        if (!tables.isNotEmpty) return null
+        val size = component.preferredSize
+        for (table in tables) {
+            val tableSize = table.preferredSize
+            size.width = size.width.coerceAtLeast(tableSize.width)
+            size.height = size.height.coerceAtLeast(tableSize.height + size.height - table.parent.height)
+        }
+        size.width = 1000.coerceAtMost(600.coerceAtLeast(size.width))
+        size.height = 800.coerceAtMost(size.height)
+        return size
     }
 
     private fun saveModuleName(project: Project, moduleName: String) {
