@@ -3,6 +3,8 @@ package com.developerphil.adbidea.adb
 import com.android.ddmlib.IDevice
 import com.android.tools.idea.gradle.project.model.AndroidModuleModel
 import com.android.tools.idea.util.androidFacet
+import com.developerphil.adbidea.adb.DeviceResult.DeviceNotFound
+import com.developerphil.adbidea.adb.DeviceResult.SuccessfulDeviceResult
 import com.developerphil.adbidea.ui.DeviceChooserDialog
 import com.developerphil.adbidea.ui.ModuleChooserDialogHelper
 import com.developerphil.adbidea.ui.NotificationHelper
@@ -31,16 +33,16 @@ class DeviceResultFetcher constructor(
 
             val rememberedDevices = useSameDevicesHelper.getRememberedDevices()
             if (rememberedDevices.isNotEmpty()) {
-                return DeviceResult(rememberedDevices, facet, packageName)
+                return SuccessfulDeviceResult(rememberedDevices, facet, packageName)
             }
 
             val devices = bridge.connectedDevices()
-            if (devices.size == 1) {
-                return DeviceResult(devices, facet, packageName)
+            return if (devices.size == 1) {
+                SuccessfulDeviceResult(devices, facet, packageName)
             } else if (devices.size > 1) {
-                return showDeviceChooserDialog(facet, packageName)
+                showDeviceChooserDialog(facet, packageName)
             } else {
-                return null
+                DeviceNotFound
             }
         }
         return null
@@ -61,12 +63,12 @@ class DeviceResultFetcher constructor(
         return facet
     }
 
-    private fun showDeviceChooserDialog(facet: AndroidFacet, packageName: String): DeviceResult? {
+    private fun showDeviceChooserDialog(facet: AndroidFacet, packageName: String): DeviceResult {
         val chooser = DeviceChooserDialog(facet)
         chooser.show()
 
         if (chooser.exitCode != DialogWrapper.OK_EXIT_CODE) {
-            return null
+            return DeviceResult.Cancelled
         }
 
 
@@ -77,12 +79,21 @@ class DeviceResultFetcher constructor(
         }
 
         if (selectedDevices.isEmpty()) {
-            return null
+            return DeviceResult.Cancelled
         }
 
-        return DeviceResult(selectedDevices.asList(), facet, packageName)
+        return SuccessfulDeviceResult(selectedDevices.asList(), facet, packageName)
     }
 }
 
 
-data class DeviceResult(val devices: List<IDevice>, val facet: AndroidFacet, val packageName: String)
+sealed class DeviceResult {
+    data class SuccessfulDeviceResult(
+        val devices: List<IDevice>,
+        val facet: AndroidFacet,
+        val packageName: String
+    ) : DeviceResult()
+
+    object Cancelled : DeviceResult()
+    object DeviceNotFound : DeviceResult()
+}
