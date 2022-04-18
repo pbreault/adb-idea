@@ -28,6 +28,13 @@
 
 
     <change-notes><![CDATA[
+        <b>1.6.5</b>
+        <ul>
+            <li>BUGFIX: Compatibility with Android Studio 2021.2</li>
+            <li>BUGFIX: Stop spamming that no device is found when cancelling out of the module selection dialog</li>
+            <li>BUGFIX: Stop showing androidTest and unit tests modules in the module selection dialog</li>
+            <li>BUGFIX: Set minimum dimensions on the module selection dialog</li>
+        </ul>
         <b>1.6.4</b>
         <ul>
             <li>BUGFIX: Fix multiple device support on Android Studio 7.1+</li>
