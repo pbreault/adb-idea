@@ -138,6 +138,7 @@
 - Command to clear data and restart
 
 
+[1.6.6]: https://github.com/pbreault/adb-idea/releases/tag/1.6.6
 [1.6.5]: https://github.com/pbreault/adb-idea/releases/tag/1.6.5
 [1.6.4]: https://github.com/pbreault/adb-idea/releases/tag/1.6.4
 [1.6.3]: https://github.com/pbreault/adb-idea/releases/tag/1.6.3
