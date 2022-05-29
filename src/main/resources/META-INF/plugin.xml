@@ -28,6 +28,10 @@
 
 
     <change-notes><![CDATA[
+        <b>1.6.6</b>
+        <ul>
+            <li>BUGFIX: Compatibility with Android Studio 2022.1.1</li>
+        </ul>
         <b>1.6.5</b>
         <ul>
             <li>BUGFIX: Compatibility with Android Studio 2021.2</li>
