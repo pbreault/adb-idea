@@ -47,7 +47,7 @@ object AdbFacade {
                 }
             }
             is DeviceResult.Cancelled -> Unit
-            is DeviceResult.DeviceNotFound -> NotificationHelper.error("No device found")
+            is DeviceResult.DeviceNotFound, null -> NotificationHelper.error("No device found")
         }
     }
 }
