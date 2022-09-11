@@ -32,7 +32,7 @@ class Debugger(private val project: Project, private val device: IDevice, privat
 
     private fun closeOldSessionAndRun(androidDebugger: AndroidDebugger<*>, client: Client) {
         terminateRunSessions(client)
-        AttachToClient(androidDebugger, project, client).get()
+        androidDebugger.attachToClient(project, client, null)
     }
 
     // Disconnect any active run sessions to the same client
@@ -78,18 +78,6 @@ class TerminateRunSession(
     }
 
     private fun pidFrom(client: Client) = on(client).call("getClientData").call("getPid").get<Int>()!!
-}
-
-class AttachToClient(private val androidDebugger: AndroidDebugger<*>,
-                     private val project: Project,
-                     private val client: Client) : BackwardCompatibleGetter<Unit>() {
-    override fun getCurrentImplementation() {
-        androidDebugger.attachToClient(project, client, null)
-    }
-
-    override fun getPreviousImplementation() {
-        on(androidDebugger).call("attachToClient", project, client)
-    }
 }
 
 private class RunningProcessesGetter(
