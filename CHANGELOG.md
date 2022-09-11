@@ -1,4 +1,8 @@
 # Changelog
+## [1.6.7] - 2022-09-11
+### Fixed
+- exception on "* with debugger" commands in AS Chipmunk | 2021.2.1 #144
+
 ## [1.6.6] - 2022-05-29
 ### Fixed
 - Compatibility with Android Studio Electric Eel 2022.1.1 Canary
@@ -138,6 +142,7 @@
 - Command to clear data and restart
 
 
+[1.6.7]: https://github.com/pbreault/adb-idea/releases/tag/1.6.7
 [1.6.6]: https://github.com/pbreault/adb-idea/releases/tag/1.6.6
 [1.6.5]: https://github.com/pbreault/adb-idea/releases/tag/1.6.5
 [1.6.4]: https://github.com/pbreault/adb-idea/releases/tag/1.6.4

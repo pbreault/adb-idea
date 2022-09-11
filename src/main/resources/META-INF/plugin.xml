@@ -28,6 +28,10 @@
 
 
     <change-notes><![CDATA[
+         <b>1.6.7</b>
+        <ul>
+            <li>BUGFIX: exception on "* with debugger" commands in AS Chipmunk | 2021.2.1 (#144)</li>
+        </ul>
         <b>1.6.6</b>
         <ul>
             <li>BUGFIX: Compatibility with Android Studio 2022.1.1</li>
