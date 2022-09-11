@@ -28,6 +28,10 @@
 
 
     <change-notes><![CDATA[
+        <b>1.6.8</b>
+        <ul>
+            <li>BUGFIX: Compatibility with AS Dolphin and Electric Eel</li>
+        </ul>
          <b>1.6.7</b>
         <ul>
             <li>BUGFIX: exception on "* with debugger" commands in AS Chipmunk | 2021.2.1 (#144)</li>
@@ -164,7 +168,7 @@
 
     <!-- Android Studio 7.1+ -->
     <!-- see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html -->
-    <idea-version since-build="212.5712"/>
+    <idea-version since-build="213.7172"/>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.androidstudio</depends>

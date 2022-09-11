@@ -1,4 +1,7 @@
 # Changelog
+## [1.6.8] - 2022-09-11
+### Fixed
+- Compatibility with AS Dolphin and Electric Eel
 ## [1.6.7] - 2022-09-11
 ### Fixed
 - exception on "* with debugger" commands in AS Chipmunk | 2021.2.1 #144
@@ -142,6 +145,7 @@
 - Command to clear data and restart
 
 
+[1.6.8]: https://github.com/pbreault/adb-idea/releases/tag/1.6.8
 [1.6.7]: https://github.com/pbreault/adb-idea/releases/tag/1.6.7
 [1.6.6]: https://github.com/pbreault/adb-idea/releases/tag/1.6.6
 [1.6.5]: https://github.com/pbreault/adb-idea/releases/tag/1.6.5
