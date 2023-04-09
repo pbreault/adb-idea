@@ -9,6 +9,10 @@ plugins {
 
     // https://github.com/ajoberstar/reckon
     id "org.ajoberstar.reckon" version "0.13.0"
+
+    // https://github.com/b3er/gradle-local-properties-plugin
+    id("com.github.b3er.local.properties") version "1.1"
+
 }
 
 repositories {
@@ -19,7 +23,7 @@ sourceCompatibility = 11
 targetCompatibility = 11
 
 if (!hasProperty('StudioCompilePath')) {
-    throw new GradleException("No StudioCompilePath value was set, please create gradle.properties file")
+    throw new GradleException("No StudioCompilePath value was set, please create local.properties file")
 }
 
 intellij {

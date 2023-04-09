@@ -5,7 +5,6 @@ workspace.xml
 local.properties
 
 .gradle
-gradle.properties
 
 build/
 

@@ -2,7 +2,7 @@ Run/Debug
 =========
 
 * Open project in intellij
-* Create gradle.properties file, use [instruction](gradle.properties.change_me)
+* Create local.properties file, use [instruction](local.properties.change_me)
 * Open _edit configurations_ to create a new run/debug configuration
 * Choose a new gradle configuration and name it `build and run` that runs `./gradlew buildPlugin runIde`
 ![Create debug configuration](website/debug_howto.png)
@@ -10,7 +10,7 @@ Run/Debug
 
 Running from command line
 -------------------------
-* Create gradle.properties file, use [instruction](gradle.properties.change_me)
+* Create local.properties file, use [instruction](local.properties.change_me)
 * Execute command 
 ```shell script
   ./gradlew buildPlugin runIde
