@@ -1,6 +1,13 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.5.21"
-    id "org.jetbrains.intellij" version "1.9.0"
+    // Must match the Kotlin version bundled with the IDE
+    // https://plugins.jetbrains.com/docs/intellij/using-kotlin.html#kotlin-standard-library
+    // https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html
+    id "org.jetbrains.kotlin.jvm" version "1.6.20"
+
+    // https://github.com/JetBrains/gradle-intellij-plugin
+    id "org.jetbrains.intellij" version "1.13.3"
+
+    // https://github.com/ajoberstar/reckon
     id "org.ajoberstar.reckon" version "0.13.0"
 }
 
@@ -19,13 +26,6 @@ intellij {
     pluginName = 'adb_idea'
     updateSinceUntilBuild = false
     localPath = project.hasProperty("StudioRunPath") ? StudioRunPath : StudioCompilePath
-    instrumentCode {
-        compilerVersion = "212.4746.92"
-    }
-    instrumentTestCode {
-        compilerVersion = "212.4746.92"
-    }
-
 }
 
 group 'com.developerphil.intellij.plugin.adbidea'

@@ -13,3 +13,7 @@ StudioCompilePath=/Applications/Android Studio.app/Contents
 # This is useful to test the plugin on older versions of Android Studio or Intellij
 # Default value: $StudioCompilePath
 #StudioRunPath=/Applications/Android Studio.app/Contents
+
+org.gradle.parallel=true
+org.gradle.caching=true
+kotlin.stdlib.default.dependency = false

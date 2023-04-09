@@ -168,7 +168,7 @@
 
     <!-- Android Studio 7.1+ -->
     <!-- see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html -->
-    <idea-version since-build="213.7172"/>
+    <idea-version since-build="221"/>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.androidstudio</depends>
