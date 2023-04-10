@@ -166,9 +166,9 @@
         ]]>
     </change-notes>
 
-    <!-- Android Studio 7.1+ -->
-    <!-- see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html -->
-    <idea-version since-build="221"/>
+    <!-- Android Studio Flamingo 2022.1+ -->
+    <!-- see https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html -->
+    <idea-version since-build="222"/>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.androidstudio</depends>

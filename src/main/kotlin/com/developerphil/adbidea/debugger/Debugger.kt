@@ -2,8 +2,8 @@ package com.developerphil.adbidea.debugger
 
 import com.android.ddmlib.Client
 import com.android.ddmlib.IDevice
-import com.android.tools.idea.run.AndroidProcessHandler
-import com.android.tools.idea.run.editor.AndroidDebugger
+import com.android.tools.idea.execution.common.processhandler.AndroidProcessHandler
+import com.android.tools.idea.execution.common.debug.AndroidDebugger
 import com.developerphil.adbidea.compatibility.BackwardCompatibleGetter
 import com.developerphil.adbidea.invokeLater
 import com.developerphil.adbidea.on

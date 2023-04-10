@@ -29,7 +29,7 @@ object AdbUtil {
     // shares the same base version.
     val isDebuggingAvailable: Boolean
         get() = try {
-            Reflect.on("com.android.tools.idea.run.editor.AndroidDebugger").get<Any>()
+            Reflect.on("com.android.tools.idea.execution.common.debug.AndroidDebugger").get<Any>()
             true
         } catch (e: Exception) {
             false
