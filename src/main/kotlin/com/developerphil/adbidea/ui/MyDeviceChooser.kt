@@ -22,6 +22,7 @@ import com.android.sdklib.AndroidVersion
 import com.android.sdklib.IAndroidTarget
 import com.android.tools.idea.gradle.project.model.AndroidModuleModel
 import com.android.tools.idea.model.AndroidModuleInfo
+import com.android.tools.idea.model.StudioAndroidModuleInfo
 import com.android.tools.idea.run.AndroidDevice
 import com.android.tools.idea.run.ConnectedAndroidDevice
 import com.android.tools.idea.run.LaunchCompatibility
@@ -42,8 +43,8 @@ import com.intellij.util.containers.ContainerUtil
 import gnu.trove.TIntArrayList
 import org.jetbrains.android.dom.manifest.UsesFeature
 import org.jetbrains.android.facet.AndroidFacet
-import org.jetbrains.android.sdk.AndroidPlatform
 import org.jetbrains.android.sdk.AndroidSdkUtils
+import org.jetbrains.android.sdk.getInstance
 import java.awt.Dimension
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
@@ -72,10 +73,10 @@ class MyDeviceChooser(
     private val myRefreshingAlarm: Alarm
     private val myBridge: AndroidDebugBridge?
     private val myMinSdkVersion: ListenableFuture<AndroidVersion> =
-        AndroidModuleInfo.getInstance(myFacet).runtimeMinSdkVersion;
+        StudioAndroidModuleInfo.getInstance(myFacet).runtimeMinSdkVersion;
 
     private val myProjectTarget: IAndroidTarget =
-        AndroidPlatform.getInstance(myFacet.module)?.target ?: error("Module [${myFacet.module.name}] already disposed")
+        getInstance(myFacet.module)?.target ?: error("Module [${myFacet.module.name}] already disposed")
 
     private val androidModuleModel = AndroidModuleModel.get(myFacet)
     private val mySupportedAbis = androidModuleModel?.supportedAbis ?: Collections.emptySet()
