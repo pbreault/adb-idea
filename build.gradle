@@ -38,7 +38,7 @@ intellij {
     localPath = project.hasProperty("StudioRunPath") ? StudioRunPath : StudioCompilePath
 
     patchPluginXml {
-        sinceBuild = '222'
+        sinceBuild = project.property("sinceBuild")
 
         // Extract the 5 most recents entries in CHANGELOG.md
         changeNotes = provider {
