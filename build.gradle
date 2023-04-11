@@ -25,8 +25,8 @@ repositories {
 }
 
 group 'com.developerphil.intellij.plugin.adbidea'
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = 17
+targetCompatibility = 17
 
 if (!hasProperty('StudioCompilePath')) {
     throw new GradleException("No StudioCompilePath value was set, please create local.properties file")
