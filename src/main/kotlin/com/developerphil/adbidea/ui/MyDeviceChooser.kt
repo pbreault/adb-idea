@@ -20,8 +20,7 @@ import com.android.ddmlib.IDevice
 import com.android.ddmlib.IDevice.HardwareFeature
 import com.android.sdklib.AndroidVersion
 import com.android.sdklib.IAndroidTarget
-import com.android.tools.idea.gradle.project.model.AndroidModuleModel
-import com.android.tools.idea.model.AndroidModuleInfo
+import com.android.tools.idea.model.AndroidModel
 import com.android.tools.idea.model.StudioAndroidModuleInfo
 import com.android.tools.idea.run.AndroidDevice
 import com.android.tools.idea.run.ConnectedAndroidDevice
@@ -78,7 +77,7 @@ class MyDeviceChooser(
     private val myProjectTarget: IAndroidTarget =
         getInstance(myFacet.module)?.target ?: error("Module [${myFacet.module.name}] already disposed")
 
-    private val androidModuleModel = AndroidModuleModel.get(myFacet)
+    private val androidModuleModel = AndroidModel.get(myFacet)
     private val mySupportedAbis = androidModuleModel?.supportedAbis ?: Collections.emptySet()
 
     @Volatile

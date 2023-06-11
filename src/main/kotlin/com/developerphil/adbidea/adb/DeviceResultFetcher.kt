@@ -1,7 +1,7 @@
 package com.developerphil.adbidea.adb
 
 import com.android.ddmlib.IDevice
-import com.android.tools.idea.gradle.project.model.AndroidModuleModel
+import com.android.tools.idea.model.AndroidModel
 import com.android.tools.idea.util.androidFacet
 import com.developerphil.adbidea.adb.DeviceResult.DeviceNotFound
 import com.developerphil.adbidea.adb.DeviceResult.SuccessfulDeviceResult
@@ -24,7 +24,8 @@ class DeviceResultFetcher constructor(
         val facets = AndroidUtils.getApplicationFacets(project)
         if (facets.isNotEmpty()) {
             val facet = getFacet(facets) ?: return null
-            val packageName = AndroidModuleModel.get(facet)?.applicationId ?: return null
+
+            val packageName = AndroidModel.get(facet)?.applicationId ?: return null
 
             if (!bridge.isReady()) {
                 NotificationHelper.error("No platform configured")
