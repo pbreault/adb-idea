@@ -4,13 +4,13 @@ plugins {
     // Must match the Kotlin version bundled with the IDE
     // https://plugins.jetbrains.com/docs/intellij/using-kotlin.html#kotlin-standard-library
     // https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html
-    id "org.jetbrains.kotlin.jvm" version "1.6.20"
+    id "org.jetbrains.kotlin.jvm" version "1.8.21"
 
     // https://github.com/JetBrains/gradle-intellij-plugin
-    id "org.jetbrains.intellij" version "1.13.3"
+    id "org.jetbrains.intellij" version "1.14.1"
 
     // https://github.com/ajoberstar/reckon
-    id "org.ajoberstar.reckon" version "0.13.0"
+    id "org.ajoberstar.reckon" version "0.14.0"
 
     // https://github.com/b3er/gradle-local-properties-plugin
     id "com.github.b3er.local.properties" version "1.1"
