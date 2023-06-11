@@ -2,6 +2,9 @@
 
 ## [[Unreleased]]
 
+## [1.6.11] - 2023-06-11
+- Compatibility with AS Hedgehog
+
 ## [1.6.10] - 2023-04-10
 - Fix device selection on Android Studio Giraffe
 
@@ -188,6 +191,7 @@
 - Command to clear data and restart
 
 [Unreleased]: https://github.com/pbreault/adb-idea/compare/v1.7.0-SNAPSHOT...HEAD
+[1.6.11]: https://github.com/pbreault/adb-idea/compare/1.6.10...1.6.11
 [1.6.10]: https://github.com/pbreault/adb-idea/compare/1.6.9...1.6.10
 [1.6.9]: https://github.com/pbreault/adb-idea/compare/1.6.8...1.6.9
 [1.6.8]: https://github.com/pbreault/adb-idea/compare/1.6.7...1.6.8
