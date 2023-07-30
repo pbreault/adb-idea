@@ -7,7 +7,7 @@ plugins {
     id "org.jetbrains.kotlin.jvm" version "1.8.21"
 
     // https://github.com/JetBrains/gradle-intellij-plugin
-    id "org.jetbrains.intellij" version "1.14.1"
+    id "org.jetbrains.intellij" version "1.15.0"
 
     // https://github.com/ajoberstar/reckon
     id "org.ajoberstar.reckon" version "0.14.0"
