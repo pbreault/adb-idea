@@ -2,6 +2,9 @@
 
 ## [[Unreleased]]
 
+## [1.6.12] - 2023-07-30
+- Debugger freezes the IDE on AS Giraffe (#157)
+
 ## [1.6.11] - 2023-06-11
 - Compatibility with AS Hedgehog
 
@@ -191,6 +194,7 @@
 - Command to clear data and restart
 
 [Unreleased]: https://github.com/pbreault/adb-idea/compare/v1.7.0-SNAPSHOT...HEAD
+[1.6.12]: https://github.com/pbreault/adb-idea/compare/1.6.11...1.6.12
 [1.6.11]: https://github.com/pbreault/adb-idea/compare/1.6.10...1.6.11
 [1.6.10]: https://github.com/pbreault/adb-idea/compare/1.6.9...1.6.10
 [1.6.9]: https://github.com/pbreault/adb-idea/compare/1.6.8...1.6.9

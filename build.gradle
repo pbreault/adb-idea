@@ -39,6 +39,7 @@ intellij {
 
     patchPluginXml {
         sinceBuild = project.property("sinceBuild")
+        untilBuild = project.property("untilBuild")
 
         // Extract the 5 most recents entries in CHANGELOG.md
         changeNotes = provider {
