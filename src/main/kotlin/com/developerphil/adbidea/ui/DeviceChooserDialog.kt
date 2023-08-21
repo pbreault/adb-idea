@@ -32,7 +32,7 @@ class DeviceChooserDialog(facet: AndroidFacet) : DialogWrapper(facet.module.proj
     init {
         title = AndroidBundle.message("choose.device.dialog.title")
         myProject = facet.module.project
-        projectPreferences = myProject.getComponent(ObjectGraph::class.java).projectPreferences
+        projectPreferences = myProject.getService(ObjectGraph::class.java).projectPreferences
         okAction.isEnabled = false
         myDeviceChooser = MyDeviceChooser(true, okAction, facet, null)
         Disposer.register(myDisposable, myDeviceChooser)

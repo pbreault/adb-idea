@@ -40,7 +40,7 @@ object AdbFacade {
             return
         }
 
-        when (val result = project.getComponent(ObjectGraph::class.java).deviceResultFetcher.fetch()) {
+        when (val result = project.getService(ObjectGraph::class.java).deviceResultFetcher.fetch()) {
             is SuccessfulDeviceResult -> {
                 result.devices.forEach { device ->
                     EXECUTOR.submit { runnable.run(project, device, result.facet, result.packageName) }
