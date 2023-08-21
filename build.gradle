@@ -4,7 +4,7 @@ plugins {
     // Must match the Kotlin version bundled with the IDE
     // https://plugins.jetbrains.com/docs/intellij/using-kotlin.html#kotlin-standard-library
     // https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html
-    id "org.jetbrains.kotlin.jvm" version "1.8.21"
+    id "org.jetbrains.kotlin.jvm" version "1.8.0"
 
     // https://github.com/JetBrains/gradle-intellij-plugin
     id "org.jetbrains.intellij" version "1.15.0"
@@ -34,6 +34,11 @@ intellij {
     version = project.property("ideVersion")
     type = "AI"
     plugins = ['android']
+
+
+    instrumentCode {
+        compilerVersion = "231.9225.16"
+    }
 
     patchPluginXml {
         sinceBuild = project.property("sinceBuild")
