@@ -28,19 +28,17 @@ group 'com.developerphil.intellij.plugin.adbidea'
 sourceCompatibility = 17
 targetCompatibility = 17
 
-if (!hasProperty('StudioCompilePath')) {
-    throw new GradleException("No StudioCompilePath value was set, please create local.properties file")
-}
-
 intellij {
     pluginName = 'adb_idea'
     updateSinceUntilBuild = false
-    localPath = project.hasProperty("StudioRunPath") ? StudioRunPath : StudioCompilePath
+    version = project.property("ideVersion")
+    type = "AI"
+    plugins = ['android']
 
     patchPluginXml {
         sinceBuild = project.property("sinceBuild")
 
-        // Extract the 5 most recents entries in CHANGELOG.md
+        // Extract the 5 most recent entries in CHANGELOG.md
         changeNotes = provider {
             def s = ""
             changelog.getAll()
@@ -92,12 +90,8 @@ task printLastChanges() {
 
 dependencies {
     implementation 'org.jooq:joor-java-8:0.9.14'
-    compileOnly fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
-    compileOnly fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
-    testImplementation fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
     testImplementation 'org.mockito:mockito-core:4.7.0'
     testImplementation 'com.google.truth:truth:1.1.3'
 }
@@ -107,15 +101,4 @@ reckon {
     snapshotFromProp()
 }
 
-task(verifySetup) {
-    doLast {
-        def ideaJarDolphin = "$StudioCompilePath/lib/idea.jar"
-        def ideaJarElectricEel = "$StudioCompilePath/lib/idea_rt.jar"
-        if (!file(ideaJarDolphin).exists() && !file(ideaJarElectricEel).exists()) {
-            throw new GradleException("idea.jar not found, set StudioCompilePath in gradle.properties")
-        }
-    }
-}
-
-compileKotlin.dependsOn verifySetup
 buildSearchableOptions.enabled = false
