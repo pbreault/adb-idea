@@ -8,10 +8,10 @@ import com.developerphil.adbidea.adb.DeviceResult.SuccessfulDeviceResult
 import com.developerphil.adbidea.ui.DeviceChooserDialog
 import com.developerphil.adbidea.ui.ModuleChooserDialogHelper
 import com.developerphil.adbidea.ui.NotificationHelper
+import com.intellij.facet.ProjectFacetManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import org.jetbrains.android.facet.AndroidFacet
-import org.jetbrains.android.util.AndroidUtils
 
 
 class DeviceResultFetcher constructor(
@@ -21,7 +21,7 @@ class DeviceResultFetcher constructor(
 ) {
 
     fun fetch(): DeviceResult? {
-        val facets = AndroidUtils.getApplicationFacets(project)
+        val facets = ProjectFacetManager.getInstance(project).getFacets(AndroidFacet.ID)
         if (facets.isNotEmpty()) {
             val facet = getFacet(facets) ?: return null
 
