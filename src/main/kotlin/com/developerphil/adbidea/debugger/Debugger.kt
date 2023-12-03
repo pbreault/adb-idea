@@ -4,6 +4,8 @@ import com.android.ddmlib.Client
 import com.android.ddmlib.IDevice
 import com.android.tools.idea.execution.common.processhandler.AndroidProcessHandler
 import com.android.tools.idea.execution.common.debug.AndroidDebugger
+import com.android.tools.idea.execution.common.debug.AndroidDebuggerState
+import com.android.tools.idea.execution.common.debug.DebugSessionStarter
 import com.developerphil.adbidea.compatibility.BackwardCompatibleGetter
 import com.developerphil.adbidea.on
 import com.developerphil.adbidea.waitUntil
@@ -12,9 +14,16 @@ import com.intellij.execution.process.ProcessHandler
 import com.intellij.execution.process.ProcessOutputTypes
 import com.intellij.openapi.project.Project
 import com.intellij.util.concurrency.AppExecutorUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import org.joor.Reflect.on
 
-class Debugger(private val project: Project, private val device: IDevice, private val packageName: String) {
+class Debugger(
+    private val project: Project,
+    private val device: IDevice,
+    private val packageName: String,
+    private val coroutineScope: CoroutineScope
+) {
 
     fun attach() {
         var client: Client? = null
@@ -32,9 +41,17 @@ class Debugger(private val project: Project, private val device: IDevice, privat
         }
     }
 
-    private fun closeOldSessionAndRun(androidDebugger: AndroidDebugger<*>, client: Client) {
+    private fun closeOldSessionAndRun(androidDebugger: AndroidDebugger<AndroidDebuggerState>, client: Client) {
         terminateRunSessions(client)
-        androidDebugger.attachToClient(project, client, null)
+
+        coroutineScope.launch {
+            DebugSessionStarter.attachDebuggerToClientAndShowTab<AndroidDebuggerState>(
+                project,
+                client,
+                androidDebugger,
+                androidDebugger.createState()
+            )
+        }
     }
 
     // Disconnect any active run sessions to the same client
