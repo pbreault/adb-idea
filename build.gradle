@@ -7,7 +7,7 @@ plugins {
     id "org.jetbrains.kotlin.jvm" version "1.8.0"
 
     // https://github.com/JetBrains/gradle-intellij-plugin
-    id "org.jetbrains.intellij" version "1.15.0"
+    id "org.jetbrains.intellij" version "1.16.1"
 
     // https://github.com/ajoberstar/reckon
     id "org.ajoberstar.reckon" version "0.14.0"
@@ -31,10 +31,16 @@ targetCompatibility = 17
 intellij {
     pluginName = 'adb_idea'
     updateSinceUntilBuild = false
-    version = project.property("ideVersion")
     type = "AI"
     plugins = ['android']
 
+    // Set this path to point to a locally installed version of android studio.
+    // see gradle.properties for more info
+    if (project.hasProperty("localIdeOverride")) {
+        localPath = localIdeOverride
+    } else {
+        version = project.property("ideVersion")
+    }
 
     instrumentCode {
         compilerVersion = "231.9225.16"
@@ -60,6 +66,10 @@ intellij {
                     }
             s
         }
+    }
+
+    runIde {
+        jvmArgs = ['-Xmx4096m', '-XX:+UnlockDiagnosticVMOptions']
     }
 }
 
