@@ -1,15 +1,11 @@
 package com.developerphil.adbidea.adb.command
 
-import com.android.ddmlib.IDevice
 import com.android.ddmlib.InstallException
-import com.developerphil.adbidea.ui.NotificationHelper
 import com.developerphil.adbidea.ui.NotificationHelper.error
 import com.developerphil.adbidea.ui.NotificationHelper.info
-import com.intellij.openapi.project.Project
-import org.jetbrains.android.facet.AndroidFacet
 
 class UninstallCommand : Command {
-    override fun run(project: Project, device: IDevice, facet: AndroidFacet, packageName: String): Boolean {
+    override fun run(context: CommandContext): Boolean = with(context) {
         try {
             val errorCode = device.uninstallPackage(packageName)
             if (errorCode == null) {

@@ -12,14 +12,13 @@ import com.developerphil.adbidea.ui.NotificationHelper.info
 import com.google.common.base.Joiner
 import com.google.common.base.Strings
 import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.ThrowableComputable
 import org.jetbrains.android.facet.AndroidFacet
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 class StartDefaultActivityCommand(private val withDebugger: Boolean) : Command {
-    override fun run(project: Project, device: IDevice, facet: AndroidFacet, packageName: String): Boolean {
+    override fun run(context: CommandContext): Boolean = with(context) {
         try {
             val activityName = getDefaultActivityName(facet, device)
             val receiver = StartActivityReceiver()
@@ -33,7 +32,14 @@ class StartDefaultActivityCommand(private val withDebugger: Boolean) : Command {
                 info(String.format("<b>%s</b> started on %s", packageName, device.name))
                 return true
             } else {
-                error(String.format("<b>%s</b> could not be started on %s. \n\n<b>ADB Output:</b> \n%s", packageName, device.name, receiver.message))
+                error(
+                    String.format(
+                        "<b>%s</b> could not be started on %s. \n\n<b>ADB Output:</b> \n%s",
+                        packageName,
+                        device.name,
+                        receiver.message
+                    )
+                )
             }
         } catch (e: Exception) {
             error("Start fail... " + e.message)
@@ -44,7 +50,11 @@ class StartDefaultActivityCommand(private val withDebugger: Boolean) : Command {
     @Throws(ActivityLocatorException::class)
     private fun getDefaultActivityName(facet: AndroidFacet, device: IDevice): String {
         return ApplicationManager.getApplication()
-                .runReadAction(ThrowableComputable<String, ActivityLocatorException?> { DefaultActivityLocator(facet).getQualifiedActivityName(device) })
+            .runReadAction(ThrowableComputable<String, ActivityLocatorException?> {
+                DefaultActivityLocator(facet).getQualifiedActivityName(
+                    device
+                )
+            })
     }
 
     class StartActivityReceiver : MultiLineReceiver() {

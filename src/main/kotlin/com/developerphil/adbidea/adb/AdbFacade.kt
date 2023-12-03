@@ -43,9 +43,19 @@ object AdbFacade {
         when (val result = project.getService(ObjectGraph::class.java).deviceResultFetcher.fetch()) {
             is SuccessfulDeviceResult -> {
                 result.devices.forEach { device ->
-                    EXECUTOR.submit { runnable.run(project, device, result.facet, result.packageName) }
+                    EXECUTOR.submit {
+                        runnable.run(
+                            CommandContext(
+                                project = project,
+                                device = device,
+                                facet = result.facet,
+                                packageName = result.packageName
+                            )
+                        )
+                    }
                 }
             }
+
             is DeviceResult.Cancelled -> Unit
             is DeviceResult.DeviceNotFound, null -> NotificationHelper.error("No device found")
         }

@@ -8,5 +8,8 @@ interface Command {
     /**
      * @return true if the command executed properly
      */
-    fun run(project: Project, device: IDevice, facet: AndroidFacet, packageName: String): Boolean
+    fun run(context: CommandContext): Boolean
 }
+
+data class CommandContext(val project: Project, val device: IDevice, val facet: AndroidFacet, val packageName: String)
+
