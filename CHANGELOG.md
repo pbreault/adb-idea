@@ -2,6 +2,12 @@
 
 ## [[Unreleased]]
 
+## [1.6.13] - 2023-12-05
+- Compatibility with AS Iguana Canary 16
+
+## [1.6.12] - 2023-07-30
+- Compatibility with AS Giraffe
+
 ## [1.6.11] - 2023-06-11
 - Compatibility with AS Hedgehog
 
@@ -190,7 +196,9 @@
 - Command to clear data
 - Command to clear data and restart
 
-[Unreleased]: https://github.com/pbreault/adb-idea/compare/v1.7.0-SNAPSHOT...HEAD
+[Unreleased]: https://github.com/pbreault/adb-idea/compare/1.6.13...HEAD
+[1.6.13]: https://github.com/pbreault/adb-idea/compare/1.6.12...1.6.13
+[1.6.12]: https://github.com/pbreault/adb-idea/compare/1.6.11...1.6.12
 [1.6.11]: https://github.com/pbreault/adb-idea/compare/1.6.10...1.6.11
 [1.6.10]: https://github.com/pbreault/adb-idea/compare/1.6.9...1.6.10
 [1.6.9]: https://github.com/pbreault/adb-idea/compare/1.6.8...1.6.9
