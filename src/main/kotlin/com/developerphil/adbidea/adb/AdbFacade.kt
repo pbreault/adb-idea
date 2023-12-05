@@ -40,7 +40,8 @@ object AdbFacade {
             return
         }
 
-        when (val result = project.getService(ObjectGraph::class.java).deviceResultFetcher.fetch()) {
+        val objectGraph = project.getService(ObjectGraph::class.java)
+        when (val result = objectGraph.deviceResultFetcher.fetch()) {
             is SuccessfulDeviceResult -> {
                 result.devices.forEach { device ->
                     EXECUTOR.submit {
@@ -49,7 +50,8 @@ object AdbFacade {
                                 project = project,
                                 device = device,
                                 facet = result.facet,
-                                packageName = result.packageName
+                                packageName = result.packageName,
+                                coroutineScope = objectGraph.projectScope
                             )
                         )
                     }

@@ -4,7 +4,6 @@ import com.android.ddmlib.IDevice
 import com.android.ddmlib.MultiLineReceiver
 import com.android.tools.idea.run.activity.ActivityLocator.ActivityLocatorException
 import com.android.tools.idea.run.activity.DefaultActivityLocator
-import com.developerphil.adbidea.ObjectGraph
 import com.developerphil.adbidea.adb.ShellCommandsFactory.startActivity
 import com.developerphil.adbidea.debugger.Debugger
 import com.developerphil.adbidea.ui.NotificationHelper.error
@@ -23,7 +22,6 @@ class StartDefaultActivityCommand(private val withDebugger: Boolean) : Command {
             val activityName = getDefaultActivityName(facet, device)
             val receiver = StartActivityReceiver()
             val shellCommand = startActivity(packageName, activityName, withDebugger)
-            val coroutineScope = project.getService(ObjectGraph::class.java).projectScope
             device.executeShellCommand(shellCommand, receiver, 15L, TimeUnit.SECONDS)
             if (withDebugger) {
                 Debugger(project, device, packageName, coroutineScope).attach()
