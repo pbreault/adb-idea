@@ -2,6 +2,9 @@
 
 ## [[Unreleased]]
 
+## [1.6.15] - 2024-03-17
+- Compatibility with Android Studio Jellyfish
+
 ## [1.6.14] - 2024-03-17
 - Fix [#162](https://github.com/pbreault/adb-idea/issues/162) : Bug (v1.6.11): for a project with multiple modules, it always asks on which to perform any operation 
 
@@ -199,7 +202,8 @@
 - Command to clear data
 - Command to clear data and restart
 
-[Unreleased]: https://github.com/pbreault/adb-idea/compare/1.6.14...HEAD
+[Unreleased]: https://github.com/pbreault/adb-idea/compare/1.6.15...HEAD
+[1.6.14]: https://github.com/pbreault/adb-idea/compare/1.6.14...1.6.15
 [1.6.14]: https://github.com/pbreault/adb-idea/compare/1.6.13...1.6.14
 [1.6.13]: https://github.com/pbreault/adb-idea/compare/1.6.12...1.6.13
 [1.6.12]: https://github.com/pbreault/adb-idea/compare/1.6.11...1.6.12

@@ -299,7 +299,6 @@ class MyDeviceChooser(
                         if (myMinSdkVersion.isDone) connectedDevice.canRun(
                             myMinSdkVersion.get(),
                             myProjectTarget,
-                            myFacet,
                             { EnumSet.noneOf(HardwareFeature::class.java) },
                             mySupportedAbis
                         ) else false
