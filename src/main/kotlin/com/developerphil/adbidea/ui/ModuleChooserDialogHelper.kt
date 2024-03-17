@@ -28,7 +28,8 @@ object ModuleChooserDialogHelper {
         with(ChooseModulesDialog(project, modules, "Choose Module", "")) {
             setSingleSelectionMode()
             getSizeForTableContainer(preferredFocusedComponent)?.let {
-                setSize(it.width, it.height)
+                // Set the height to 0 to allow the dialog to resize itself to fit the content.
+                setSize(it.width, 0)
             }
             previousSelectedModule?.let { selectElements(listOf(it)) }
             return showAndGetResult().firstOrNull()
@@ -45,10 +46,8 @@ object ModuleChooserDialogHelper {
         for (table in tables) {
             val tableSize = table.preferredSize
             size.width = size.width.coerceAtLeast(tableSize.width)
-            size.height = size.height.coerceAtLeast(tableSize.height + size.height - table.parent.height)
         }
-        size.width = 1000.coerceAtMost(600.coerceAtLeast(size.width))
-        size.height = 800.coerceAtMost(size.height)
+        size.width = size.width.coerceIn(600, 1000)
         return size
     }
 

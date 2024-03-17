@@ -1,6 +1,7 @@
 package com.developerphil.adbidea.adb
 
 import com.android.ddmlib.IDevice
+import com.android.tools.idea.insights.isAndroidApp
 import com.android.tools.idea.model.AndroidModel
 import com.android.tools.idea.util.androidFacet
 import com.developerphil.adbidea.adb.DeviceResult.DeviceNotFound
@@ -49,19 +50,17 @@ class DeviceResultFetcher constructor(
         return null
     }
 
-    private fun getFacet(_facets: List<AndroidFacet>): AndroidFacet? {
-        val facets = _facets.mapNotNull { it.holderModule.androidFacet }.distinct()
-        val facet: AndroidFacet?
-        if (facets.size > 1) {
-            facet = ModuleChooserDialogHelper.showDialogForFacets(project, facets)
-            if (facet == null) {
-                return null
-            }
-        } else {
-            facet = facets[0]
-        }
+    private fun getFacet(facets: List<AndroidFacet>): AndroidFacet? {
+        val appFacets = facets
+            .filter { it.holderModule.isAndroidApp }
+            .mapNotNull { it.holderModule.androidFacet }
+            .distinct()
 
-        return facet
+        return if (appFacets.size > 1) {
+            ModuleChooserDialogHelper.showDialogForFacets(project, appFacets)
+        } else {
+            appFacets[0]
+        }
     }
 
     private fun showDeviceChooserDialog(facet: AndroidFacet, packageName: String): DeviceResult {
