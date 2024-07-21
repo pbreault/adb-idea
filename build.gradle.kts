@@ -8,8 +8,8 @@ plugins {
     // https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html
     id("org.jetbrains.kotlin.jvm") version "1.8.0"
 
-    // https://github.com/JetBrains/gradle-intellij-plugin
-    id("org.jetbrains.intellij") version "1.17.4"
+    // https://github.com/JetBrains/intellij-platform-gradle-plugin
+    id("org.jetbrains.intellij.platform") version "2.0.0-rc1"
 
     // https://github.com/ajoberstar/reckon
     id("org.ajoberstar.reckon") version "0.14.0"
@@ -24,44 +24,21 @@ plugins {
 
 repositories {
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
-group = "com.developerphil.intellij.plugin.adbidea"
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
-
-intellij {
-    pluginName.set("adb_idea")
-    updateSinceUntilBuild.set(false)
-    type.set("AI")
-    plugins.set(listOf("android"))
-
-    // Set this path to point to a locally installed version of android studio.
-    // see gradle.properties for more info
-    if (project.hasProperty("localIdeOverride")) {
-        localPath.set(property("localIdeOverride").toString())
-    } else {
-        version.set(property("ideVersion").toString())
-    }
-
-    tasks.instrumentCode {
-        compilerVersion.set("231.9225.16")
-    }
-
-
-    tasks.patchPluginXml {
-        sinceBuild.set(project.property("sinceBuild").toString())
-
-        // Extract the most recent entries in CHANGELOG.md and add them to the change notes.
+intellijPlatform {
+    pluginConfiguration {
+        name = "adb_idea"
+        group = "com.developerphil.intellij.plugin.adbidea"
         changeNotes.set(provider { recentChanges(HTML) })
-    }
+        ideaVersion.sinceBuild.set(project.property("sinceBuild").toString())
 
-    tasks.runIde {
-        jvmArgs = listOf("-Xmx4096m", "-XX:+UnlockDiagnosticVMOptions")
     }
+    buildSearchableOptions.set(false)
+    instrumentCode = true
 }
 
 changelog {
@@ -73,44 +50,55 @@ changelog {
     combinePreReleases.set(true)
 }
 
+reckon {
+    scopeFromProp()
+    snapshotFromProp()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.runIde {
+    jvmArgs = listOf("-Xmx4096m", "-XX:+UnlockDiagnosticVMOptions")
+}
+
 tasks.register("printLastChanges") {
     doLast {
         println(recentChanges(outputType = MARKDOWN))
     }
 }
 
+dependencies {
+    intellijPlatform {
+        bundledPlugin("org.jetbrains.android")
+        instrumentationTools()
+        if (project.hasProperty("localIdeOverride")) {
+            local(property("localIdeOverride").toString())
+        } else {
+            androidStudio(property("ideVersion").toString())
+        }
+
+    }
+
+    implementation("org.jooq:joor-java-8:0.9.14")
+
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:4.7.0")
+    testImplementation("com.google.truth:truth:1.4.4")
+}
+
 fun recentChanges(outputType: Changelog.OutputType): String {
     var s = ""
-    changelog.getAll()
-        .toList()
-        .drop(1) // drop the [Unreleased] section
+    changelog.getAll().toList().drop(1) // drop the [Unreleased] section
         .take(5) // last 5 changes
         .forEach { (key, _) ->
             s += changelog.renderItem(
-                changelog
-                    .get(key)
-                    .withHeader(false)
-                    .withEmptySections(false),
-                outputType
+                changelog.get(key).withHeader(false).withEmptySections(false), outputType
             )
         }
 
     return s
 }
 
-dependencies {
-    implementation("org.jooq:joor-java-8:0.9.14")
-
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:4.7.0")
-    testImplementation("com.google.truth:truth:1.1.3")
-}
-
-reckon {
-    scopeFromProp()
-    snapshotFromProp()
-}
-
-tasks.buildSearchableOptions {
-    isEnabled = false
-}

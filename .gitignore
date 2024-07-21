@@ -11,3 +11,5 @@ build/
 .idea/
 *.iml
 *.iws
+
+.intellijPlatform/
