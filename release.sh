@@ -23,7 +23,7 @@ echo -e "GitHub Token is valid. Success!\n "
 TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
 
 # Release to upload
-FILE="./build/distributions/adb_idea-$TAG.zip"
+FILE="./build/distributions/adb-idea-$TAG.zip"
 
 # Check if the file exists
 if [ ! -f "$FILE" ]; then
