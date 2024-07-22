@@ -23,7 +23,7 @@ import com.android.sdklib.IAndroidTarget
 import com.android.tools.idea.model.AndroidModel
 import com.android.tools.idea.model.StudioAndroidModuleInfo
 import com.android.tools.idea.run.AndroidDevice
-import com.android.tools.idea.run.ConnectedAndroidDevice
+import com.android.tools.idea.run.FakeAndroidDevice
 import com.android.tools.idea.run.LaunchCompatibility
 import com.android.tools.idea.run.LaunchCompatibility.State
 import com.google.common.util.concurrent.ListenableFuture
@@ -294,7 +294,7 @@ class MyDeviceChooser(
                 SERIAL_COLUMN_INDEX -> return device.serialNumber
                 DEVICE_STATE_COLUMN_INDEX -> return getDeviceState(device)
                 COMPATIBILITY_COLUMN_INDEX -> {
-                    val connectedDevice: AndroidDevice = ConnectedAndroidDevice(device)
+                    val connectedDevice: AndroidDevice = FakeAndroidDevice(device)
                     return try {
                         if (myMinSdkVersion.isDone) connectedDevice.canRun(
                             myMinSdkVersion.get(),

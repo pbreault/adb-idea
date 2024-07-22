@@ -3,6 +3,7 @@ package com.developerphil.adbidea.adb
 import com.android.ddmlib.IDevice
 import com.android.tools.idea.insights.isAndroidApp
 import com.android.tools.idea.model.AndroidModel
+import com.android.tools.idea.projectsystem.isHolderModule
 import com.android.tools.idea.util.androidFacet
 import com.developerphil.adbidea.adb.DeviceResult.DeviceNotFound
 import com.developerphil.adbidea.adb.DeviceResult.SuccessfulDeviceResult
@@ -52,8 +53,8 @@ class DeviceResultFetcher constructor(
 
     private fun getFacet(facets: List<AndroidFacet>): AndroidFacet? {
         val appFacets = facets
-            .filter { it.holderModule.isAndroidApp }
-            .mapNotNull { it.holderModule.androidFacet }
+            .filter { it.module.isAndroidApp && it.module.isHolderModule()}
+            .mapNotNull { it.module.androidFacet }
             .distinct()
 
         return if (appFacets.size > 1) {

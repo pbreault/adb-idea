@@ -67,6 +67,7 @@ tasks.runIde {
 tasks.register("printLastChanges") {
     doLast {
         println(recentChanges(outputType = MARKDOWN))
+        println(recentChanges(outputType = HTML))
     }
 }
 
@@ -95,7 +96,7 @@ fun recentChanges(outputType: Changelog.OutputType): String {
         .take(5) // last 5 changes
         .forEach { (key, _) ->
             s += changelog.renderItem(
-                changelog.get(key).withHeader(false).withEmptySections(false), outputType
+                changelog.get(key).withHeader(true).withEmptySections(false), outputType
             )
         }
 
