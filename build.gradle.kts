@@ -35,7 +35,6 @@ intellijPlatform {
         group = "com.developerphil.intellij.plugin.adbidea"
         changeNotes.set(provider { recentChanges(HTML) })
         ideaVersion.sinceBuild.set(project.property("sinceBuild").toString())
-
     }
     buildSearchableOptions.set(false)
     instrumentCode = true
@@ -68,6 +67,12 @@ tasks.register("printLastChanges") {
     doLast {
         println(recentChanges(outputType = MARKDOWN))
         println(recentChanges(outputType = HTML))
+    }
+}
+val localIdePath: String? by project.extra
+localIdePath?.let {
+    val runLocalIde by intellijPlatformTesting.runIde.registering {
+        localPath.set(file(it))
     }
 }
 
