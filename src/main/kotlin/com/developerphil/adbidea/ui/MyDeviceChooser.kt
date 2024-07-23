@@ -26,6 +26,7 @@ import com.android.tools.idea.run.AndroidDevice
 import com.android.tools.idea.run.FakeAndroidDevice
 import com.android.tools.idea.run.LaunchCompatibility
 import com.android.tools.idea.run.LaunchCompatibility.State
+import com.developerphil.adbidea.compatibility.BackwardCompatibleGetter
 import com.google.common.util.concurrent.ListenableFuture
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
@@ -44,6 +45,7 @@ import org.jetbrains.android.dom.manifest.UsesFeature
 import org.jetbrains.android.facet.AndroidFacet
 import org.jetbrains.android.sdk.AndroidSdkUtils
 import org.jetbrains.android.sdk.getInstance
+import org.joor.Reflect
 import java.awt.Dimension
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
@@ -294,7 +296,7 @@ class MyDeviceChooser(
                 SERIAL_COLUMN_INDEX -> return device.serialNumber
                 DEVICE_STATE_COLUMN_INDEX -> return getDeviceState(device)
                 COMPATIBILITY_COLUMN_INDEX -> {
-                    val connectedDevice: AndroidDevice = FakeAndroidDevice(device)
+                    val connectedDevice: AndroidDevice = androidDevice(device).get()
                     return try {
                         if (myMinSdkVersion.isDone) connectedDevice.canRun(
                             myMinSdkVersion.get(),
@@ -310,6 +312,20 @@ class MyDeviceChooser(
                 }
             }
             return null
+        }
+
+        /**
+         * Remove after 241.18034
+         */
+        private fun androidDevice(device: IDevice) = object : BackwardCompatibleGetter<AndroidDevice>() {
+            override fun getCurrentImplementation(): AndroidDevice {
+                return FakeAndroidDevice(device)
+            }
+
+            override fun getPreviousImplementation(): AndroidDevice {
+                return Reflect.onClass("com.android.tools.idea.run.ConnectedAndroidDevice").create(device).get()
+            }
+
         }
 
         private fun generateDeviceName(device: IDevice): String {
