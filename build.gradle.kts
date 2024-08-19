@@ -6,10 +6,10 @@ plugins {
     // Must match the Kotlin version bundled with the IDE
     // https://plugins.jetbrains.com/docs/intellij/using-kotlin.html#kotlin-standard-library
     // https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html
-    id("org.jetbrains.kotlin.jvm") version "1.8.0"
+    id("org.jetbrains.kotlin.jvm") version "1.9.24"
 
     // https://github.com/JetBrains/intellij-platform-gradle-plugin
-    id("org.jetbrains.intellij.platform") version "2.0.0-rc1"
+    id("org.jetbrains.intellij.platform") version "2.0.1"
 
     // https://github.com/ajoberstar/reckon
     id("org.ajoberstar.reckon") version "0.14.0"
@@ -35,6 +35,7 @@ intellijPlatform {
         group = "com.developerphil.intellij.plugin.adbidea"
         changeNotes.set(provider { recentChanges(HTML) })
         ideaVersion.sinceBuild.set(project.property("sinceBuild").toString())
+        ideaVersion.untilBuild.set(provider { null })
     }
     buildSearchableOptions.set(false)
     instrumentCode = true

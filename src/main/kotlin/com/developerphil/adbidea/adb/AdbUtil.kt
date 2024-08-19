@@ -24,17 +24,6 @@ object AdbUtil {
         return receiver.adbOutputLines.isNotEmpty()
     }
 
-    // The android debugger class is not available in Intellij 2016.1.
-    // Nobody should use that version but it's still the minimum "supported" version since android studio 2.2
-    // shares the same base version.
-    val isDebuggingAvailable: Boolean
-        get() = try {
-            Reflect.on("com.android.tools.idea.execution.common.debug.AndroidDebugger").get<Any>()
-            true
-        } catch (e: Exception) {
-            false
-        }
-
     fun isGradleSyncInProgress(project: Project): Boolean {
         return try {
             GradleSyncState.getInstance(project).isSyncInProgress

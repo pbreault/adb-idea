@@ -2,6 +2,9 @@
 
 ## [[Unreleased]]
 
+## [1.6.18] - 2024-08-18
+- Compatibility with AS Ladybug
+ 
 ## [1.6.17] - 2024-07-22
 - Fix regression in 1.6.16 that broke device selection in Android Studio Koala  
 
@@ -208,7 +211,8 @@
 - Command to clear data
 - Command to clear data and restart
 
-[Unreleased]: https://github.com/pbreault/adb-idea/compare/1.6.17...HEAD
+[Unreleased]: https://github.com/pbreault/adb-idea/compare/1.6.18...HEAD
+[1.6.18]: https://github.com/pbreault/adb-idea/compare/1.6.17...1.6.18
 [1.6.17]: https://github.com/pbreault/adb-idea/compare/1.6.16...1.6.17
 [1.6.16]: https://github.com/pbreault/adb-idea/compare/1.6.15...1.6.16
 [1.6.15]: https://github.com/pbreault/adb-idea/compare/1.6.14...1.6.15
