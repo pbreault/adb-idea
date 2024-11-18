@@ -2,6 +2,9 @@
 
 ## [[Unreleased]]
 
+## [1.6.19] - 2024-11-17
+- Compatibility with AS Ladybug Feature Drop 2024.2.2
+
 ## [1.6.18] - 2024-08-18
 - Compatibility with AS Ladybug
  
@@ -212,6 +215,7 @@
 - Command to clear data and restart
 
 [Unreleased]: https://github.com/pbreault/adb-idea/compare/1.6.18...HEAD
+[1.6.19]: https://github.com/pbreault/adb-idea/compare/1.6.18...1.6.19
 [1.6.18]: https://github.com/pbreault/adb-idea/compare/1.6.17...1.6.18
 [1.6.17]: https://github.com/pbreault/adb-idea/compare/1.6.16...1.6.17
 [1.6.16]: https://github.com/pbreault/adb-idea/compare/1.6.15...1.6.16

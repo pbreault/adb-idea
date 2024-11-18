@@ -3,17 +3,21 @@ package com.developerphil.adbidea.adb
 import com.android.ddmlib.IDevice
 import com.android.tools.idea.insights.isAndroidApp
 import com.android.tools.idea.model.AndroidModel
-import com.android.tools.idea.projectsystem.getHolderModule
+import com.android.tools.idea.projectsystem.gradle.getHolderModule
 import com.android.tools.idea.util.androidFacet
 import com.developerphil.adbidea.adb.DeviceResult.DeviceNotFound
 import com.developerphil.adbidea.adb.DeviceResult.SuccessfulDeviceResult
+import com.developerphil.adbidea.compatibility.BackwardCompatibleGetter
 import com.developerphil.adbidea.ui.DeviceChooserDialog
 import com.developerphil.adbidea.ui.ModuleChooserDialogHelper
 import com.developerphil.adbidea.ui.NotificationHelper
 import com.intellij.facet.ProjectFacetManager
+import com.intellij.openapi.module.Module
+import com.intellij.openapi.module.impl.ModuleImpl
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import org.jetbrains.android.facet.AndroidFacet
+import org.joor.Reflect
 
 
 class DeviceResultFetcher constructor(
@@ -53,7 +57,7 @@ class DeviceResultFetcher constructor(
 
     private fun getFacet(facets: List<AndroidFacet>): AndroidFacet? {
         val appFacets = facets
-            .map { it.module.getHolderModule() }
+            .map { HolderModuleGetter(it).get() }
             .filter { it.isAndroidApp }
             .mapNotNull { it.androidFacet }
             .distinct()
@@ -64,6 +68,19 @@ class DeviceResultFetcher constructor(
             appFacets[0]
         }
     }
+
+    // Can be removed after 242.23339
+    class HolderModuleGetter(private val facet: AndroidFacet) : BackwardCompatibleGetter<Module>() {
+        override fun getCurrentImplementation(): Module {
+            return facet.module.getHolderModule()
+        }
+
+        override fun getPreviousImplementation(): Module {
+            return Reflect.onClass("com.android.tools.idea.projectsystem.ModuleSystemUtil")
+                .call("getHolderModule", facet.module).get<ModuleImpl>()
+        }
+    }
+
 
     private fun showDeviceChooserDialog(facet: AndroidFacet, packageName: String): DeviceResult {
         val chooser = DeviceChooserDialog(facet)
