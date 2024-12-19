@@ -13,3 +13,5 @@ build/
 *.iws
 
 .intellijPlatform/
+
+.kotlin
