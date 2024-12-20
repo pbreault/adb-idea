@@ -124,10 +124,4 @@
 
         </group>
     </actions>
-
-    <application-components>
-        <component>
-            <implementation-class>com.developerphil.adbidea.Application</implementation-class>
-        </component>
-    </application-components>
 </idea-plugin>

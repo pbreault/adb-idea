@@ -20,7 +20,7 @@ import org.jetbrains.android.facet.AndroidFacet
 import org.joor.Reflect
 
 
-class DeviceResultFetcher constructor(
+class DeviceResultFetcher(
     private val project: Project,
     private val useSameDevicesHelper: UseSameDevicesHelper,
     private val bridge: Bridge
@@ -113,6 +113,6 @@ sealed class DeviceResult {
         val packageName: String
     ) : DeviceResult()
 
-    object Cancelled : DeviceResult()
-    object DeviceNotFound : DeviceResult()
+    data object Cancelled : DeviceResult()
+    data object DeviceNotFound : DeviceResult()
 }

@@ -2,10 +2,10 @@ package com.developerphil.adbidea.debugger
 
 import com.android.ddmlib.Client
 import com.android.ddmlib.IDevice
-import com.android.tools.idea.execution.common.processhandler.AndroidProcessHandler
 import com.android.tools.idea.execution.common.debug.AndroidDebugger
 import com.android.tools.idea.execution.common.debug.AndroidDebuggerState
 import com.android.tools.idea.execution.common.debug.DebugSessionStarter
+import com.android.tools.idea.execution.common.processhandler.AndroidProcessHandler
 import com.developerphil.adbidea.compatibility.BackwardCompatibleGetter
 import com.developerphil.adbidea.on
 import com.developerphil.adbidea.waitUntil
@@ -45,7 +45,7 @@ class Debugger(
         terminateRunSessions(client)
 
         coroutineScope.launch {
-            DebugSessionStarter.attachDebuggerToClientAndShowTab<AndroidDebuggerState>(
+            DebugSessionStarter.attachDebuggerToClientAndShowTab(
                 project,
                 client,
                 androidDebugger,
@@ -107,6 +107,6 @@ private class RunningProcessesGetter(
     }
 
     override fun getPreviousImplementation(): Array<ProcessHandler> {
-        return on<ExecutionManager>().call("getInstance", project).call("getRunningProcesses").get<Array<ProcessHandler>>()
+        return on<ExecutionManager>().call("getInstance", project).call("getRunningProcesses").get()
     }
 }

@@ -4,12 +4,10 @@ import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.ui.configuration.ChooseModulesDialog
-import com.intellij.ui.table.JBTable
 import com.intellij.util.ui.UIUtil
 import org.jetbrains.android.facet.AndroidFacet
 import java.awt.Component
 import java.awt.Dimension
-import java.awt.geom.Dimension2D
 import javax.swing.JTable
 
 object ModuleChooserDialogHelper {

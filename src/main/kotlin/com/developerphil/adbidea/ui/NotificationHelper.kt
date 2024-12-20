@@ -2,7 +2,6 @@ package com.developerphil.adbidea.ui
 
 import com.intellij.notification.NotificationGroup
 import com.intellij.notification.NotificationGroupManager
-import com.intellij.notification.NotificationListener
 import com.intellij.notification.NotificationType
 
 object NotificationHelper {
@@ -37,11 +36,8 @@ object NotificationHelper {
         val notification = notificationGroup.createNotification(
             "ADB IDEA",
             escapeString(message),
-            notificationType
+            notificationType,
         )
-
-        // Set the listener separately, if needed
-        notification.setListener(NotificationListener.URL_OPENING_LISTENER)
 
         // Display the notification
         notification.notify(null)
