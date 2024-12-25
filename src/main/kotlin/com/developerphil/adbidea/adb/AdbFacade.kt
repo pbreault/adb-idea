@@ -34,6 +34,16 @@ object AdbFacade {
     fun enableMobile(project: Project) = executeOnDevice(project, ToggleSvcCommand(MOBILE, true))
     fun disableMobile(project: Project) = executeOnDevice(project, ToggleSvcCommand(MOBILE, false))
 
+    fun keepScreenOn(project: Project) =
+        executeOnDevice(project, KeepScreenOnCommand(KeepScreenOnCommand.CommandMode.TURN_ON))
+
+    fun turnOffKeepScreenOn(project: Project) =
+        executeOnDevice(project, KeepScreenOnCommand(KeepScreenOnCommand.CommandMode.TURN_OFF))
+
+    // TODO: find a way to fire when plugin and project both are loaded
+    fun saveScreenTimeout(project: Project) =
+        executeOnDevice(project, KeepScreenOnCommand(KeepScreenOnCommand.CommandMode.SAVE_TIMEOUT))
+
     private fun executeOnDevice(project: Project, runnable: Command) {
         if (AdbUtil.isGradleSyncInProgress(project)) {
             NotificationHelper.error("Gradle sync is in progress")

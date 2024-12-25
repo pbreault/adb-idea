@@ -5,6 +5,15 @@ import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 
 object NotificationHelper {
+    fun success(message: String) {
+        sendNotification(
+            message,
+            NotificationType.INFORMATION,
+            NotificationGroupManager
+                .getInstance()
+                .getNotificationGroup("ADB Idea (Success)")
+        )
+    }
     fun info(message: String) {
         sendNotification(
             message,
