@@ -1,11 +1,8 @@
-package com.developerphil.adbidea
+package com.developerphil.adbidea.adb
 
 import com.android.ddmlib.IDevice
-import com.developerphil.adbidea.preference.accessor.InMemoryPreferenceAccessor
-import com.developerphil.adbidea.adb.Bridge
-import com.developerphil.adbidea.adb.FakeDevice
-import com.developerphil.adbidea.adb.UseSameDevicesHelper
 import com.developerphil.adbidea.preference.ProjectPreferences
+import com.developerphil.adbidea.preference.accessor.InMemoryPreferenceAccessor
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 

@@ -2,7 +2,16 @@
     <id>com.developerphil.adbidea</id>
     <name>ADB Idea</name>
     <vendor url="http://www.developerphil.com">Philippe Breault</vendor>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Notification group for logging -->
+        <notificationGroup displayType="NONE" id="ADB Idea (Logging)" isLogByDefault="true" />
 
+        <!-- Notification group for success messages -->
+        <notificationGroup displayType="STICKY_BALLOON" id="ADB Idea (Success)" isLogByDefault="true" />
+
+        <!-- Notification group for errors -->
+        <notificationGroup displayType="BALLOON" id="ADB Idea (Errors)" isLogByDefault="true" />
+    </extensions>
     <description><![CDATA[
         Adds the following ADB commands to Android Studio and Intellij:<br />
         <ul>
@@ -17,6 +26,8 @@
             <li>ADB Grant/Revoke Permissions</li>
             <li>ADB Enable/Disable Wi-Fi</li>
             <li>ADB Enable/Disable Mobile Data</li>
+            <li>ADB Keep Screen On</li>
+            <li>ADB Turn off Keep Screen On</li>
         </ul>
         <br />
         There are two basic ways to invoke a command:
@@ -133,13 +144,17 @@
                     text="ADB Disable Mobile Data"
                     description="Disable mobile data on device or emulator">
             </action>
-
+            <separator/>
+            <action id="com.developerphil.adbidea.action.KeepScreenOnAction"
+                    class="com.developerphil.adbidea.action.KeepScreenOnAction"
+                    text="Keep Screen On"
+                    description="Keep the device screen on for 10 minutes">
+            </action>
+            <action id="com.developerphil.adbidea.action.TurnOffKeepScreenOnAction"
+                    class="com.developerphil.adbidea.action.TurnOffKeepScreenOnAction"
+                    text="Turn off Keep Screen On"
+                    description="Turns off the Keep Screen On feature">
+            </action>
         </group>
     </actions>
-
-    <application-components>
-        <component>
-            <implementation-class>com.developerphil.adbidea.Application</implementation-class>
-        </component>
-    </application-components>
 </idea-plugin>

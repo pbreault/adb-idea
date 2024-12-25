@@ -1,12 +1,7 @@
 package com.developerphil.adbidea.adb
 
 import com.android.ddmlib.*
-import com.android.ddmlib.log.LogReceiver
-import com.android.sdklib.AndroidVersion
-import java.io.File
 import java.lang.reflect.Proxy
-import java.util.concurrent.Future
-import java.util.concurrent.TimeUnit
 
 data class FakeDevice(private val serialNumber: String) : IDevice by stub() {
     override fun getSerialNumber(): String {

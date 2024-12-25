@@ -1,6 +1,5 @@
 package com.developerphil.adbidea.action
 
-import com.developerphil.adbidea.adb.AdbUtil
 import com.intellij.ide.actions.QuickSwitchSchemeAction
 import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -26,6 +25,9 @@ class QuickListAction : QuickSwitchSchemeAction(), DumbAware {
         group.addSeparator()
         addAction("com.developerphil.adbidea.action.StartWithDebuggerAction", group)
         addAction("com.developerphil.adbidea.action.RestartWithDebuggerAction", group)
+        group.addSeparator()
+        addAction("com.developerphil.adbidea.action.KeepScreenOnAction", group)
+        addAction("com.developerphil.adbidea.action.TurnOffKeepScreenOnAction", group)
     }
 
 

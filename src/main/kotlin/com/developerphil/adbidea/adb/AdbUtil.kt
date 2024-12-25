@@ -8,7 +8,6 @@ import com.android.tools.idea.gradle.project.sync.GradleSyncState
 import com.developerphil.adbidea.adb.command.receiver.GenericReceiver
 import com.developerphil.adbidea.ui.NotificationHelper.info
 import com.intellij.openapi.project.Project
-import org.joor.Reflect
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
