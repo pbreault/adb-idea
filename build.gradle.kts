@@ -21,10 +21,6 @@ plugins {
     id("org.jetbrains.changelog") version "2.2.1"
 
 }
-// Readying the code for org.jetbrains.intellij.platform : 2.2.1
-//project.configurations.all {
-//    exclude(Constants.Configurations.Dependencies.BUNDLED_MODULE_GROUP, "com.jetbrains.performancePlugin")
-//}
 repositories {
     mavenCentral()
     intellijPlatform {
@@ -83,9 +79,6 @@ dependencies {
     intellijPlatform {
         bundledPlugin("org.jetbrains.android")
         instrumentationTools()
-// Readying the code for org.jetbrains.intellij.platform : 2.2.1
-//        plugin("org.jetbrains.android", property("androidPluginVersion").toString())
-//        plugin("com.android.tools.design", property("androidPluginVersion").toString())
         if (project.hasProperty("localIdeOverride")) {
             local(property("localIdeOverride").toString())
         } else {

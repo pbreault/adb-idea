@@ -116,6 +116,3 @@ sealed class DeviceResult {
     data object Cancelled : DeviceResult()
     data object DeviceNotFound : DeviceResult()
 }
-//
-//val Module.isAndroidApp: Boolean
-//    get() = AndroidFacet.getInstance(this)?.configuration?.isAppProject ?: false
