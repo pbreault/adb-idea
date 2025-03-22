@@ -63,6 +63,7 @@ tasks.runIde {
 }
 
 tasks.register("printLastChanges") {
+    notCompatibleWithConfigurationCache("Uses recentChanges function which is not cacheable")
     doLast {
         println(recentChanges(outputType = MARKDOWN))
         println(recentChanges(outputType = HTML))
