@@ -3,7 +3,7 @@ package com.developerphil.adbidea.adb
 import com.android.ddmlib.IDevice
 import com.developerphil.adbidea.preference.ProjectPreferences
 
-class UseSameDevicesHelper constructor(private val projectPreferences: ProjectPreferences, private val bridge: Bridge) {
+class UseSameDevicesHelper(private val projectPreferences: ProjectPreferences, private val bridge: Bridge) {
 
     var previouslyConnectedDevices: List<IDevice>? = null
 

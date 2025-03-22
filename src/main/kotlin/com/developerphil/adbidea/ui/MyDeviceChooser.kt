@@ -74,7 +74,7 @@ class MyDeviceChooser(
     private val myRefreshingAlarm: Alarm
     private val myBridge: AndroidDebugBridge?
     private val myMinSdkVersion: ListenableFuture<AndroidVersion> =
-        StudioAndroidModuleInfo.getInstance(myFacet).runtimeMinSdkVersion;
+        StudioAndroidModuleInfo.getInstance(myFacet).runtimeMinSdkVersion
 
     private val myProjectTarget: IAndroidTarget =
         getInstance(myFacet.module)?.target ?: error("Module [${myFacet.module.name}] already disposed")
@@ -95,7 +95,7 @@ class MyDeviceChooser(
      */
     private val myDetectedDevicesRef = AtomicReference(EMPTY_DEVICE_ARRAY)
     private val myPanel: JComponent
-    private val myDeviceTable: JBTable
+    private val myDeviceTable = JBTable()
     private var mySelectedRows: IntArray? = null
     private var hadUserInteraction = false
     private var previouslySelectedSerials: Array<String>? = null
@@ -180,7 +180,7 @@ class MyDeviceChooser(
                 }
             })
         }
-        if (!Arrays.equals(myDisplayedDevices, devices)) {
+        if (!myDisplayedDevices.contentEquals(devices)) {
             myDetectedDevicesRef.set(devices)
             ApplicationManager.getApplication()
                 .invokeLater({ refreshTable() }, ModalityState.stateForComponent(myDeviceTable))
@@ -198,8 +198,8 @@ class MyDeviceChooser(
             }
         }
         myProcessSelectionFlag = false
-        myDeviceTable.setModel(MyDeviceTableModel(devices))
-        if (selectedRows.size() == 0 && devices.size > 0) {
+        myDeviceTable.model = MyDeviceTableModel(devices)
+        if (selectedRows.size() == 0 && devices.isNotEmpty()) {
             myDeviceTable.selectionModel.setSelectionInterval(0, 0)
         }
         for (selectedRow in selectedRows.toNativeArray()) {
@@ -219,7 +219,7 @@ class MyDeviceChooser(
     val preferredFocusComponent: JComponent
         get() = myDeviceTable
 
-    val panel: JComponent?
+    val panel: JComponent
         get() = myPanel
 
     val selectedDevices: Array<IDevice>
@@ -336,12 +336,16 @@ class MyDeviceChooser(
         }
 
         override fun getColumnClass(columnIndex: Int): Class<*> {
-            return if (columnIndex == COMPATIBILITY_COLUMN_INDEX) {
-                LaunchCompatibility::class.java
-            } else if (columnIndex == DEVICE_NAME_COLUMN_INDEX) {
-                IDevice::class.java
-            } else {
-                String::class.java
+            return when (columnIndex) {
+                COMPATIBILITY_COLUMN_INDEX -> {
+                    LaunchCompatibility::class.java
+                }
+                DEVICE_NAME_COLUMN_INDEX -> {
+                    IDevice::class.java
+                }
+                else -> {
+                    String::class.java
+                }
             }
         }
 
@@ -409,7 +413,6 @@ class MyDeviceChooser(
     }
 
     init {
-        myDeviceTable = JBTable()
         myPanel = ScrollPaneFactory.createScrollPane(myDeviceTable)
         myPanel.preferredSize = Dimension(450, 220)
         myDeviceTable.model = MyDeviceTableModel(EMPTY_DEVICE_ARRAY)

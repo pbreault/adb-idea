@@ -1,6 +1,5 @@
 package com.developerphil.adbidea.action
 
-import com.developerphil.adbidea.adb.AdbUtil
 import com.intellij.ide.actions.QuickSwitchSchemeAction
 import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.actionSystem.AnActionEvent
