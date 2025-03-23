@@ -34,5 +34,5 @@ jobs:
           STUDIO_VERSION: ${{ steps.fetch-studio-version.outputs.STUDIO_VERSION }}
         run: |
           echo "Building with Android Studio Canary version: $STUDIO_VERSION"
-          ./gradlew build -PideVersion=$STUDIO_VERSION
+          ./gradlew build -PideVersion=$STUDIO_VERSION --no-configuration-cache
 
