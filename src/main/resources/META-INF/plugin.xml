@@ -122,6 +122,13 @@
                     id="com.developerphil.adbidea.action.DisableMobileAction"
                     text="ADB Disable Mobile Data" />
 
+            <separator/>
+            <action id="com.developerphil.adbidea.action.NavigateToResumedActivityAction"
+                    class="com.developerphil.adbidea.action.NavigateToResumedActivityAction"
+                    text="ADB Navigate To Resumed Activity"
+                    description="Find and navigate to resumed activity">
+            </action>
+
         </group>
     </actions>
 </idea-plugin>
