@@ -122,6 +122,12 @@
                     id="com.developerphil.adbidea.action.DisableMobileAction"
                     text="ADB Disable Mobile Data" />
 
+            <action id="com.developerphil.adbidea.action.SwitchLayoutBounds"
+                    class="com.developerphil.adbidea.action.SwitchLayoutBounds"
+                    text="ADB Switch Layout Bounds"
+                    description="Switches (Developer Tools -> Show Layout Bounds) on device">
+            </action>
+
         </group>
     </actions>
 </idea-plugin>
