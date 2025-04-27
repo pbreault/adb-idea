@@ -6,6 +6,9 @@
         <!-- Notification group for logging -->
         <notificationGroup displayType="NONE" id="ADB Idea (Logging)" isLogByDefault="true" />
 
+        <!-- Notification group for success messages -->
+        <notificationGroup displayType="STICKY_BALLOON" id="ADB Idea (Success)" isLogByDefault="true" />
+
         <!-- Notification group for errors -->
         <notificationGroup displayType="BALLOON" id="ADB Idea (Errors)" isLogByDefault="true" />
     </extensions>
@@ -23,6 +26,8 @@
             <li>ADB Grant/Revoke Permissions</li>
             <li>ADB Enable/Disable Wi-Fi</li>
             <li>ADB Enable/Disable Mobile Data</li>
+            <li>ADB Keep Screen On</li>
+            <li>ADB Turn off Keep Screen On</li>
         </ul>
         <br />
         There are two basic ways to invoke a command:
@@ -37,91 +42,119 @@
     <depends>org.jetbrains.android</depends>
 
     <actions>
-        <group description="ADB Idea" id="AdbIdea" popup="true" text="_ADB Idea">
-            <action class="com.developerphil.adbidea.action.QuickListAction"
-                    description="List all the adb idea operations in a popup"
-                    id="com.developerphil.adbidea.action.AdbIdeaQuickList"
-                    text="ADB Operations Popup...">
-                <keyboard-shortcut first-keystroke="shift ctrl A" keymap="Mac OS X" />
-                <keyboard-shortcut first-keystroke="shift ctrl A" keymap="Mac OS X 10.5+" />
-                <keyboard-shortcut first-keystroke="shift ctrl alt A" keymap="$default" />
+        <group id="AdbIdea" text="_ADB Idea" description="ADB Idea" popup="true">
+            <action id="com.developerphil.adbidea.action.AdbIdeaQuickList"
+                    class="com.developerphil.adbidea.action.QuickListAction" text="ADB Operations Popup..."
+                    description="List all the adb idea operations in a popup">
+                <keyboard-shortcut keymap="Mac OS X" first-keystroke="shift ctrl A"/>
+                <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="shift ctrl A"/>
+                <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt A"/>
             </action>
-            <separator />
+            <separator/>
 
-            <action class="com.developerphil.adbidea.action.RevokePermissionsAction"
-                    description="Revoking the runtime permissions of the current application"
-                    id="com.developerphil.adbidea.action.RevokePermissionsAction"
-                    text="ADB Revoke Permissions" />
+            <action id="com.developerphil.adbidea.action.RevokePermissionsAction"
+                    class="com.developerphil.adbidea.action.RevokePermissionsAction"
+                    text="ADB Revoke Permissions"
+                    description="Revoking the runtime permissions of the current application">
+            </action>
 
-            <action class="com.developerphil.adbidea.action.RevokePermissionsAndRestartAction"
-                    description="Revoking the runtime permissions of the current application and restarts it"
-                    id="com.developerphil.adbidea.action.RevokePermissionsAndRestartAction"
-                    text="ADB Revoke Permissions and Restart" />
+            <action id="com.developerphil.adbidea.action.RevokePermissionsAndRestartAction"
+                    class="com.developerphil.adbidea.action.RevokePermissionsAndRestartAction"
+                    text="ADB Revoke Permissions and Restart"
+                    description="Revoking the runtime permissions of the current application and restarts it">
+            </action>
 
-            <action class="com.developerphil.adbidea.action.GrantPermissionsAction"
-                    description="Granting the runtime permissions of the current application"
-                    id="com.developerphil.adbidea.action.GrantPermissionsAction"
-                    text="ADB Grant Permissions" />
+            <action id="com.developerphil.adbidea.action.GrantPermissionsAction"
+                    class="com.developerphil.adbidea.action.GrantPermissionsAction"
+                    text="ADB Grant Permissions"
+                    description="Granting the runtime permissions of the current application">
+            </action>
 
-            <action class="com.developerphil.adbidea.action.UninstallAction"
-                    description="Uninstalls the current application"
-                    id="com.developerphil.adbidea.action.UninstallAction"
-                    text="ADB Uninstall App" />
+            <action id="com.developerphil.adbidea.action.UninstallAction"
+                    class="com.developerphil.adbidea.action.UninstallAction"
+                    text="ADB Uninstall App"
+                    description="Uninstalls the current application">
+            </action>
 
-            <action class="com.developerphil.adbidea.action.KillAction"
-                    description="Kills the current application"
-                    id="com.developerphil.adbidea.action.KillAction" text="ADB Kill App" />
-            <action class="com.developerphil.adbidea.action.StartAction"
-                    description="Starts the current application"
-                    id="com.developerphil.adbidea.action.StartAction" text="ADB Start App" />
-            <action class="com.developerphil.adbidea.action.RestartAction"
-                    description="Restarts the current application"
-                    id="com.developerphil.adbidea.action.RestartAction" text="ADB Restart App" />
-            <action class="com.developerphil.adbidea.action.ClearDataAction"
-                    description="Clears the private storage of the app"
-                    id="com.developerphil.adbidea.action.ClearDataAction"
-                    text="ADB Clear App Data" />
-            <action class="com.developerphil.adbidea.action.ClearDataAndRestartAction"
-                    description="Clears the private storage of the app and restarts it"
-                    id="com.developerphil.adbidea.action.ClearDataAndRestartAction"
-                    text="ADB Clear App Data and Restart" />
-            <action class="com.developerphil.adbidea.action.StartWithDebuggerAction"
-                    description="Starts the current application and attach the debugger"
-                    id="com.developerphil.adbidea.action.StartWithDebuggerAction"
-                    text="ADB Start App With Debugger" />
+            <action id="com.developerphil.adbidea.action.KillAction"
+                    class="com.developerphil.adbidea.action.KillAction"
+                    text="ADB Kill App"
+                    description="Kills the current application">
+            </action>
+            <action id="com.developerphil.adbidea.action.StartAction"
+                    class="com.developerphil.adbidea.action.StartAction"
+                    text="ADB Start App"
+                    description="Starts the current application">
+            </action>
+            <action id="com.developerphil.adbidea.action.RestartAction"
+                    class="com.developerphil.adbidea.action.RestartAction"
+                    text="ADB Restart App"
+                    description="Restarts the current application">
+            </action>
+            <action id="com.developerphil.adbidea.action.ClearDataAction"
+                    class="com.developerphil.adbidea.action.ClearDataAction"
+                    text="ADB Clear App Data"
+                    description="Clears the private storage of the app">
+            </action>
+            <action id="com.developerphil.adbidea.action.ClearDataAndRestartAction"
+                    class="com.developerphil.adbidea.action.ClearDataAndRestartAction"
+                    text="ADB Clear App Data and Restart"
+                    description="Clears the private storage of the app and restarts it">
+            </action>
+            <action id="com.developerphil.adbidea.action.StartWithDebuggerAction"
+                    class="com.developerphil.adbidea.action.StartWithDebuggerAction"
+                    text="ADB Start App With Debugger"
+                    description="Starts the current application and attach the debugger">
+            </action>
 
-            <action class="com.developerphil.adbidea.action.RestartWithDebuggerAction"
-                    description="Restarts the current application and attach the debugger"
-                    id="com.developerphil.adbidea.action.RestartWithDebuggerAction"
-                    text="ADB Restart App With Debugger" />
+            <action id="com.developerphil.adbidea.action.RestartWithDebuggerAction"
+                    class="com.developerphil.adbidea.action.RestartWithDebuggerAction"
+                    text="ADB Restart App With Debugger"
+                    description="Restarts the current application and attach the debugger">
+            </action>
 
-            <action class="com.developerphil.adbidea.action.ClearDataAndRestartWithDebuggerAction"
-                    description="Clears the private storage of the app and restarts it, and attach the debugger"
-                    id="com.developerphil.adbidea.action.ClearDataAndRestartWithDebuggerAction"
-                    text="ADB Clear App Data and Restart App With Debugger" />
-            <add-to-group anchor="first" group-id="AndroidToolsGroup" />
-            <separator />
+            <action id="com.developerphil.adbidea.action.ClearDataAndRestartWithDebuggerAction"
+                    class="com.developerphil.adbidea.action.ClearDataAndRestartWithDebuggerAction"
+                    text="ADB Clear App Data and Restart App With Debugger"
+                    description="Clears the private storage of the app and restarts it, and attach the debugger">
+            </action>
+            <add-to-group group-id="AndroidToolsGroup" anchor="first"/>
+            <separator/>
 
-            <action class="com.developerphil.adbidea.action.EnableWifiAction"
-                    description="Enable Wi-Fi on device or emulator"
-                    id="com.developerphil.adbidea.action.EnableWifiAction"
-                    text="ADB Enable Wi-Fi" />
+            <action id="com.developerphil.adbidea.action.EnableWifiAction"
+                    class="com.developerphil.adbidea.action.EnableWifiAction"
+                    text="ADB Enable Wi-Fi"
+                    description="Enable Wi-Fi on device or emulator">
+            </action>
 
-            <action class="com.developerphil.adbidea.action.DisableWifiAction"
-                    description="Disable Wi-Fi on device or emulator"
-                    id="com.developerphil.adbidea.action.DisableWifiAction"
-                    text="ADB Disable Wi-Fi" />
+            <action id="com.developerphil.adbidea.action.DisableWifiAction"
+                    class="com.developerphil.adbidea.action.DisableWifiAction"
+                    text="ADB Disable Wi-Fi"
+                    description="Disable Wi-Fi on device or emulator">
+            </action>
 
-            <action class="com.developerphil.adbidea.action.EnableMobileAction"
-                    description="Enable mobile data on device or emulator"
-                    id="com.developerphil.adbidea.action.EnableMobileAction"
-                    text="ADB Enable Mobile Data" />
+            <action id="com.developerphil.adbidea.action.EnableMobileAction"
+                    class="com.developerphil.adbidea.action.EnableMobileAction"
+                    text="ADB Enable Mobile Data"
+                    description="Enable mobile data on device or emulator">
+            </action>
 
-            <action class="com.developerphil.adbidea.action.DisableMobileAction"
-                    description="Disable mobile data on device or emulator"
-                    id="com.developerphil.adbidea.action.DisableMobileAction"
-                    text="ADB Disable Mobile Data" />
-
+            <action id="com.developerphil.adbidea.action.DisableMobileAction"
+                    class="com.developerphil.adbidea.action.DisableMobileAction"
+                    text="ADB Disable Mobile Data"
+                    description="Disable mobile data on device or emulator">
+            </action>
+            <separator/>
+            <action id="com.developerphil.adbidea.action.KeepScreenOnAction"
+                    class="com.developerphil.adbidea.action.KeepScreenOnAction"
+                    text="Keep Screen On"
+                    description="Keep the device screen on for 10 minutes">
+            </action>
+            <action id="com.developerphil.adbidea.action.TurnOffKeepScreenOnAction"
+                    class="com.developerphil.adbidea.action.TurnOffKeepScreenOnAction"
+                    text="Turn off Keep Screen On"
+                    description="Turns off the Keep Screen On feature">
+            </action>
         </group>
     </actions>
 </idea-plugin>

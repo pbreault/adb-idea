@@ -25,6 +25,9 @@ class QuickListAction : QuickSwitchSchemeAction(), DumbAware {
         group.addSeparator()
         addAction("com.developerphil.adbidea.action.StartWithDebuggerAction", group)
         addAction("com.developerphil.adbidea.action.RestartWithDebuggerAction", group)
+        group.addSeparator()
+        addAction("com.developerphil.adbidea.action.KeepScreenOnAction", group)
+        addAction("com.developerphil.adbidea.action.TurnOffKeepScreenOnAction", group)
     }
 
 
