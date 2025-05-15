@@ -9,7 +9,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "2.1.0"
 
     // https://github.com/JetBrains/intellij-platform-gradle-plugin
-    id("org.jetbrains.intellij.platform") version "2.4.0"
+    id("org.jetbrains.intellij.platform") version "2.6.0"
 
     // https://github.com/ajoberstar/reckon
     id("org.ajoberstar.reckon") version "0.14.0"
@@ -78,14 +78,35 @@ localIdePath?.let {
 
 dependencies {
     intellijPlatform {
-        bundledPlugin("org.jetbrains.android")
-        instrumentationTools()
-        if (project.hasProperty("localIdeOverride")) {
-            local(property("localIdeOverride").toString())
-        } else {
-            androidStudio(property("ideVersion").toString())
-        }
+        val version = property("ideVersion").toString()
+        val ide = property("ideOverride").toString()
+        val pluginVersion = property("sinceBuild").toString()
 
+        when {
+            localIdePath?.isNotBlank() == true -> {
+                // We don't recognize if it's local Android Studio or Idea.
+                // In case that's Android Studio, it's required to replace the line with:
+                // bundledPlugin("org.jetbrains.android")
+                plugin("org.jetbrains.android:$pluginVersion")
+                local(localPath = localIdePath.toString())
+            }
+
+            ide == "IC" -> {
+                plugin("org.jetbrains.android:$pluginVersion")
+                intellijIdeaCommunity(version)
+            }
+
+            ide == "IU" -> {
+                plugin("org.jetbrains.android:$pluginVersion")
+                intellijIdeaUltimate(version)
+            }
+
+            else -> {
+                // Only for Android studio itself: https://github.com/JetBrains/intellij-platform-gradle-plugin/issues/1843#issuecomment-2658420485
+                bundledPlugin("org.jetbrains.android")
+                androidStudio(version)
+            }
+        }
     }
 
     implementation("org.jooq:joor:0.9.15")
@@ -107,4 +128,3 @@ fun recentChanges(outputType: Changelog.OutputType): String {
 
     return s
 }
-

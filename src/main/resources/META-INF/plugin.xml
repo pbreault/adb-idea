@@ -33,7 +33,6 @@
         ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
-    <depends>com.intellij.modules.androidstudio</depends>
     <depends>org.jetbrains.android</depends>
 
     <actions>
