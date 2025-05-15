@@ -14,6 +14,22 @@ Running from command line
   ./gradlew runIde
 ```
 
+Override running IDE
+--------------------
+
+* Create `local.properties` file in root directory of the project with content:
+```
+# Uncomment when you want to use local IDE instead install specified IDE by ideOverride
+#localIdePath=C:\\Users\\[USER]\\AppData\\Local\\Programs\\IntelliJ IDEA Ultimate
+
+# Allowed types
+# IU - Intellij Idea Ultimate
+# IC - Intellij Idea Community
+# IA - Android Studio
+ideOverride=IU
+```
+* Select which IDE you want to use or uncomment `localIdePath` and specify the path to IDE.
+
 Create new menu item
 ====================
 

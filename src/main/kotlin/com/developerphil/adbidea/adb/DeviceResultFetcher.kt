@@ -1,9 +1,8 @@
 package com.developerphil.adbidea.adb
 
 import com.android.ddmlib.IDevice
-import com.android.tools.idea.insights.isAndroidApp
 import com.android.tools.idea.model.AndroidModel
-import com.android.tools.idea.projectsystem.gradle.getHolderModule
+import com.android.tools.idea.projectsystem.getHolderModule
 import com.android.tools.idea.util.androidFacet
 import com.developerphil.adbidea.adb.DeviceResult.DeviceNotFound
 import com.developerphil.adbidea.adb.DeviceResult.SuccessfulDeviceResult
@@ -58,7 +57,6 @@ class DeviceResultFetcher(
     private fun getFacet(facets: List<AndroidFacet>): AndroidFacet? {
         val appFacets = facets
             .map { HolderModuleGetter(it).get() }
-            .filter { it.isAndroidApp }
             .mapNotNull { it.androidFacet }
             .distinct()
 
