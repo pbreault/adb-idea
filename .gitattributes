@@ -1,0 +1,13 @@
+# Enforce LF for shell scripts so WSL/Git Bash doesn't see $'\r'
+*.sh text eol=lf
+
+# Keep Windows batch files CRLF
+*.bat text eol=crlf
+
+# Common text files
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.gradle text eol=lf
+*.kts text eol=lf
+

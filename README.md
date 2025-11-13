@@ -1,4 +1,7 @@
-ADB Idea
+Full Credit for the plugin development goes to [Philippe Breault](https://github.com/pbreault). I
+have only made this plugin because previous one was not maintained anymore.
+
+ADB Menu
 ========
 
 A plugin for Android Studio and Intellij IDEA that speeds up your day to day android development.
@@ -27,29 +30,31 @@ The number on the left is a shortcut that will stay the same for your muscle mem
 
 Find Actions
 -----------------
-Each command is prefixed by "ADB", so you can quickly filter through adb commands using the "[Find Actions](http://www.jetbrains.com/idea/webhelp/navigating-to-action.html)" shortcut.
+Each command is prefixed by "ADB", so you can quickly filter through adb commands using
+the "[Find Actions](http://www.jetbrains.com/idea/webhelp/navigating-to-action.html)" shortcut.
 
 ![Logo](website/find_actions.png)
 
 The Menu Way
 ------------
 You can find every command in the following menu:
-`Tools->Android->ADB Idea`
+`Tools->Android->ADB Menu`
 
 
 Installation
 ========
 
-Download and install *ADB Idea* directly from Intellij / Android Studio:
+Download and install *ADB Menu* directly from Intellij / Android Studio:
 `Preferences/Settings->Plugins->Browse Repositories`
 
-Alternatively, you can [download the plugin](http://plugins.jetbrains.com/plugin/7380?pr=idea) from the jetbrains plugin site and install it manually in:
+Alternatively, you can [download the plugin](https://plugins.jetbrains.com/plugin/28868-adb-menu)
+from the jetbrains plugin site and install it manually in:
 `Preferences/Settings->Plugins->Install plugin from disk`
 
 License
 =======
 
-    Copyright 2017 Philippe Breault
+    Copyright 2025 Raghav Satyadev
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
