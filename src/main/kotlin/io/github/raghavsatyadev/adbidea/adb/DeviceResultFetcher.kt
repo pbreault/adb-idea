@@ -29,7 +29,13 @@ class DeviceResultFetcher(
     if (facets.isNotEmpty()) {
       val facet = getFacet(facets) ?: return null
 
-      val packageName = AndroidModel.get(facet)?.applicationId ?: return null
+        val packageName =
+            AndroidModel.get(facet)?.applicationId
+                ?: run {
+                    NotificationHelper.error("No Android package found")
+
+                    return null
+                }
 
       if (!bridge.isReady()) {
         NotificationHelper.error("No platform configured")
@@ -63,8 +69,10 @@ class DeviceResultFetcher(
 
     return if (appFacets.size > 1) {
       ModuleChooserDialogHelper.showDialogForFacets(project, appFacets)
+    } else if (appFacets.size == 1) {
+        appFacets.first()
     } else {
-      appFacets[0]
+        null
     }
   }
 
