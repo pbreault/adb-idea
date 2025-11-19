@@ -2,6 +2,10 @@
 
 ## [[Unreleased]]
 
+## [1.7.2] - 2025-11-19
+
+- Support Android Studio Otter 3 Feature Drop | 2025.2.3 Canary 1
+
 ## [1.7.1] - 2025-11-13
 
 - Support Android Studio Otter 2 Feature Drop | 2025.2.2 Canary 4
