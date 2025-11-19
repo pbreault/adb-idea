@@ -29,4 +29,26 @@ class ShellCommandsFactoryTest {
 
     assertThat(command).isEqualTo("am start -D -n com.example/com.example.MyActivity")
   }
+
+    @Test
+    fun startComponentWithoutDebugger() {
+        val command =
+            ShellCommandsFactory.startComponent(
+                componentName = "com.example/.MyActivity",
+                attachDebugger = false,
+            )
+
+        assertThat(command).isEqualTo("am start -n com.example/.MyActivity -a android.intent.action.MAIN")
+    }
+
+    @Test
+    fun startComponentWithDebugger() {
+        val command =
+            ShellCommandsFactory.startComponent(
+                componentName = "com.example/.MyActivity",
+                attachDebugger = true,
+            )
+
+        assertThat(command).isEqualTo("am start -D -n com.example/.MyActivity -a android.intent.action.MAIN")
+    }
 }
