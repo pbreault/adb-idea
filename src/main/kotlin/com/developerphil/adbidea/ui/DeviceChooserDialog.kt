@@ -9,31 +9,34 @@ import com.intellij.openapi.util.Disposer
 import org.jetbrains.android.facet.AndroidFacet
 import org.jetbrains.android.util.AndroidBundle
 import org.joor.Reflect
+import java.awt.BorderLayout
 import javax.swing.JCheckBox
 import javax.swing.JComponent
 import javax.swing.JPanel
 
 /**
- * https://android.googlesource.com/platform/tools/adt/idea/+/refs/heads/mirror-goog-studio-master-dev/android/src/com/android/tools/idea/run/DeviceChooserDialog.java
+ * Programmatic UI for the device chooser dialog. Replaces the previous UI Designer-based
+ * approach to avoid initialization order issues across IDE versions.
  */
 class DeviceChooserDialog(facet: AndroidFacet) : DialogWrapper(facet.module.project, true) {
 
-    lateinit var myPanel: JPanel
-    lateinit var myDeviceChooserWrapper: JPanel
-    lateinit var useSameDeviceSCheckBox: JCheckBox
+    private val myProject: Project = facet.module.project
+    private val projectPreferences: ProjectPreferences =
+        myProject.getService(ObjectGraph::class.java).projectPreferences
 
-    private val myProject: Project
+    private val rootPanel = JPanel(BorderLayout())
+    private val deviceChooserWrapper = JPanel(BorderLayout())
+    private val useSameDeviceCheckBox = JCheckBox("Use same device(s) for future commands")
+
     private val myDeviceChooser: MyDeviceChooser
-    private val projectPreferences: ProjectPreferences
 
     val selectedDevices: Array<IDevice>
         get() = myDeviceChooser.selectedDevices
 
     init {
         title = AndroidBundle.message("choose.device.dialog.title")
-        myProject = facet.module.project
-        projectPreferences = myProject.getService(ObjectGraph::class.java).projectPreferences
         okAction.isEnabled = false
+
         myDeviceChooser = MyDeviceChooser(true, okAction, facet, null)
         Disposer.register(myDisposable, myDeviceChooser)
         myDeviceChooser.addListener(object : DeviceChooserListener {
@@ -41,14 +44,22 @@ class DeviceChooserDialog(facet: AndroidFacet) : DialogWrapper(facet.module.proj
                 updateOkButton()
             }
         })
-        myDeviceChooserWrapper.add(myDeviceChooser.panel)
-        myDeviceChooser.init(projectPreferences.getSelectedDeviceSerials())
+
+        // Build static UI
+        rootPanel.add(deviceChooserWrapper, BorderLayout.CENTER)
+        rootPanel.add(useSameDeviceCheckBox, BorderLayout.SOUTH)
+
+        // Initialize DialogWrapper and dynamic content
         init()
+        deviceChooserWrapper.add(myDeviceChooser.panel, BorderLayout.CENTER)
+        myDeviceChooser.init(projectPreferences.getSelectedDeviceSerials())
         updateOkButton()
     }
 
     private fun persistSelectedSerialsToPreferences() {
-        projectPreferences.saveSelectedDeviceSerials(myDeviceChooser.selectedDevices.map { it.serialNumber }.toList())
+        projectPreferences.saveSelectedDeviceSerials(
+            myDeviceChooser.selectedDevices.map { it.serialNumber }.toList()
+        )
     }
 
     private fun updateOkButton() {
@@ -58,7 +69,7 @@ class DeviceChooserDialog(facet: AndroidFacet) : DialogWrapper(facet.module.proj
     override fun getPreferredFocusedComponent(): JComponent? {
         return try {
             myDeviceChooser.preferredFocusComponent
-        } catch (e: NoSuchMethodError) { // that means that we are probably on a preview version of android studio or in intellij 13
+        } catch (e: NoSuchMethodError) { // preview versions fallback
             Reflect.on(myDeviceChooser).call("getDeviceTable").get<JComponent>()
         }
     }
@@ -70,7 +81,8 @@ class DeviceChooserDialog(facet: AndroidFacet) : DialogWrapper(facet.module.proj
     }
 
     override fun getDimensionServiceKey() = javaClass.canonicalName
-    override fun createCenterPanel(): JComponent = myPanel
 
-    fun useSameDevices() = useSameDeviceSCheckBox.isSelected
+    override fun createCenterPanel(): JComponent = rootPanel
+
+    fun useSameDevices() = useSameDeviceCheckBox.isSelected
 }
