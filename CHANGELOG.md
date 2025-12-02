@@ -2,6 +2,10 @@
 
 ## [[Unreleased]]
 
+## [1.6.20] - 2025-12-02
+- Fix the device selector on Otter Feature Drop 2025.2.2
+- Fix `java.lang.UnsupportedOperationException: This method is not used in Android Studio` on Otter Feature Drop 2025.2.3
+
 ## [1.6.19] - 2024-11-17
 - Compatibility with AS Ladybug Feature Drop 2024.2.2
 
@@ -214,7 +218,8 @@
 - Command to clear data
 - Command to clear data and restart
 
-[Unreleased]: https://github.com/pbreault/adb-idea/compare/1.6.18...HEAD
+[Unreleased]: https://github.com/pbreault/adb-idea/compare/1.6.20...HEAD
+[1.6.20]: https://github.com/pbreault/adb-idea/compare/1.6.19...1.6.20
 [1.6.19]: https://github.com/pbreault/adb-idea/compare/1.6.18...1.6.19
 [1.6.18]: https://github.com/pbreault/adb-idea/compare/1.6.17...1.6.18
 [1.6.17]: https://github.com/pbreault/adb-idea/compare/1.6.16...1.6.17
