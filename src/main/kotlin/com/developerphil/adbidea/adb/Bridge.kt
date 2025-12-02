@@ -16,9 +16,7 @@ class BridgeImpl(private val project: Project) : Bridge {
     private val androidBridge: AndroidDebugBridge?
         get() = AndroidSdkUtils.getDebugBridge(project)
 
-    override fun isReady() = androidBridge?.let {
-        it.isConnected && it.hasInitialDeviceList()
-    } ?: false
+    override fun isReady() = androidBridge?.isConnected ?: false
 
     override fun connectedDevices(): List<IDevice> {
         return androidBridge?.devices?.asList() ?: emptyList()
