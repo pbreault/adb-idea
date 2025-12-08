@@ -13,7 +13,7 @@ class ShellCommandsFactoryTest {
                 activityName = "com.example.MyActivity",
                 attachDebugger = false)
 
-        assertThat(command).isEqualTo("am start -n com.example/com.example.MyActivity")
+        assertThat(command).isEqualTo("am start -a android.intent.action.MAIN -n com.example/com.example.MyActivity")
     }
 
     @Test
@@ -23,6 +23,6 @@ class ShellCommandsFactoryTest {
                 activityName = "com.example.MyActivity",
                 attachDebugger = true)
 
-        assertThat(command).isEqualTo("am start -D -n com.example/com.example.MyActivity")
+        assertThat(command).isEqualTo("am start -a android.intent.action.MAIN -D -n com.example/com.example.MyActivity")
     }
 }
