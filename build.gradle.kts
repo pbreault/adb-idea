@@ -6,7 +6,7 @@ plugins {
     // Must match the Kotlin version bundled with the IDE
     // https://plugins.jetbrains.com/docs/intellij/using-kotlin.html#kotlin-standard-library
     // https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html
-    id("org.jetbrains.kotlin.jvm") version "2.1.0"
+    id("org.jetbrains.kotlin.jvm") version "2.2.20"
 
     // https://github.com/JetBrains/intellij-platform-gradle-plugin
     id("org.jetbrains.intellij.platform") version "2.10.5"
