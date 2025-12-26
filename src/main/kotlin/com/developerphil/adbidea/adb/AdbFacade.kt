@@ -33,6 +33,7 @@ object AdbFacade {
     fun disableWifi(project: Project) = executeOnDevice(project, ToggleSvcCommand(WIFI, false))
     fun enableMobile(project: Project) = executeOnDevice(project, ToggleSvcCommand(MOBILE, true))
     fun disableMobile(project: Project) = executeOnDevice(project, ToggleSvcCommand(MOBILE, false))
+    fun navigateToResumedActivity(project: Project) = executeOnDevice(project, NavigateToResumedActivityCommand())
 
     private fun executeOnDevice(project: Project, runnable: Command) {
         if (AdbUtil.isGradleSyncInProgress(project)) {
