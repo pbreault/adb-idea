@@ -6,19 +6,16 @@ plugins {
     // Must match the Kotlin version bundled with the IDE
     // https://plugins.jetbrains.com/docs/intellij/using-kotlin.html#kotlin-standard-library
     // https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html
-    id("org.jetbrains.kotlin.jvm") version "2.2.20"
+    id("org.jetbrains.kotlin.jvm") version "2.3.21"
 
     // https://github.com/JetBrains/intellij-platform-gradle-plugin
-    id("org.jetbrains.intellij.platform") version "2.10.5"
-
-    // https://github.com/ajoberstar/reckon
-    id("org.ajoberstar.reckon") version "0.14.0"
+    id("org.jetbrains.intellij.platform") version "2.16.0"
 
     // https://github.com/b3er/gradle-local-properties-plugin
     id("com.github.b3er.local.properties") version "1.1"
 
     // https://github.com/JetBrains/gradle-changelog-plugin
-    id("org.jetbrains.changelog") version "2.2.1"
+    id("org.jetbrains.changelog") version "2.5.0"
 
 }
 repositories {
@@ -49,11 +46,6 @@ changelog {
     combinePreReleases.set(true)
 }
 
-reckon {
-    scopeFromProp()
-    snapshotFromProp()
-}
-
 kotlin {
     jvmToolchain(21)
 }
@@ -79,7 +71,6 @@ localIdePath?.let {
 dependencies {
     intellijPlatform {
         bundledPlugin("org.jetbrains.android")
-        instrumentationTools()
         if (project.hasProperty("localIdeOverride")) {
             local(property("localIdeOverride").toString())
         } else {
